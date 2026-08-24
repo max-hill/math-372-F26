@@ -1,6 +1,6 @@
 ---
 layout: latex
-title: Lecture Notes
+title: lecture notes
 #
 # By default, content added below the "---" mark will appear in the home page
 # between the top bar and the list of recent posts.
@@ -9,15 +9,15 @@ title: Lecture Notes
 #
 ---
 
-[Lecture notes](lectures/lecture-notes-372.pdf)
+[lecture notes](lectures/lecture-notes-372.pdf)
 
 
- Date        | Lecture notes           | Topics covered
+ date        | lecture notes           | topics covered
 -------------|----------------------------|-------------
- 2026-08-24  |  [worksheet-01](worksheets/worksheet-01--pirates-and-probabilities/main.pdf) | Syllabus, introduction to dice games
+ 2026-08-24  |  [worksheet](hw/homework-01/homework-01.pdf) | syllabus, introduction to dice games
  
-# Other links
+# other links
 
 [syllabus](syllabus/syllabus.pdf)
 
-[My old lecture notes from Fall 2026](lectures/lecture-notes-372.pdf)
+[my old lecture notes from fall 2026](lectures/lecture-notes-372.pdf)
