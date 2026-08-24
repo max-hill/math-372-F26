@@ -6,11 +6,11 @@ permalink: /exam-information/
 
 ## midterm 1
 
-- TBD in class
+- Friday, September 25 (in class)
 
 ## midterm 2
 
-- TBD in class
+- Tentative date: Friday, October 23 (in class)
 
 ## final exam
 
