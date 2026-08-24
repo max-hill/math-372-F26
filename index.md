@@ -20,4 +20,4 @@ title: lecture notes
 
 [syllabus](syllabus/syllabus.pdf)
 
-[my old lecture notes from fall 2026](lectures/lecture-notes-372.pdf)
+[my old lecture notes from fall 2026](old-stuff/lectures/lecture-notes-372.pdf)
