@@ -198,27 +198,27 @@
 
 
 \tableofcontents
-\newpage
-\section*{About these notes}
+% \newpage
+% \section*{About these notes}
 
-These lecture notes were prepared by Max Hill for a 16-week course on
-probability and statistics (MATH 372) at University of Hawaii at Manoa in
-Spring 2025. The textbook used is \textit{Probability and Statistics for
-  Engineering and the Sciences} (9th edition) by Jay L.~Devore. In addition to
-this text, the material in these lecture notes is also based on a number of
-other sources as well, including:
-\begin{itemize}
-  \item Milton and Arndold's \textit{Introduction to Probability and Statistics} (2nd edition) 
-  \item D.~Zeilberger's lecture notes \url{https://sites.math.rutgers.edu/~zeilberg/math477/}
-  \item Unpublished lecture notes from E.~Gross, R.~Willett, J.~Kim, and B.~Xie.
-  \item My notes from when I took probability with W.~Peterson in 2012.
-  \item L.~Breiman's \textit{Probability} (1992).
-  \item K.L.~Chung's wonderful textbook \textit{Elementary Probability Theory with Stochastic
-    Processes}, (1975).
-  \item H.~Pishro-Nik's online textbook ``Introduction to Probability,
-  Statistics, and Random Processes''
-  \item ``Introduction to Probability'' by D.~Anderson, T.~Seppalainen, and B.~Valko.
-\end{itemize}
+% These lecture notes were prepared by Max Hill for a 16-week course on
+% probability and statistics (MATH 372) at University of Hawaii at Manoa in
+% Spring 2025. The textbook used is \textit{Probability and Statistics for
+%   Engineering and the Sciences} (9th edition) by Jay L.~Devore. In addition to
+% this text, the material in these lecture notes is also based on a number of
+% other sources as well, including:
+% \begin{itemize}
+%   \item Milton and Arndold's \textit{Introduction to Probability and Statistics} (2nd edition) 
+%   \item D.~Zeilberger's lecture notes \url{https://sites.math.rutgers.edu/~zeilberg/math477/}
+%   \item Unpublished lecture notes from E.~Gross, R.~Willett, J.~Kim, and B.~Xie.
+%   \item My notes from when I took probability with W.~Peterson in 2012.
+%   \item L.~Breiman's \textit{Probability} (1992).
+%   \item K.L.~Chung's wonderful textbook \textit{Elementary Probability Theory with Stochastic
+%     Processes}, (1975).
+%   \item H.~Pishro-Nik's online textbook ``Introduction to Probability,
+%   Statistics, and Random Processes''
+%   \item ``Introduction to Probability'' by D.~Anderson, T.~Seppalainen, and B.~Valko.
+% \end{itemize}
 \newpage
 \setcounter{section}{-1}
 \section{Tentative course outline}
@@ -227,33 +227,37 @@ This course is a problem-oriented introduction to the basic concepts of probabil
 providing a foundation for applications and further study.
 
 \begin{itemize}
-  \item \textbf{Weeks 1-2:} Introduction to probability theory 
+  \item \textbf{Weeks 1-3:} Introduction to probability theory 
   \begin{itemize}
     \item Experiments, events, sets, probabilities, random variables. Equally likely outcomes, counting
     techniques. Conditional probability. Independence. Bayes' theorem. (Sections: 2.1-2.5)
   \end{itemize}
-  \item \textbf{Weeks 3-5:} Random variables
+  \item \textbf{Weeks 4-5:} Discrete random variables (1.5 weeks)
   \begin{itemize}
-    \item Discrete random variables (1.5 weeks): Expected values, mean, variance, binomial distribution,
-    Poisson distribution. Moment generating functions.  (Sections: 3.1-3.6)
-    \item Continuous Random variables (1.5 weeks): Uniform, exponential, gamma, and normal distributions.
+    \item Expected values, mean, variance, binomial distribution, Poisson
+    distribution. Moment generating functions. (Sections: 3.1-3.6)
+  \end{itemize}
+  \item \textbf{End of week 5: Midterm 1 (Friday, September 25)}
+  \item \textbf{Weeks 6-7:} Continuous Random variables (1.5 weeks)
+  \begin{itemize}
+    \item Uniform, exponential, gamma, and normal distributions.
     Intuitive treatment of the Poisson process and development of the relationship with gamma
     distributions. (Sections: 4.1-4.4)
   \end{itemize}
-  \item \textbf{Midterm 1 (Feb 18)}
-  \item \textbf{Weeks 6-7:} Multivariate distributions
+  \item \textbf{Weeks 8-9:} Multivariate distributions
   \begin{itemize}
     \item Calculation of probability, covariance, correlation, marginals, conditions. Distributions of
     sums of random variables and sampling distributions. Central limit theorem. (Sections: 1.1, 1.3, 1.4, 5.1-5.7)
   \end{itemize}
-  \item \textbf{Week 8:} Catch-up, review.
-  \item \textbf{Week 9:} Introduction to statistical estimation
+  \item \textbf{End of week 9: Midterm 2 (Tentatively: Friday, October 23)}
+  
+  \item \textbf{Week 10:} Introduction to statistical estimation
   \begin{itemize}
     \item Point and confidence interval estimation. Maximum likelihood, optimal, and unbiased estimators.
     Examples. (Sections 6.1, 6.2)
   \end{itemize}
-  \item \textbf{Midterm 2 (March 27)}
-  \item \textbf{Weeks 10-12:} Large sample inference
+  
+  \item \textbf{Weeks 11-12:} Large sample inference
   \begin{itemize}
     \item Estimation (1.5 weeks): Types and comparison of estimators; sampling distributions
     for means/proportions, and their use in large sample estimation; sample size. (Sections 7.1,
@@ -272,28 +276,217 @@ providing a foundation for applications and further study.
     12.1-12.5)
     \item $\chi^{2}$ tests: multinomial dsitributions, contingency tables, goodness-of-fit (Sections: 14.1-14.3)
   \end{itemize}
-  \item \textbf{Last day of instruction: May 6}
-  \item \textbf{Final Exam: May 15}
+  \item \textbf{Last day of instruction: Wednesday, December 9}
+  \item \textbf{Final Exam: December 18}
 \end{itemize} 
-
 \newpage
-\section{2025-01-12 | Week 01 |  Lecture 01}
+\section{2026-08-24 | Week 01 |  Lecture 01}
 \begin{itemize}
   \item give syllabus
-  \item do activity with why you're in this course
-  \item do the pirates worksheet
+  \item did the pirates worksheet
 \end{itemize}
 
 \newpage
-\section{2025-01-14  | Week 01 | Lecture 02}
+\section{2026-08-26  | Week 01 | Lecture 02}
 \begin{center}
   \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
-    \textit{\textbf{The nexus question of this lecture:} What is the general
-      framework for probability?}
+    \textit{\textbf{The nexus question of this lecture:} What is a set and and
+      what are the basic set operations?}
 
-    \textit{\textbf{Reading assignment:} chapters 2.1 - 2.5}
+    \textit{\textbf{Reading assignment:} chapter 2.1}
   \end{tcolorbox}
 \end{center}
+\subsection{Set theory}
+
+The mathematical formalization of modern probability theory rests on the
+foundation of set theory.
+
+\subsubsection{Definitions and set-builder notation}
+\begin{itemize}
+  \item A \demph{set} is an unordered collection of distinct objects. The
+  objects of a set are called \demph{elements}. We write the elements of a set
+  inside curly braces, $\left\{\ldots\right\}$.
+
+  Examples: $\left\{1,4,2,3\right\}$,  $\left\{\text{cat}, \text{fish}, 5
+  \right\}$, $\mathbf{Z}:= \left\{\ldots, -2, -1, 0, 1, 2,\ldots\right\}$,
+  $\mathbf{R}=\left\{\text{the real numbers}\right\}$
+
+  \item Two sets $A$ and $B$ are \demph{equal}, denoted $A=B$, if they share
+  precisely the same elements. The order that the elements are written is
+  irrelevant.
+
+  $\left\{1,2,3\right\}=\left\{3,1,2\right\}$.
+  
+  Repeated elements are ignored:
+
+  $\left\{1,2,3\right\}=\left\{1,1,2,3\right\}$.
+  
+  \item A set is \demph{finite} if it contains a finite number of distinct
+  elements. This number is called the \demph{size} of the set, and is denoted
+  $|A|$.
+
+  Example: $|\left\{\text{cat}, 5\right\}|=2$.
+  
+  \item The \demph{empty set} is the set which contains no elements. This is
+  denoted as
+  \begin{equation*}
+    \emptyset \quad \text{or} \quad \left\{\right\} 
+  \end{equation*}
+  \item \demph{Set-builder notation} describes a set by specifying the
+  properties that its elements must satisfy.
+
+
+  Examples:
+
+  The set of integers between 1 and 36:
+  \begin{equation*}
+    \left\{n\in \mathbb{Z}: 1 \leq n \leq 36\right\} 
+  \end{equation*}
+
+  The set of ordered pairs $(x,y)$ such that $x$ and $y$ are both positive
+  real numbers:
+  \begin{equation*}
+    \left\{(x,y)\in \R^{2}: x,y>0\right\}
+  \end{equation*}
+  
+
+  The set of even integers:
+  \begin{equation*}
+    \left\{n\in \mathbb{Z}: n \text{ is even}\right\} 
+  \end{equation*}
+  
+  The set of ordered pairs $x,y$ such that both $x$ and $y$ are integers
+  beween 1 and 4:
+  \begin{equation*}
+    \left\{(x,y): x,y\in \left\{1,2,3,4\right\} \right\} 
+  \end{equation*}
+
+  In set builder notation, the colon `:' is read as ``such that'' and the
+  symbol `$\in$' (which looks like an E) is read as ``is an element of''
+    
+\end{itemize}
+
+\subsubsection{Set operations}
+
+\tikzset{
+  venn outline/.style={draw=black, very thick},
+  venn fill/.style={fill=red!50},
+  venn label/.style={}
+}
+
+Let \(A,B\) be sets.
+\begin{itemize}
+
+  \item The \demph{intersection} of \(A\) and \(B\), denoted \(A\cap B\), is
+  defined by
+  \begin{equation*}
+    A\cap B=\{x:x\in A\text{ and }x\in B\}.
+  \end{equation*}
+  \begin{center}
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle (6,4);
+      \draw[venn outline] (0.15,0.15) rectangle (5.85,3.85);
+      \begin{scope}
+        \clip (2.35,2) circle (1.35);
+        \fill[venn fill] (3.65,2) circle (1.35);
+      \end{scope}
+      \draw[venn outline] (2.35,2) circle (1.35);
+      \draw[venn outline] (3.65,2) circle (1.35);
+      \node[venn label] at (1.45,3.25) {\(A\)};
+      \node[venn label] at (4.55,3.25) {\(B\)};
+    \end{tikzpicture}
+  \end{center}
+
+  \item The \demph{union} of \(A\) and \(B\), denoted \(A\cup B\), is
+  defined by
+  \begin{equation*}
+    A\cup B=\{x:x\in A\text{ or }x\in B\}.
+  \end{equation*}
+  \begin{center}
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle (6,4);
+      \draw[venn outline] (0.15,0.15) rectangle (5.85,3.85);
+      \fill[venn fill] (2.35,2) circle (1.35);
+      \fill[venn fill] (3.65,2) circle (1.35);
+      \draw[venn outline] (2.35,2) circle (1.35);
+      \draw[venn outline] (3.65,2) circle (1.35);
+      \node[venn label] at (1.45,3.25) {\(A\)};
+      \node[venn label] at (4.55,3.25) {\(B\)};
+    \end{tikzpicture}
+  \end{center}
+
+  \item The \demph{set difference} of \(A\) and \(B\), denoted
+  \(A\setminus B\), is
+  \begin{equation*}
+    A\setminus B=\{x:x\in A\text{ and }x\notin B\}.
+  \end{equation*}
+  \begin{center}
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle (6,4);
+      \draw[venn outline] (0.15,0.15) rectangle (5.85,3.85);
+      \fill[venn fill] (2.35,2) circle (1.35);
+      \fill[white] (3.65,2) circle (1.35);
+      \draw[venn outline] (2.35,2) circle (1.35);
+      \draw[venn outline] (3.65,2) circle (1.35);
+      \node[venn label] at (1.45,3.25) {\(A\)};
+      \node[venn label] at (4.55,3.25) {\(B\)};
+    \end{tikzpicture}
+  \end{center}
+  \item We say that \(A\) is a \demph{subset} of \(B\), and write
+  \(A\subseteq B\), if
+  \begin{equation*}
+    x\in A\implies x\in B.
+  \end{equation*}
+  \begin{center}
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle (6,4);
+      \draw[venn outline] (0.15,0.15) rectangle (5.85,3.85);
+      \fill[venn fill] (2.55,2) circle (0.75);
+      \draw[venn outline] (3,2) circle (1.55);
+      \draw[venn outline] (2.55,2) circle (0.75);
+      \node[venn label] at (2.55,2) {\(A\)};
+      \node[venn label] at (4.05,2.85) {\(B\)};
+    \end{tikzpicture}
+  \end{center}
+
+  \item If \(A\subseteq B\), the \demph{complement of \(A\) in \(B\)},
+  denoted \(A^c\), is
+  \begin{equation*}
+    A^c=B\setminus A =\{x:x\in B\text{ and }x\notin A\}.
+  \end{equation*}
+  \begin{center}
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle (6,4);
+      \fill[venn fill] (0.15,0.15) rectangle (5.85,3.85);
+      \fill[white] (3,2) circle (1.05);
+      \draw[venn outline] (0.15,0.15) rectangle (5.85,3.85);
+      \draw[venn outline] (3,2) circle (1.05);
+      \node[venn label] at (3,2) {\(A\)};
+      \node[venn label] at (0.55,3.45) {\(B\)};
+    \end{tikzpicture}
+  \end{center}
+
+  \item We say that \(A\) and \(B\) are \demph{disjoint} if
+  $A\cap B=\emptyset$. 
+  \begin{center}
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle (6,4);
+      \draw[venn outline] (0.15,0.15) rectangle (5.85,3.85);
+
+      \fill[venn fill] (2,2) circle (0.95);
+      \fill[venn fill] (4,2) circle (0.95);
+
+      \draw[venn outline] (2,2) circle (0.95);
+      \draw[venn outline] (4,2) circle (0.95);
+      \node[venn label] at (2,2) {\(A\)};
+      \node[venn label] at (4,2) {\(B\)};
+    \end{tikzpicture}
+  \end{center}
+
+\end{itemize}
+
+\end{document}
+\section{2026-08-28}
 
 \subsection{A general framework for probability}
 We begin with a general framework and some terminology to formalize the
