@@ -15,7 +15,7 @@ title: lecture notes
  date        | lecture notes           | topics covered
 -------------|----------------------------|-------------
  2026-08-24  |  [worksheet](hw/homework-01/homework-01.pdf) | syllabus, introduction to dice games
- 2026-08-24  |  [worksheet](hw/homework-02/homework-02.pdf) | set theory
+ 2026-08-26  |  [worksheet](hw/homework-02/homework-02.pdf) | set theory
  
 # other links
 
