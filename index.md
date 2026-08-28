@@ -12,10 +12,11 @@ title: lecture notes
 [lecture notes](lectures/lecture-notes-372.pdf)
 
 
- date        | lecture notes           | topics covered
+ date        | links         | topics covered
 -------------|----------------------------|-------------
  2026-08-24  |  [worksheet](hw/homework-01/homework-01.pdf) | syllabus, introduction to dice games
  2026-08-26  |  [worksheet](hw/homework-02/homework-02.pdf) | set theory
+ 2026-08-28  |  - | sample space, event, random variable
  
 # other links
 
