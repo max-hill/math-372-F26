@@ -12,25 +12,8 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{calc}
-\usepackage{forest}
-\usepackage{tikz-qtree}
 \graphicspath{ {./images/} }
 \usepackage{hyperref}
-\usepackage[capitalize]{cleveref}
-\usepackage[shortlabels]{enumitem}
-\usetikzlibrary{arrows,matrix,positioning}
-\usepackage{multicol}
-\usepackage{makecell}
-
-\usepackage{mathtools}% http://ctan.org/pkg/mathtools
-\usepackage{abraces} %xyz
-\usepackage{pgfplots}
-
-% Hawai'i
-\usepackage{fontspec}
-\newfontface\OkinaFallback{Gentium Plus} % or Noto Serif / Charis SIL / Gentium Plus
-\newcommand{\okina}{{\OkinaFallback ʻ}} % genuine U+02BB
-
 
 
 
@@ -47,23 +30,23 @@
   boxrule=1pt,
   #1}
 
+\usepackage[capitalize]{cleveref}
+\usepackage[shortlabels]{enumitem}
+\usetikzlibrary{arrows,matrix,positioning}
+\usepackage{multicol}
+\usepackage{makecell}
+
+\usepackage{mathtools}% http://ctan.org/pkg/mathtools
+\usepackage{abraces} %xyz
+\usepackage{pgfplots}
+
+% Hawai'i
+\usepackage{fontspec}
+\newfontface\OkinaFallback{Gentium Plus} % or Noto Serif / Charis SIL / Gentium Plus
+\newcommand{\okina}{{\OkinaFallback ʻ}} % genuine U+02BB
+
 % for the pipe symbol
 \usepackage[T1]{fontenc}
-
-
-% Citing theorems by name. (source: https://tex.stackexchange.com/questions/109843/cleveref-and-named-theorems)
-\makeatletter
-\newcommand{\ncref}[1]{\cref{#1}\mynameref{#1}{\csname r@#1\endcsname}}
-
-\def\mynameref#1#2{%
-  \begingroup 
-  \edef\@mytxt{#2}%
-  \edef\@mytst{\expandafter\@thirdoffive\@mytxt}%
-  \ifx\@mytst\empty\else
-  \space(\nameref{#1})\fi
-  \endgroup
-}
-\makeatother
 
 % Colorful Notes
 \usepackage{color} \definecolor{Red}{rgb}{1,0,0} \definecolor{Blue}{rgb}{0,0,1}
@@ -134,16 +117,6 @@
 \newcommand{\pnorm}[1]{\left\lVert#1\right\rVert_p} % p-norm
 \newcommand{\qnorm}[1]{\left\lVert#1\right\rVert_q} % q-norm
 \newcommand{\1}[1]{\textbf{1}_{\left[#1\right]}} % indicator function 
-\def\limn{\lim_{n\to\infty}} % shortcut for lim as n-> infinity
-\def\sumn{\sum_{n=1}^{\infty}} % shortcut for sum from n=1 to infinity
-\def\sumkn{\sum_{k=1}^{n}} % shortcut for sum from k=1 to n
-\def\sumin{\sum_{i=1}^{n}} % shortcut for sum from i=1 to n
-\def\SAs{\sigma\text{-algebras}} % shortcut for $\sigma$-algebras
-\def\SA{\sigma\text{-algebra}} % shortcut for $\sigma$-algebra
-\def\Ft{\mathcal{F}_t} % time-indexed sigma-algebra (t)
-\def\Fs{\mathcal{F}_s} % time-indexed sigma-algebra (s)
-\def\F{\mathcal{F}} % sigma-algebra
-\def\G{\mathcal{G}} % sigma-algebra
 \def\R{\mathbb{R}} % Real numbers
 \def\N{\mathbb{N}} % Natural numbers
 \def\Z{\mathbb{Z}} % Integers
@@ -175,10 +148,6 @@
 \definecolor{RoyalBlue}{cmyk}{1, 0.50, 0, 0}
 \newcommand{\dempfcolor}[1]{{\color{RoyalBlue}#1}} 
 \newcommand{\demph}[1]{\dempfcolor{{\sl \textbf{#1}}}}
-
-% comment exactly one of the following line to show / hide the solutions
-% \newcommand{\solution}[1]{{\purple #1}} % uncomment to show the solutions
-\newcommand{\solution}[1]{} % uncomment to hide the solutions
 
 
 
@@ -482,11 +451,19 @@ Let \(A,B\) be sets.
       \node[venn label] at (4,2) {\(B\)};
     \end{tikzpicture}
   \end{center}
-
 \end{itemize}
 
-\end{document}
-\section{2026-08-28}
+\newpage
+\section{2026-08-28 | Week 01 | Lecture 03}
+
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{The nexus question of this lecture:} What does set theory
+      have to do with probability?}
+
+    \textit{\textbf{Reading assignment:} finish chapter 2.1, start 2.2}
+  \end{tcolorbox}
+\end{center}
 
 \subsection{A general framework for probability}
 We begin with a general framework and some terminology to formalize the
@@ -498,78 +475,84 @@ notions of probability.
 
   Examples include flipping a coin, rolling a dice, measuring the size of a
   wave, or the amount of rainfall, conducting a poll, performing a diagnostic
-  test, opening a pack of Pokemon cards, etc.
+  test, opening a pack of Pokemon cards, asking your crush on a date, etc.
 
   \item The \demph{sample space} $S$ of an experiment is the set of all
   possible outcomes. The elements of the sample space are called \demph{sample
-    points}.
+    points}. Each sample point represents a \textbf{unique} outcome of the
+  experiment.
 
-  We think of each sample point as representing a unique outcome of the
-  experiment. In the case of rolling a dice, the sample points are $1,2,3,4,5$
-  and $6$, and the sample space is $S=\left\{1,2,3,4,5,6\right\}$.
+  Roll a dice. There are six outcomes:
+  \begin{equation*}
+    1,2,3,4,5,6
+  \end{equation*}
+  These are the sample points. The sample space is
+  \begin{equation*}
+    S=\left\{1,2,3,4,5,6\right\}.
+  \end{equation*}
 
-
-  \item We use the term \demph{event} to refer to a collection of outcomes. So
-  we think of an event as being a \textit{subset} of the sample space:
+  \item In probability, we refer to subsets of the sample space as
+  \demph{events}.
   \begin{equation*}
     \text{an event} = \text{a set of outcomes} = \text{a subset of $S$}.
   \end{equation*}
+  We represent events using brackets $\left[ \ldots \right]$, and usually
+  denote them with capital letters.
 
-
-
-  Example: if our experiment is rolling a 6-sided dice, here are some events
-
+  Examples of events when rolling a dice are:
   \begin{equation*}
     \begin{aligned}
-      A &= [\text{observe an odd number}]\\
-      B &= [\text{observe an even number}]\\
-      C &= [\text{observe a number less than 5}]\\
-      D &= [\text{observe a 2 or a 3}]\\
-      E_1 &= [\text{observe a 1}]
-    \end{aligned}
-    \qquad
-    \begin{aligned}
-      E_2 &= [\text{observe a 2}]\\
-      E_3 &= [\text{observe a 3}]\\
-      E_4 &= [\text{observe a 4}]\\
-      E_5 &= [\text{observe a 5}]\\
-      E_6 &= [\text{observe a 6}]
+      E_{1}&=[\text{roll a 1}] = \left\{1\right\} \\
+      E_{2}&=[\text{roll a 2}] = \left\{2\right\} \\
+      E_{3}&=[\text{roll a 3}] = \left\{3\right\} \\
+      A &= [\text{roll an odd number}] = \left\{1,3,5\right\} \\
+      B &= [\text{roll an even number}] = \left\{2,4,6\right\} \\
+      C &= [\text{roll a number less than 5}] = \left\{1,2,3,4\right\} \\
+      D &= [\text{roll a 2 or a 3}] = \left\{2,3\right\} \\
     \end{aligned}
   \end{equation*}
-
-  \item There are two types of events: \demph{compound events}, which can be
-  decomposed into other events, and \demph{simple events}, which cannot.
-
-  In the above example, the events $A,B,C$ and $D$ are compound events. $E_{1},\ldots,E_{6}$ are simple events.
-
+  
+  \item The first three events shown are \demph{singleton} sets, containing
+  only one sample point. The book calls these \demph{simple events}. But note
   \begin{equation*}
-    \begin{aligned}
-      A &= [\text{observe an odd number}] = \{1,3,5\} \\
-      B &= [\text{observe an even number}] = \{2,4,6\} \\
-      C &= [\text{observe a number less than 5}] = \{1,2,3,4\} \\
-      D &= [\text{observe a 2 or a 3}] = \{2,3\}\\
-      E_1 &= [\text{observe a 1}] = \{1\}
-    \end{aligned}
-    \qquad
-    \begin{aligned}
-      E_2 &= [\text{observe a 2}] = \{2\} \\
-      E_3 &= [\text{observe a 3}] = \{3\} \\
-      E_4 &= [\text{observe a 4}] = \{4\} \\
-      E_5 &= [\text{observe a 5}] = \{5\} \\
-      E_6 &= [\text{observe a 6}] = \{6\}
-    \end{aligned}
+    1\neq \left\{1\right\} 
   \end{equation*}
+
+  \item The empty set $\emptyset$ and the whole sample space $S$ are always
+  both events:
+  \begin{itemize}[$\cdot$]
+    \item $S$ is the event that an outcome occurs (``something happens'').
+    \item $\emptyset$ is the event that no outcome occurs. This is called the
+    \demph{null event.}
+  \end{itemize}
+  
+
+  
+  \item Two events are $E,F$ \demph{mutually exclusive} if $E\cap F=\emptyset$
+  (i.e., the sets $E,F$ are disjoint). This means that the events $E$ and $F$
+  cannot both happen at the same time.
+
+  The events $A,B$ defined above are mutually exclusive, since the dice
+  roll cannot be both even and odd.
+  
+  \item Translating set operations into the language of events,
+  \begin{itemize}[$\cdot$]
+    \item $E\cap F$ is the
+    event that both $E$ \textbf{and} $F$ occur
+    \item $E\cup F$ is the
+    event that at least one of the events $E$ \textbf{or} $F$ occurs
+    \item $E^{c}=S\backslash E$ is the event that $E$ does \textbf{not} occur.
+  \end{itemize}
 
 \end{itemize}
 
 
 
+
 \begin{example}[Examples of sample spaces]
   \begin{itemize}
-    \item[]
-    \item If I roll dice, the sample space is $S = \left\{1,2,3,4,5,6\right\}$
-    
-    \item  If I flip a coin, the sample space is $S = \left\{T,H\right\} $
+    \item[]    
+    \item  Flip a coin. the sample space is $S = \left\{T,H\right\} $
      
     \item The amount of rainfall in a day is
     $S = \left\{x\in \mathbb{R}: x \geq 0\right\}$
@@ -591,125 +574,94 @@ notions of probability.
 \end{example}
 
 
-% \begin{example}[Rolling a dice]
-%   To illustrate, suppose we roll a dice. Let $X$ be the value of the dice roll. We know the sample space
-%   of the experiment is $S = \left\{1,2,3,4,5,6\right\}$. Some possible events, along with the sets we
-%   identify them with, are shown below:
-%   \begin{itemize}
-%     \item ``the dice roll is even'' \dotfill $\left\{2,4,6\right\}$
-%     \item ``the dice roll is at least 3'' \dotfill $\left\{3,4,5,6\right\}$
-%     \item ``the dice roll equals 1'' \dotfill $\left\{1\right\}$
-%   \end{itemize}
-%   It's common to represent events using square brackets like this:
-%   $\left[ \text{event description} \right]$. For example, the first event above could also be written as:
-%   \begin{equation*}
-%     \left[ X \text{ is even} \right] \quad \text{or }\quad \left[ X \in \left\{2,4,6\right\} \right].
-%   \end{equation*}
-%   And we might write the other two events as
-%   \begin{equation*}
-%     \left[ X \geq 3\right] \quad \text{and} \quad \left[ X=1 \right].
-%   \end{equation*}
-% \end{example}
-\subsection{The enumeration principle}
-\begin{example}[Rolling two dice]
-  When rolling a red and a blue dice, the sample space consists of 36 possible outcomes:
-  \begin{center}
-    \includegraphics[scale=0.3]{images/state-space-2-dice-rolls}
-  \end{center}
-  so we can write the sample space as:
-  \begin{align*}
-    S
-    &= \left\{(x,y): x,y\in \left\{1,2,3,4,5,6\right\}\right\}\\
-    &= \left\{(1,1), (1,2), \ldots, (6,6)\right\}
-  \end{align*}
-  The event that the dice are equal is
+\subsection{Random variable}
+
+We often associate numbers with outcomes of an experiment.
+
+
+\begin{definition}[Random variables]
+  \label{def:random-variables}
+  Let $S$ be a sample space of an experiment. A \demph{random variable} is any
+  rule that associates a number with each outcome in the $S$. Formally, it is
+  a function whose domain is $S$ and whose range is $\R$.
+\end{definition}
+
+Most interesting events are defined using random variables.
+
+\begin{example}[sum 2d4]
+  \label{ex:sum-2d4}
+  Roll a 4-sided dice twice (this is the \textbf{experiment}). There are 16 possible
+  \textbf{outcomes}. The \textbf{sample space} is
   \begin{equation*}
-    \left[ \text{dice are equal} \right]  = \left\{(1,1), (2,2), (3,3), (4,4), (5,5), (6,6)\right\}
+    S = \left\{(x,y): x,y\in \left\{1,2,3,4\right\} \right\},
   \end{equation*}
-  We could have other events too, like that the dice sum to 3:
+  which consists of 16 ordered pairs $(x,y)$, the \textbf{sample points}. We
+  can enumerate the sample space as a table:
   \begin{equation*}
-    \left[ \text{dice sum to 4}  \right] = \left\{(1,3),(2,2),(3,1)\right\} 
+    \begin{array}{c@{\quad}c|cccc}
+      & \multicolumn{5}{c}{\text{Dice 2}} \\
+      & & 1 & 2 & 3 & 4 \\
+      \cline{2-6}
+      & 1 & (1,1) & (1,2) & (1,3) & (1,4) \\
+      \text{Dice 1}
+      & 2 & (2,1) & (2,2) & (2,3) & (2,4) \\
+      & 3 & (3,1) & (3,2) & (3,3) & (3,4) \\
+      & 4 & (4,1) & (4,2) & (3,4) & (4,4)
+    \end{array}
+  \end{equation*}
+  
+  Let $X$ be the sum of the two rolls. This is an example of a \textbf{random
+    variable}. We can represent $X$ by the following table:
+  \begin{equation*}
+    \begin{array}{c@{\quad}c|cccc}
+      & \multicolumn{5}{c}{\text{Dice 2}} \\
+      & & 1 & 2 & 3 & 4 \\
+      \cline{2-6}
+      & 1 & 2 & 3 & 4 & 5 \\
+      \text{Dice 1}
+      & 2 & 3 & 4 & 5 & 6 \\
+      & 3 & 4 & 5 & 6 & 7 \\
+      & 4 & 5 & 6 & 7 & 8
+    \end{array}
   \end{equation*}
 
-  % Let's do this for all possible sums of our red and blue dice:
-  % \begin{center}
-  %   \includegraphics[scale=0.5]{images/sums-events.png}
-  % \end{center}
-  All of the outcome pairs are equally likely, so we can compute the probabilities of by counting entires
-  in the table. Let
-  \begin{equation*}
-    Z = \text{the sum of the red dice and the blue dice}
-  \end{equation*}
-  By counting entries in our table, we see that
-  \begin{equation*}
-    \P\left[Z =  4 \right] = \frac{3}{36}.
-  \end{equation*}
-  Similarly,
-  \begin{equation*}
-    \P\left[Z = 7 \right] = \frac{6}{36} = \frac{1}{6}
-  \end{equation*}
-  and
-  \begin{equation*}
-    \P\left[Z \leq 5\right] = \frac{10}{36}.
-  \end{equation*}
+  We can define events using $X$. For example
+  \begin{align*}
+    \left[ X \leq 3\right] &= \left\{(x,y)\in S: x+y\leq 3\right\} =  \left\{(1,1), (1,2), (2,1)\right\} \\
+    [X = 4]  &= \left\{(x,y)\in S: x+y=4\right\} = \left\{(1,3), (2,2), (3,1)\right\}\\
+    [X \leq 4]  &= \left[ X \leq 3\right]\cup \left[ X=4 \right]= \left\{(1,1), (1,2), (2,1),(1,3), (2,2), (3,1)\right\}\\
+    \left[ X \text{ is even} \right] &= \left\{(1,1), (1,3), (2,2), (2,4), (3,1), (3,3), (4,2), (4,4) \right\}.\\
+                           \text{etc.}&
+  \end{align*}
 \end{example}
 
-The previous example illustrates the critically imporant idea of \textbf{enumeration:}
+\subsection{The enumeration principle}
 
+On Monday's worksheet, I had you do a bunch of problems where you computed
+probabilities by counting outcomes. This is a smiple but critically important
+idea, called the \demph{enumeration principle}.
 \begin{center}
   \colorbox{gray!10}{%
     \begin{minipage}{0.8\textwidth}
-      If your sample space is finite and consists of \textit{equally likely outcomes}, then you can
-      compute lots of probabilities easily by listing outcomes and counting them. To be prcecise, for any
-      event $A$,
+      \textbf{Enumeration principle:} If the sample space is finite and
+      consists of \textit{equally likely outcomes}, then we can compute lots
+      of probabilities easily by listing outcomes and counting them. To be
+      prcecise, for any event $A$,
       \begin{equation*}
-        \P\left[A \right] = \frac{|A|}{|S|}  = \frac{\# \text{ of outcomes in $A$ }}{\# \text{ of outcomes in
-            $S$ }}
+        \P\left[A \right] = \frac{|A|}{|S|}  = \frac{\# \text{ of outcomes in $A$ }}{\# \text{ of outcomes in $S$}}.
       \end{equation*}
     \end{minipage}%
   }
 \end{center}
+So using $X$ from \cref{ex:sum-2d4},
+\begin{equation*}
+  \P\left[X=4 \right] = \frac{3}{16}
+\end{equation*}
+\begin{equation*}
+  \P\left[ X\text{ is even} \right] =\frac{8}{16} = \frac{1}{2}.
+\end{equation*}
 
-I already had you do a bunch of these problems on Monday.
-
-
-
-
-\subsection{Events}
-
-Some observations about events:
-\begin{itemize}
-  \item Two events $E$ and $F$ are \demph{mutually exclusive} if
-  $E\cap F =\emptyset$. This means that $E$ and $F$ cannot both happen at the
-  same time.
-  \begin{center}
-    \includegraphics[scale=.4]{images/venn-diagram-disjoint}
-  \end{center}
-
-  In the dice example, the events $A$ and $B$ are mutually exclusive, since
-  the dice roll cannot be both even and odd. But $A$ and $C$ are not mutually
-  exclusive because $A\cap C =\left\{1,3\right\}\neq \emptyset$. If a 1 or a 3
-  is rolled, then both $A$ and $C$ occur.
-
-  \item The sample points are \textit{elements} of $S$. The simple events
-  are \textit{singleton subsets} of $S$. In the dice example, we have:
-  \begin{itemize}
-    \item Sample points: 1,2,3,4,5,6.
-    \item Simple events:
-    $\left\{1\right\},\left\{2\right\},\left\{3\right\},\left\{4\right\},\left\{5\right\},\left\{6\right\}$.
-  \end{itemize}
-  \item The empty set $\emptyset$ and the whole sample space $S$ are always
-  both events: $\emptyset$ is the event ``nothing happens'' and $S$ is the
-  event ``something happens''.
-  \item If $E$ and $F$ are events, then $E\cap F$ is the event that both $E$
-  \textbf{and} $F$ occur:
-  \begin{center}
-    \includegraphics[scale=0.2]{images/venn-diagram-intersection}
-  \end{center}
-  Here, $E\cap F$ is the \demph{intersection} of $E$ and $F$; that is, $E\cap F$ the set
-  of sample points contained in both $E$ and $F$.
-\end{itemize}
-
+\end{document}
 \newpage
 \section{2025-01-16 | Week 01 | Lecture 03}
 
@@ -763,53 +715,6 @@ Some observations about events:
 \begin{equation*}
   \text{an event} = \text{a set of outcomes} = \text{a subset of the sample space $S$.}
 \end{equation*}
-
-
-\begin{example}[Sum 2d4]
-  \label{ex:sum-2d4}
-  Roll a 4-sided dice twice (this is the \textbf{experiment}). There are 16 possible
-  \textbf{outcomes}. The \textbf{sample space} is
-  \begin{equation*}
-    S = \left\{(x,y): x,y\in \left\{1,2,3,4\right\} \right\},
-  \end{equation*}
-  which consists of 16 ordered pairs $(x,y)$, the \textbf{sample points}. An
-  \textbf{event} is any subset of these.
-
-  We'll give two examples of events.
-
-  Let $X$ be the sum of the two rolls. We can represent $X$ by the following table:
-  \begin{equation*}
-    \begin{array}{c@{\quad}c|cccc} & \multicolumn{5}{c}{\text{Dice 2}} \\ & &
-      1 & 2 & 3 & 4 \\ \cline{2-6}  & 1 & 2 & 3 & 4 & 5 \\ \text{Dice 1} & 2 & 3 & 4 & 5 & 6 \\ & 3 & 4 & 5 & 6 & 7 \\ & 4 & 5 & 6 & 7 & 8 \end{array}
-  \end{equation*}
-
-  The event that $X=6$ is:
-  \begin{align*}
-    [X=6] 
-    &= \left\{(1,5), (2,4), (3,3), (4,2), (5,1)\right\}.
-  \end{align*}
-
-  Here's another example of an event:
-  \begin{align*}
-    \left[ X \text{ is even} \right]
-    &= \left\{(1,1), (1,3), (2,2), (2,4), (3,1), (3,3), (4,2), (4,4) \right\}.
-  \end{align*}
-
-  The \textbf{enumeration principle} says that, when outcomes are equally
-  likely, we can compute the probability of an event $E$ by
-  \begin{equation*}
-    \P\left[E \right] = \frac{|E|}{|S|}.
-  \end{equation*}
-  So
-  \begin{equation*}
-    \P\left[X=6 \right] = \frac{3}{16}
-  \end{equation*}
-  and
-  \begin{equation*}
-    \P\left[ X\text{ is even} \right] =\frac{8}{16} = \frac{1}{2}.
-  \end{equation*}
-\end{example}
-
 
 Since probability theory is formalized in terms of sets, we need to have some intuition about set theory.
 
