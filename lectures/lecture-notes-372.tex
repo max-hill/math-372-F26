@@ -1078,10 +1078,11 @@ In the remainder, we will formalize these ideas.
   (Note: the right-hand side is a product of $k$ terms.)
 \end{theorem}
 \begin{proof}[Proof idea]
-  Build the list one entry at a time. There are $n$ choices for the first entry,
-  then $n-1$ for the second (since one element was used up). Then $n-2$, and
-  so on, with $n-k+1$ choices for the $k^{\rm th}$ entry. The number of
-  choices multiply, giving the formula.
+  Build the list one entry at a time. There are $n$ choices for the first
+  entry, then $n-1$ for the second (since one element was used up). Then
+  $n-2$, and so on, with $n-k+1$ choices for the $k^{\rm th}$ entry. By
+  \cref{thm:multiplication-principle}, the number of choices multiply, giving
+  the formula.
 \end{proof}
 
 \subsection{Combinations}
