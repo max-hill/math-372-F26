@@ -156,9 +156,13 @@
 \def\gray{\color{gray}}
 \def\purple{\color{Purple}}
 \definecolor{RoyalBlue}{cmyk}{1, 0.50, 0, 0}
-\newcommand{\dempfcolor}[1]{{\color{RoyalBlue}#1}} 
-\newcommand{\demph}[1]{\dempfcolor{{\sl \textbf{#1}}}}
-
+\DeclareRobustCommand{\demph}[1]{% definitions
+  \ifmmode
+  {\color{Blue}#1}%
+  \else
+  {\color{Blue}\bfseries\slshape #1}%
+  \fi
+}
 
 
 \title{Lecture Notes for Math 372: \\Elementary Probability and Statistics}
@@ -926,9 +930,337 @@ only the three axioms.
 \end{proof}
 
 
-\end{document}
 
 \newpage
+
+\section{2026-09-02 | Week 02 | Lecture 05}
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{The topic for this lecture:} Combinatorial principles}
+
+    \textit{\textbf{Reading assignment:} chapter 2.3}
+  \end{tcolorbox}
+\end{center}
+There are three main counting principles we'll look at:
+\begin{itemize}
+  \item multiplication principle
+  \item permutation principle
+  \item combination principle
+\end{itemize}
+
+\subsection{The multiplication principle}
+\begin{notation}
+  Denote the set consisting of the first $n$ positive integers by
+  \begin{equation*}
+    \demph{[n]} = \left\{1,\ldots,n\right\}.
+  \end{equation*}
+\end{notation}
+
+
+\begin{definition}[Tuple]
+  Let $k$ be a positive integer. A \demph{$k$-tuple} is an ordered list
+  \begin{equation*}
+    (a_1, a_2, \ldots, a_k)
+  \end{equation*}
+  of $k$ objects. We call $a_i$ the \demph{$i^{\rm th}$ coordinate} of the tuple.
+\end{definition}
+
+\begin{remark}
+  The word \textit{ordered} is key. $(1,2)$ and $(2,1)$ are different
+  $2$-tuples, and $(1,1,2)$ is a perfectly fine $3$-tuple even thought it
+  repeats an entry.
+\end{remark}
+
+\begin{theorem}[The multiplication principle]
+  \label{thm:multiplication-principle}
+  Suppose an object is built by making $k$ choices in order, where the number
+  of options for the $1^{\rm st}$ choice is $n_{1}$, the number of options for
+  the $2^{\rm nd}$ is $n_{2}$, and so forth. Then the number of objects that
+  can be built is $n_1n_2\cdots n_k$.
+\end{theorem}
+
+\begin{example}
+  A man has 3 shirts and 2 ties. How many ways
+  can he dress himself?
+  \begin{center}
+    \includegraphics[scale=.6]{images/chung-ties}
+  \end{center}
+  We can schematize this as three shirts $s_{1},s_{2},s_{3}$ and two ties
+  $t_{1},t_{2}$, in which case the possible outfits are:
+  \begin{align*}
+    &(s_{1},t_{1})\  (s_{2},t_{1})\  (s_{3},t_{1})\\
+    &(s_{1},t_{2})\  (s_{2},t_{2})\  (s_{3},t_{2})
+  \end{align*}
+  Of course, we don't need to write $s$ and $t$; it is enough to write
+  \begin{align*}
+    &(1,1)\ (2,1)\ (3,1)\\
+    &(1,2)\ (2,2)\ (3,2)
+  \end{align*}
+  where the first slot is ``shirt'' and the second is ``tie''. Equivalently,
+  \begin{equation*}
+    \left\{(a_{1},a_{2}): a_{1}\in [3], a_{2}\in [2]  \right\}.
+  \end{equation*}
+  The total number of outfits is $3\times 2 = 6$.
+
+  If the man also has 2 pairs of shoes, we can add a third slot for
+  ``shoes'', so the question is asking to count the number of elements in the
+  set
+  \begin{equation*}
+    \left\{ (a_{1},a_{2},a_{3}): a_{1}\in [3],\, a_{2}\in [2], a_{3}\in [2] \right\}
+  \end{equation*}
+  By \cref{thm:multiplication-principle}, the number of elements in this set
+  is $3\times 2\times 2= 12$. Thus the number of ways he can dress himself 12.
+  
+  This is shown in the following tree diagram:
+  \begin{center}
+    \includegraphics[scale=.5]{images/chung-shoes}
+  \end{center}
+\end{example}
+
+
+
+\begin{corollary}
+  \label{thm:product-rule-for-k-tuples}
+  $|\left\{(a_{1},a_{2},\ldots,a_{k}): a_{1}\in [n_{1}],\, a_{2}\in [n_{2}],\ldots, a_{k}\in [n_{k}] \right\}| = n_{1}n_{2}\cdots n_{k}.$
+\end{corollary}
+\begin{proof}
+  Follows immediately by \cref{thm:multiplication-principle}
+\end{proof}
+
+
+\subsection{Permutations}
+
+
+\begin{example}
+  Suppose I have a set of 6 objects:
+  \begin{equation*}
+    \left\{\text{coin}, \text{card}, \text{pen}, \text{clip}, \text{craine}, \text{dice}\right\} 
+  \end{equation*}
+  
+  \textit{Question 1.} How many ways can I order these six objects?
+
+  \textit{Answer:} $6! = 6\times 5\times 4\times 3\times 2\times 1$.
+
+  \vspace{1em}
+  \textit{Question 2.} How many ways can I arrange just four elements of $S$?
+
+  \textit{Answer:} $6! = 6\times 5\times 4\times 3$.
+\end{example}
+In the remainder, we will formalize these ideas.
+
+
+
+\begin{definition}[Permutation]
+  Given a set $S$, a \demph{permutation} of $S$ is an ordering of all the elements
+  of $S$.
+\end{definition}
+
+\begin{proposition}[Counting permutations]
+  \label{prop:counting-permutations}
+  The total number of ways to order $n$ distinct objects is
+  \begin{equation*}
+    n! = n \times (n-1)\times(n-2)\times\cdots\times 2 \times 1.
+  \end{equation*}
+  (Note that $0! = 1.$)
+\end{proposition}
+
+\begin{definition}[Permutation of size $k$] 
+  Given a set $S$, a \demph{permutation of size $k$} is an ordered subset of $S$
+  containing exactly $k$ elements.
+\end{definition}
+\begin{theorem}[The permutation principle]
+  \label{thm:permutation-principle}
+  Let $\demph{P_{k,n}}$ be the number of permutations of size $k$ that can be
+  formed from a set of $n$ objects. Then
+  \begin{equation*}
+    P_{k,n} = n\cdot (n-1)\cdot (n-2)\cdots (n-k+1) = \frac{n!}{(n-k)!}
+  \end{equation*}
+  (Note: the right-hand side is a product of $k$ terms.)
+\end{theorem}
+\begin{proof}[Proof idea]
+  Build the list one entry at a time. There are $n$ choices for the first entry,
+  then $n-1$ for the second (since one element was used up). Then $n-2$, and
+  so on, with $n-k+1$ choices for the $k^{\rm th}$ entry. The number of
+  choices multiply, giving the formula.
+\end{proof}
+
+\subsection{Combinations}
+\begin{definition}[Combination of size $k$] 
+  Given a set $S$, a \demph{combination of size $k$} is a subset of $S$
+  containing exactly $k$ elements.
+\end{definition}
+
+\begin{theorem}[The combination principle]
+  \label{thm:combination-principle}
+  Let $S$ be a set with $n$ elements. The number of combinations of size $k$
+  is
+  \begin{equation*}
+    \demph{{n\choose k}} =  \frac{n!}{k!(n-k)!}
+  \end{equation*} 
+\end{theorem}
+
+\begin{proof}
+  Let $C_{k,n}$ be the number of subsets of $S$ of size $k$. Observe that for
+  every unordered subset of size $k$, there are $k!$ ways to order it by
+  \cref{prop:counting-permutations}. Hence,
+  \begin{equation*}
+    k! \times \text{(number of unordered subsets of size $k$)}
+    =
+    \text{(number of ordered subsets of size $k$)}.
+  \end{equation*}
+  Changing notation,
+  \begin{equation*}
+    k! C_{k,n} = P_{k,n}.
+  \end{equation*}
+  Therefore
+  \begin{equation*} 
+    C_{k,n} = \frac{P_{k,n}}{k!}
+  \end{equation*}
+  By the formula from \cref{thm:permutation-principle},
+  \begin{equation*}
+    C_{k,n} = \frac{n!}{(n-k)!k!}
+  \end{equation*}
+\end{proof}
+
+\end{document}
+
+\subsection{Problems and examples}
+
+
+\begin{problem}
+  Consider an experiment in which we roll a dice 5 times in a row. One
+  possible outcome is
+  \begin{equation*}
+    (1,4,6,4,4),
+  \end{equation*}
+  which occurs if the first dice rolls 1, the second dice rolls 4, the third rolls 6,
+  and the fourth and fifth both roll 4.
+  \begin{enumerate}[(a)]
+    \item What is the sample space? How many elements does it have?
+    \item Let $E = \left[ \text{All 5 dice are less than or equal to 3} \right]$. What is
+    $\P\left[E \right]?$
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  Let $S= \left\{1,2,3\right\}$. List the permutations of size 3, and the
+  permtuations of size 2.
+\end{problem}
+
+\begin{problem}
+  How many four-letter words can be formed using the alphabet
+  $\left\{A,B,C\ldots,Z\right\}$ if...
+  \begin{enumerate}[(a)]
+    \item no restriction is placed on what constitutes a valid 4-letter word?
+    \item we only allow words that have no repeated letters?
+  \end{enumerate}
+\end{problem}
+
+
+\begin{example}
+  A dessert company has 32 distinct desserts on its menu: 6 types of pie, 9
+  types of cake, and 17 flavors of ice cream.
+  \begin{enumerate}[(a)]
+    \item \textbf{Question:} After purchasing 4 different desserts, a customer decides he will
+    eat them all in a row, and he cares about the order in which he eats them.
+    How many different ways can he eat his 4 desserts?
+
+    \textbf{Solution:} Here we are counting the number of ways to order
+    set of four objects. This number is $4!$ by
+    \cref{prop:counting-permutations}.
+    
+    \item \textbf{Question:} How many ways are there for the customer to choose
+    four desserts and then eat them in a particular order of his choice?
+
+    \textbf{Solution 1:} By the combination principle, there are ${32\choose 4}$
+    combinations of desserts that the customer could choose. Moreover, by part
+    (a), for each combination of 4 desserts, he can order them $4!$ ways.
+    Therefore by the multiplication principle, there are
+    \begin{equation*}
+      {32\choose 4} \times 4! = 32\cdot 31\cdot 30\cdot 29
+    \end{equation*}
+    ways that the customer could choose and then eat four desserts.
+
+    \textbf{Solution 2:} Another solution would be to note that we want to
+    count the number of permutations of size $k=4$ from a set of $n=32$
+    distinct objects. (Think: the customer is selecting 4 desserts from an urn
+    with 32 distinct desserts in it). By the permutation principle, this
+    number is
+    \begin{equation*}
+      (32)_{4} = 32\cdot 31\cdot30 \cdot29
+    \end{equation*}
+    which agrees with our answer from solution 1.
+
+    \item \textbf{Question:} If 9 desserts are randomly selected, how many ways
+    are there to obtain 3 deserts of each type (pie, cake, and ice cream)?
+
+    \fl{Solution:} For pie, there are ${6\choose 3}$ combinations possible.
+    For cake, there are ${9\choose 3}$ combinations possible, and for ice
+    cream, there are ${17\choose 3}$.
+
+    By the multiplication principle, there are
+    \begin{equation*}
+      {6\choose 3}\times {9\choose 3}\times {17\choose 3}
+    \end{equation*}
+    ways to simultaneously select 3 pies, 3 cakes, and 3 ice cream flavors.
+  \end{enumerate}
+\end{example}
+
+\begin{example}
+  Let $S = \left\{1,2,3,4,5,6\right\}$. How many unordered subsets (i.e.,
+  combinations) of size 2 are there?
+
+  \begin{equation*}
+    {6\choose 2} = \frac{6!}{2! \cdot 4!} = \frac{6\cdot5\cdot4\cdot3\cdot2\cdot1}{\left(2\cdot1\right) \cdot \left(4\cdot3\cdot2\cdot1\right)} = \frac{6\cdot5}{2} = 15.
+  \end{equation*}
+  The fiften combinations are
+  \begin{align*}
+    \left\{1,2\right\}, \left\{1,3\right\}, \left\{1,4\right\}, \left\{1,5\right\}, &\left\{1,6\right\} \\
+    \left\{2,3\right\}, \left\{2,4\right\}, \left\{2,5\right\}, &\left\{2,6\right\} \\
+    \left\{3,4\right\}, \left\{3,5\right\}, &\left\{3,6\right\} \\
+    \left\{4,5\right\}, &\left\{4,6\right\} \\
+                                                                                    & \left\{5,6\right\}
+  \end{align*}
+  note that the order doesn't matter, i.e., $\left\{2,1\right\}=\left\{1,2\right\}$ so this just counts
+  as one, not two.
+
+\end{example}
+
+\begin{example}[Poker]
+  A poker hand consist of 5 randomly chosen cards from a
+  standard 52-card deck.
+  \begin{center}
+    \includegraphics[scale=0.3]{images/52-card-deck}
+  \end{center}
+  \fl{Some questions about poker hands:}
+  \begin{enumerate}
+    \item How many distinct poker hands are there?
+
+    \begin{equation*}
+      {52\choose 5} = \frac{52!}{5!\cdot47!} = 2,598,960
+    \end{equation*}
+    \item A \textbf{flush} occurs when all five cards are the same suit. How
+    many ways are there to get a flush?
+    \begin{equation*}
+      4 \times {13\choose 5} 
+      = 4\cdot \frac{13!}{5! 8!} 
+      = 4\cdot\frac{13\cdot 12\cdot 11 \cdot 10 \cdot 9}{5\cdot4\cdot3\cdot2\cdot1} 
+      = 5148
+    \end{equation*}
+
+    The 4 is to choose a suit. Then we choose 5 out of 13 cards in that suit.
+    \item What's the probability of getting a flush?
+
+    To answer this, we use the enumeration principle:
+    \begin{equation*}
+      \frac{{4\choose 1}\times {13\choose 5}}{{52\choose 5}} = \frac{5,148}{2,598,960} \approx 0.002
+    \end{equation*}
+
+    In other words, the probability of a flush is pretty low: about $0.2\%$.
+  \end{enumerate}
+\end{example}
+
+\section{OLD STUFF}
 \subsection{Powerball}
 
 
@@ -963,12 +1295,33 @@ only the three axioms.
 \end{example}
 
 
+\subsection{St. Petersburg Paradox}
 
+The game is the following: repeatedly flip a coin until you get heads. You win $2^{n}$ dollars, where $n$ is
+the number of coin flips. How much would you be willing to pay to play this game????
 
+Let $X$ be your (random) payoff. The sample space of $X$ is
+\begin{equation*}
+  S = \left\{2,4,8,16,32,\ldots\right\}.
+\end{equation*}
+What is the expected value of $X$?
 
-\newpage
-\section{2026-01-21 | Week 02 | Lecture 04}
-\subsection{Repeated coin flipping}
+\begin{align*}
+  \E\left[X \right] 
+  &= \sum_{x} x \P\left[X=x \right]\\
+  &= 2\P\left[X=2 \right]+ 4 \P\left[X=4 \right] + 8\P\left[X=8 \right] + 16 \P\left[X=16 \right]+\ldots\\
+\end{align*}
+Next, we observe that $\P\left[X=2^{k} \right] = \frac{1}{2^{k}}$ for all
+$k =1,2,\ldots$. Plugging these probabilities in, we get
+
+\begin{equation*}
+  \E\left[X \right] = 1+1+1+1+1+\ldots   = +\infty.
+\end{equation*}
+The expected value of playing this game is positive infinity!!!!! N matter how
+much you pay to play this game, you will eventually make money if you play
+enough times.
+
+\subsection{Repeated coin flipping (Expectation)}
 
 \begin{example}[Repeated coin flipping]
   \label{ex:cool-coin-flipping-example}
@@ -1033,11 +1386,8 @@ only the three axioms.
   In other words, we expect to flip the coin twice.
 \end{example}
 
-\subsection{The three probability axioms}
 
-
-
-\subsection{Inclusion-exclusion principle}
+\subsection{Set theory}
 \begin{theorem}[Inclusion-Exclusion Prinicple]
   \label{thm:inclusion-exclusion-principle}
   If $A$ and $B$ are events, then
@@ -1060,40 +1410,6 @@ only the three axioms.
   \end{center}
 \end{proof}
 
-
-\newpage
-\section{2026-01-23 | Week 02 | Lecture 05}
-
-\subsection{St. Petersburg Paradox}
-
-The game is the following: repeatedly flip a coin until you get heads. You win $2^{n}$ dollars, where $n$ is
-the number of coin flips. How much would you be willing to pay to play this game????
-
-Let $X$ be your (random) payoff. The sample space of $X$ is
-\begin{equation*}
-  S = \left\{2,4,8,16,32,\ldots\right\}.
-\end{equation*}
-What is the expected value of $X$?
-
-\begin{align*}
-  \E\left[X \right] 
-  &= \sum_{x} x \P\left[X=x \right]\\
-  &= 2\P\left[X=2 \right]+ 4 \P\left[X=4 \right] + 8\P\left[X=8 \right] + 16 \P\left[X=16 \right]+\ldots\\
-\end{align*}
-Next, we observe that $\P\left[X=2^{k} \right] = \frac{1}{2^{k}}$ for all
-$k =1,2,\ldots$. Plugging these probabilities in, we get
-
-\begin{equation*}
-  \E\left[X \right] = 1+1+1+1+1+\ldots   = +\infty.
-\end{equation*}
-The expected value of playing this game is positive infinity!!!!! N matter how
-much you pay to play this game, you will eventually make money if you play
-enough times.
-
-\subsection{What is probability, continued}
-
-
-
 \begin{proposition}[De Morgan's Laws]
   \label{prop:de-morgans-laws}
   The following equalities hold:
@@ -1110,403 +1426,6 @@ enough times.
 
 
 \newpage
-\section{2026-01-26 | Week 03 | Lecture 06}
-
-\textit{This lecture is based on section 2.3 in the textbook.}
-
-There are three main counting principles we'll look at:
-\begin{itemize}
-  \item multiplication principle
-  \item permutation principle
-  \item combination principle
-\end{itemize}
-
-\subsection{Multiplication principle}
-
-
-
-\begin{example}
-  A man has 3 shirts and two ties. How many ways
-  can he dress himself?
-  \begin{center}
-    \includegraphics[scale=.6]{images/chung-ties}
-  \end{center}
-  We can schematize this as three shirts $s_{1},s_{2},s_{3}$ and two ties
-  $t_{1},t_{2}$, in which case the possible outfits are:
-  \begin{align*}
-    &(s_{1},t_{1})\  (s_{2},t_{1})\  (s_{3},t_{1})\\
-    &(s_{1},t_{2})\  (s_{2},t_{2})\  (s_{3},t_{2})
-  \end{align*}
-  Of course, we don't need to write $s$ and $t$; it is enough to write
-  \begin{align*}
-    &(1,1)\ (2,1)\ (3,1)\\
-    &(1,2)\ (2,2)\ (3,2)
-  \end{align*}
-  where the first slot is ``shirt'' and the second is ``tie''. Thus the
-  methematical way to name the collection of outfits is the set of all ordered
-  couples $(a,b)$ with $a=1,2$ and $b=1,2,3$. So you can see the total number
-  of outfits is $2\times 3 = 6$.
-
-  In general we can talk about ordered $k$-tuples $(a_{1},\ldots,a_{k})$,
-  where for each $j$ from $1$ to $k$, the symbol $a_{j}$ is the assignment
-  (choice) for the  $j^{\rm th}$ slot and it may be denoted by a numeral
-  between $1$ and $n_{j}$. In our example, $k=2$ and $n_{1}=3$ and $n_{2}=2$.
-
-
-  If the man also have two pairs of shoes, we can add a third slot for
-  ``shoes'', so the question is asking to count the number of elements in the
-  set
-  \begin{equation*}
-    \left\{ (a_{1},a_{2},a_{3}): a_{1}\in \left\{1,2,3\right\} , a_{2},a_{3}\in \left\{1,2\right\} \right\}
-  \end{equation*}
-  In this case, $n_{1} = 3$, $n_{2} = 2$ and $n_{3}=2$, so the number of
-  outfits is
-  \begin{equation*}
-    n_{1}n_{2}n_{3} = 3\cdot2\cdot2 = 12,
-  \end{equation*}
-  which is shown in the following picture:
-  \begin{center}
-    \includegraphics[scale=.3]{images/chung-shoes}
-  \end{center}
-\end{example}
-
-
-In this example, we've used the ``multiplication principle''. Let's state this
-principle formally now. To do so, we need the following definition:
-
-\begin{definition}[k-tuple]
-  \label{def:k-tuple}
-  A \demph{$k$-tuple} is an ordered list of $k$ objects. 
-\end{definition}
-
-For example, $(1,2,5,4) $ and $(3,3,5,4)$ are both examples of $4$-tuples.
-Note that repeats are allowed. 
-
-
-
-\begin{theorem}[Multiplication Principle]
-  \label{thm:multiplication-principle}
-  Suppose $S$ consist of $k$-tuples and there are $n_{1}$ choices for the first element, $n_{2}$ choices
-  for the second, etc. Then there are
-  \begin{equation*}
-    n_{1}\times n_{2}\times \cdots \times n_{k}
-  \end{equation*}
-  possible $k$-tuples.
-\end{theorem}
-
-
-\begin{example}[Application of the multiplication principle to probability]
-  Consider an experiment in which we roll a dice 5 times in a row. One
-  possible outcome is
-  \begin{equation*}
-    (1,4,6,4,4).
-  \end{equation*}
-  This is an ordered list with five entries, i.e., a 5-tuple.
-
-  
-  \Fl{Problem 1:} What is the sample space? How many elements does it have?
-
-  \begin{itemize}
-    \item there are 6 choices for the first entry
-    \item 6 choices for the second entry
-    \item[] $\vdots $ 
-    \item 6 choices for the fifth entry
-  \end{itemize}
-  so the number of possible outcomes is
-  \begin{equation*}
-    6\times 6 \times 6 \times 6 \times 6 = 6^{5 } = 7776.
-  \end{equation*}
-
-  
-  \Fl{Problem 2:} Let $E = \left[ \text{All 5 dice are less than or equal to 3} \right]$. What is
-  $\P\left[E \right]?$
-
-  By the enumeration principle,
-  \begin{equation*}
-    \P\left[E \right] = \frac{|E|}{|S|} = \frac{\text{\# ways that all dice are $\leq 3$ }}{7776}
-  \end{equation*}
-  now we use again the multiplication principle to count the $k$-tuples with
-  all entries less than $3$:
-  \begin{equation*}
-    3\times 3 \times 3 \times 3 \times 3 = 3^{5} = 243
-  \end{equation*}
-  So
-  \begin{equation*}
-    \P\left[E \right] = \frac{243}{7776} = \frac{1}{32}
-  \end{equation*}
-\end{example}
-
-
-
-\subsection{Permutations and combinations}
-
-\begin{example}
-  How many ways are there to order the $4$ letters $A,B,C,D$?
-
-  Use the multiplication principle
-  \begin{equation*}
-    4\times 3 \times 2 \times 1
-  \end{equation*}
-\end{example}
-
-\begin{proposition}[Counting permutations]
-  \label{prop:counting-permutations}
-  The total number of ways to order $n$ distinct objects is
-  \begin{equation*}
-    n! = n \times (n-1)\times(n-2)\times\cdots\times 2 \times 1.
-  \end{equation*}
-  (Note that we define $0! = 1.$)
-\end{proposition}
-
-
-\begin{definition}[permutation and combination]
-  A \demph{set} is an \textit{unordered} collection of elements, all of which are \textit{distinct.}
-  \begin{itemize}
-    \item $\left\{1,2,4,5,3\right\}$ is a set
-    \item $\left\{1,1,2,4,5,3\right\}$ is not a set
-  \end{itemize}
-
-  A \demph{permutation} is an ordered subset. An unordered subset is called a \demph{combination}.
-\end{definition}
-
-
-\newpage
-\section{2026-01-28 | Week 03 | Lecture 07}
-\textit{This lecture is based on section 2.3 in the textbook.}
-
-\subsection{Review of multiplication principle}
-\begin{definition}[k-tuple]
-  \label{def:k-tuple}
-  A \demph{$k$-tuple} is an ordered list of $k$ objects. 
-\end{definition}
-
-
-\begin{theorem}[Multiplication Principle]
-  \label{thm:multiplication-principle}
-  Suppose $S$ consist of $k$-tuples and there are $n_{1}$ choices for the first element, $n_{2}$ choices
-  for the second, etc. Then there are
-  \begin{equation*}
-    n_{1}\times n_{2}\times \cdots \times n_{k}
-  \end{equation*}
-  possible $k$-tuples.
-\end{theorem}
-
-\subsection{The permutation principle and the combination principle}
-
-
-\begin{proposition}[Counting permutations]
-  The total number of ways to order $n$ distinct objects is
-  \begin{equation*}
-    n! = n \times (n-1)\times(n-2)\times\cdots\times 2 \times 1.
-  \end{equation*}
-  (Note that we define $0! = 1.$)
-\end{proposition}
-
-
-\begin{definition}
-  A \demph{set} is an \textit{unordered} collection of elements, all of which
-  are \textit{distinct.} A \demph{permutation} is an ordered subset. An
-  unordered subset is called a \demph{combination}.
-\end{definition}
-
-
-
-\begin{theorem}[The permutation principle]
-  \label{thm:permutation-principle}
-  The number of permutations of size $k$ that can be formed from $n$ objects
-  is
-  \begin{equation*}
-    (n)_{k} := n\cdot (n-1)\cdot (n-2)\cdots (n-k+1) = \frac{n!}{(n-k)!}.
-  \end{equation*}
-  There are $k$ terms in this product. (The book uses the notation $P_{k,n}$
-  instead of $(n)_{k}$.) 
-\end{theorem}
-\begin{proof}
-  Suppose our $n$ objects are $n$ balls in an urn, labeled $1,\ldots,n$. We
-  draw $n$ balls sequentially, each ball drawn is left out of the urn. The
-  number permutations is the number of ways that $k$ balls can be drawn out of
-  the urn. We are dealing with ordered $k$-tuples
-  \begin{equation*}
-    (a_{1},\ldots,a_{k})
-  \end{equation*}
-  where $a_{1},\ldots,a_{k}\in \left\{1,\ldots,n\right\}$ are integers between
-  $1$ and $n$ that must all be different. (Obviously, $k \leq n$ since there
-  are $n$ balls in the urn and we seek to draw out $k$ of them).
-
-  For the first ball, we have $n$ choices. For the second ball we have $n-1$
-  choice (since there remain only $n-1$ balls in the urn after our first
-  draw). For the third ball we have $n-2$ choices, and so forth. By the
-  $k^{\rm th}$ ball (our final draw), there are $n-k+1$ balls to choose from
-  in the urn.
-
-  Therefore, by the multiplication principle, 
-  \begin{equation*}
-    \text{the number of permutations} = n\cdot(n-1)\cdot(n-2)\cdots (n-k+1) = \frac{n!}{(n-k)!}.
-  \end{equation*}
-\end{proof}
-
-\begin{theorem}[The combination principle]
-  \label{thm:combination-principle}
-  Let $S$ be a set with $n$ elements. The number of (unordered) subsets of size $k$ is
-  \begin{equation*}
-    {n\choose k} =  \frac{n!}{k!(n-k)!}
-  \end{equation*} 
-\end{theorem}
-
-\begin{proof}
-  To understand why the formula of \cref{thm:combination-principle} is
-  correct, we begin by making two observations:
-  \begin{itemize}
-    \item \textbf{Observation 1.} For every unordered subset of size $k$,
-    there are $k!$ ways to order it by \cref{prop:counting-permutations}.
-
-    Therefore the following equation holds:
-    \begin{equation*}
-      k! \times \text{(number of unordered subsets of size $k$)}
-      =
-      \text{(number of ordered subsets of size $k$)}
-    \end{equation*}
-    
-    \item \textbf{Observation 2.} The permutation principle
-    (\cref{thm:permutation-principle}) tells us that
-    \begin{equation*}
-      \text{(number of ordered subsets of size $k$)}=\frac{n!}{(n-k)!}.
-    \end{equation*}
-  \end{itemize}
-
-  We now put these two observations together. Let $X$ and $Y$ be the following
-  quantities:
-  \begin{align*}
-    X &= \text{(number of ordered subsets of size $k$)}\\
-    Y &= \text{(number of unordered subsets of size $k$)}.
-  \end{align*}
-  Then
-  \begin{align*}
-    k!\cdot Y
-    &= X &&\text{by Observation 1}\\
-    &= \frac{n!}{(n-k)!} &&\text{by Observation 2}
-  \end{align*}
-  Dividing both sides by $k!$ gives
-  \begin{equation*}
-    Y = \frac{n!}{k!(n-k)!},
-  \end{equation*}
-  and this proves \cref{thm:combination-principle}.
-\end{proof}
-
-
-
-\subsection{Examples of the three combinatorial principles}
-
-\begin{example}
-  A dessert company has 32 distinct desserts on its menu: 6 types of pie, 9
-  types of cake, and 17 flavors of ice cream.
-  \begin{enumerate}[(a)]
-    \item \textbf{Question:} After purchasing 4 different desserts, a customer decides he will
-    eat them all in a row, and he cares about the order in which he eats them.
-    How many different ways can he eat his 4 desserts?
-
-    \textbf{Solution:} Here we are counting the number of ways to order
-    set of four objects. This number is $4!$ by
-    \cref{prop:counting-permutations}.
-    
-    \item \textbf{Question:} How many ways are there for the customer to choose
-    four desserts and then eat them in a particular order of his choice?
-
-    \textbf{Solution 1:} By the combination principle, there are ${32\choose 4}$
-    combinations of desserts that the customer could choose. Moreover, by part
-    (a), for each combination of 4 desserts, he can order them $4!$ ways.
-    Therefore by the multiplication principle, there are
-    \begin{equation*}
-      {32\choose 4} \times 4! = 32\cdot 31\cdot 30\cdot 29
-    \end{equation*}
-    ways that the customer could choose and then eat four desserts.
-
-    \textbf{Solution 2:} Another solution would be to note that we want to
-    count the number of permutations of size $k=4$ from a set of $n=32$
-    distinct objects. (Think: the customer is selecting 4 desserts from an urn
-    with 32 distinct desserts in it). By the permutation principle, this
-    number is
-    \begin{equation*}
-      (32)_{4} = 32\cdot 31\cdot30 \cdot29
-    \end{equation*}
-    which agrees with our answer from solution 1.
-
-    \item \textbf{Question:} If 9 desserts are randomly selected, how many ways
-    are there to obtain 3 deserts of each type (pie, cake, and ice cream)?
-
-    \fl{Solution:} For pie, there are ${6\choose 3}$ combinations possible.
-    For cake, there are ${9\choose 3}$ combinations possible, and for ice
-    cream, there are ${17\choose 3}$.
-
-    By the multiplication principle, there are
-    \begin{equation*}
-      {6\choose 3}\times {9\choose 3}\times {17\choose 3}
-    \end{equation*}
-    ways to simultaneously select 3 pies, 3 cakes, and 3 ice cream flavors.
-  \end{enumerate}
-\end{example}
-\newpage
-
-
-\section{2025-01-30 | Week 03 | Lecture 08}
-
-\textit{This lecture is based on sections 2.3 and 2.4 in the textbook.}
-
-
-\subsection{Applications of the 3 combinatorial principles}
-\begin{example}
-  Let $S = \left\{1,2,3,4,5,6\right\}$. How many unordered subsets (i.e.,
-  combinations) of size 2 are there?
-
-  \begin{equation*}
-    {6\choose 2} = \frac{6!}{2! \cdot 4!} = \frac{6\cdot5\cdot4\cdot3\cdot2\cdot1}{\left(2\cdot1\right) \cdot \left(4\cdot3\cdot2\cdot1\right)} = \frac{6\cdot5}{2} = 15.
-  \end{equation*}
-  The fiften combinations are
-  \begin{align*}
-    \left\{1,2\right\}, \left\{1,3\right\}, \left\{1,4\right\}, \left\{1,5\right\}, &\left\{1,6\right\} \\
-    \left\{2,3\right\}, \left\{2,4\right\}, \left\{2,5\right\}, &\left\{2,6\right\} \\
-    \left\{3,4\right\}, \left\{3,5\right\}, &\left\{3,6\right\} \\
-    \left\{4,5\right\}, &\left\{4,6\right\} \\
-    & \left\{5,6\right\}
-  \end{align*}
-  note that the order doesn't matter, i.e., $\left\{2,1\right\}=\left\{1,2\right\}$ so this just counts
-  as one, not two.
-
-\end{example}
-
-\begin{example}[Poker]
-  A poker hand consist of 5 randomly chosen cards from a
-  standard 52-card deck.
-  \begin{center}
-    \includegraphics[scale=0.3]{images/52-card-deck}
-  \end{center}
-  \fl{Some questions about poker hands:}
-  \begin{enumerate}
-    \item How many distinct poker hands are there?
-
-    \begin{equation*}
-      {52\choose 5} = \frac{52!}{5!\cdot47!} = 2,598,960
-    \end{equation*}
-    \item A \textbf{flush} occurs when all five cards are the same suit. How
-    many ways are there to get a flush?
-    \begin{equation*}
-      4 \times {13\choose 5} 
-      = 4\cdot \frac{13!}{5! 8!} 
-      = 4\cdot\frac{13\cdot 12\cdot 11 \cdot 10 \cdot 9}{5\cdot4\cdot3\cdot2\cdot1} 
-      = 5148
-    \end{equation*}
-
-    The 4 is to choose a suit. Then we choose 5 out of 13 cards in that suit.
-    \item What's the probability of getting a flush?
-
-    To answer this, we use the enumeration principle:
-    \begin{equation*}
-      \frac{{4\choose 1}\times {13\choose 5}}{{52\choose 5}} = \frac{5,148}{2,598,960} \approx 0.002
-    \end{equation*}
-
-    In other words, the probability of a flush is pretty low: about $0.2\%$.
-  \end{enumerate}
-\end{example}
 
 \subsection{Introduction to craps}
 Craps is a dice-rolling game in which a player, known as the shooter, rolls a
@@ -3125,7 +3044,6 @@ Let's try an application of this:
   \end{center}
   
 \end{example}
-
 
 % \subsection{Geometric random variable}
 
