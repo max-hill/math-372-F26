@@ -20,6 +20,7 @@ title: lecture notes
  2026-08-31  |  - | what is probability? the three axioms (and their implications)
  2026-09-02  |  - | multiplication principle, permutations, combinations
  2026-09-04  |  - | applications of counting principles
+ 2026-09-09  |  - | introduction to craps, conditional probability (chp 2.4)
  
 # other links
 

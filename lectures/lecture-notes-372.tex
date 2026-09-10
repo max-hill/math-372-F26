@@ -1213,7 +1213,351 @@ In the remainder, we will formalize these ideas.
   \end{enumerate}
 \end{example}
 
+\newpage
+\section{2026-09-09 | Week 03 | Lecture 07}
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{The topic for this lecture:} Conditional probability}
+
+    \textit{\textbf{Reading assignment:} Chapter 2.4}
+  \end{tcolorbox}
+\end{center}
+
+\subsection{Introduction to craps}
+Craps is a dice-rolling game in which a player, known as the shooter, rolls a
+pair of 6-sided dice. The shooter wins, loses or re-rolls depending on what
+happens.
+
+Here's a set of rules for the shooter:
+\begin{enumerate} 
+  \item You roll two dice and add them up.
+  \begin{itemize}
+    \item If the sum is $2,3$, or $12$, you lose (``craps'')
+    \item If you roll $7$ or $11$, then you win  (``natural'')
+    \item Otherwise you establish ``point'', which is whatever number you got.
+  \end{itemize}
+  \item If you established point, then you must keep rolling until one of two events occurs:
+  \begin{itemize}
+    \item You roll a 7: you lose
+    \item You roll your ``point'' number: you win.
+  \end{itemize}
+\end{enumerate}
+
+
+Tallying the results from the in-class activity, we saw that shooters won
+about 56\% of the time. Is this a fair game? Does the shooter have an
+advantage? We will set out to answer this question. To do so, we'll need to
+introduce some new ideas. A key idea is that of conditional probability:
+
+
+\subsection{Conditional probability}
+\textit{This section is based on section 2.4 in the text.}
+
+\begin{definition}[Conditional probability]
+  \label{def:conditional-probability}
+  Let $A,B$ be events, and assume that $\P\left[A\right]>0$. Then the
+  \demph{conditional probability of $B$, given $A$}, denoted
+  $\P\left[B\mid A \right]$, is given by the formula
+  \begin{equation*}
+    \P\left[B\mid A \right] = \frac{\P\left[A\cap B \right]}{\P\left[A \right]}.
+  \end{equation*}
+\end{definition}
+
+\fl{Interpretation:} $\P\left[B\mid A \right]$ is the probability of $B$ when
+we know that event $A$ happened.
+
+\Fl{Multiplication rule:} $\P\left[A\cap B \right] = \P\left[B\mid A \right] \P\left[A \right]$
+
+\begin{definition}
+  \label{def:positive-relationship}
+  We say that there exists a \demph{positive relationship} between events $A$
+  and $B$ if
+  \begin{equation*}
+    \P\left[B\mid A \right]> \P\left[B \right],
+  \end{equation*}
+  and a \demph{negative relationship} if
+  \begin{equation*}
+    \P\left[B\mid A \right]< \P\left[B \right].
+  \end{equation*}
+\end{definition}
+
+
+\begin{itemize}
+  \item Smoking and getting lung canger have a positive relationship: if you
+  know someone is a smoker $(A)$, then the probability that they get lung
+  cancer $(B)$ is higher than if you didn't know they were a smoker.
+  
+  % \item The idea is that if we know that event $A$ has occured, then the
+  % sample space becomes $A$, and the new event is $A\cap B$.
+\end{itemize}
+
+
+\begin{example}[Conditional probability]
+  I roll a dice behind a screen. I tell you that I rolled an even number. What's the probability that the
+  dice roll is a $4$ or a $6$?
+
+  \Fl{Solution:} We have $S = \left\{1,2,3,4,5,6\right\}$, $A= \left\{2,4,6\right\}$,
+  $B= \left\{4,6\right\}$. We want to compute $\P\left[B\mid A \right]$. By \cref{def:conditional-probability},
+  \begin{equation*}
+    \P\left[B\mid A \right] 
+    = \frac{\P\left[AB \right]}{\P\left[A \right]} 
+    = \frac{2/6}{1/2} 
+    = \frac{2}{3}.
+  \end{equation*}
+  Put differently, we have three outcomes in $A$, which are all equally likely. Two of them (4 and 6)
+  mean that event $B$ occurs. So by the enumeration principle, the probability is $2/3$.
+\end{example}
+
+\begin{example}[Conditional Probability]
+  I roll two dice and add them up. Call this number $X$. Then $\P\left[X=7 \right]=\frac{1}{6}$, which we
+  can see by counting up the possibilities. Now, what about if I tell you that I rolled the dice and got a
+  sum greater than 4? Now that you have a little additional information, you can exclude the
+  possibilities that $X=1,2,3$ or $X=4$. So with this new information, you should evaluate the
+  probability that $X=7$ as greater than before. That is, now we want
+  \begin{align*}
+    \P\left[X=7 | X>4 \right] 
+    &= \frac{\P\left[X=7 \text{ and } X>4 \right]}{ \P\left[X > 4\right]}\\
+    &=\frac{\P\left[X=7 \right]}{\P\left[X>4 \right]}\\
+    &= \frac{1/6}{30/36}\\
+    &= \frac{1}{5}.
+  \end{align*}
+  This answer makes sense because $\frac{1}{5}>\frac{1}{6}$, consistent with our intution.
+\end{example}
+
+
 \end{document}
+
+\begin{example}[Similar to examples 2.27 and 2.28 in the textbook]
+  A vampire goes to the blood bank looking to find some type O+ blood (the most delicious type). He finds
+  4 unlabeled bags of blood. Only one of the bags is O+, but the vampire doesn't know which one, so he
+  resorts to taste-testing to find the O+ bag.
+  \begin{enumerate}[(a),itemsep=0em]
+    \item What is the probability that he must test at least 3 bags to find
+    the desired type?
+
+    \fl{Solution:} Let $X$ be the number of tested bags. We
+    want to find $\P\left[X \geq 3\right]$. Let
+    \begin{equation*}
+      A = \left[ \text{first bag isn't O+} \right]
+      \quad \text{and} \quad B = \left[ \text{second bag isn't O+} \right]
+    \end{equation*}
+    \begin{align*}
+      \P\left[ X \geq 3\right] 
+      &= \P\left[A\cap B \right]\\
+      &= \P\left[A \right] \P\left[B\mid A \right]\\
+      &= \frac{3}{4}\cdot \frac{2}{3}\\
+      &= \frac{1}{2}.
+    \end{align*}
+    \item What's the probability that he must test exactly $3$ bags?
+
+    \fl{Solution:} We want $\P\left[X=3 \right]=\P\left[\text{first bag isn't
+        O+ $\cap$ second bag isn't O+ $\cap$ third bag is O+} \right]$.
+
+    \begin{align*}
+      \P\left[X=3 \right] 
+      &= \P\left[\text{third is}\mid  \text{first isn't} \cap
+        \text{second isn't}  \right] \times \P\left[\text{second isn't}\mid \text{first isn't} \right] \cdot
+        \P\left[\text{first isn't} \right]\\
+      &= \frac{1}{2}\cdot \frac{2}{3}\cdot \frac{3}{4}\\
+      &= \frac{1}{4}
+    \end{align*}
+
+    Here we have used the following multiplication rule:
+    \begin{align*}
+      \P\left[A\cap B\cap C \right] 
+      &= \P\left[ C\mid A\cap B\right] \P\left[A\cap B \right]\\
+      &= \P\left[ C\mid A\cap B\right] \P\left[B\mid A \right] \P\left[A \right]
+    \end{align*}
+    with $A=\left[\text{first bag isn't O+} \right]$, $B=\left[\text{second bag isn't O+}
+    \right]$, and $C = \left[ \text{third bag is O+} \right]$.
+
+    % \fl{Solution 2:} Let $E_{i}=[i^{\rm th} \t2ext{ bag is O+}]$ for
+    % $i=1,2,3,4$. The 4 bags are randomly ordered, so the events
+    % $E_{1},E_{2},E_{3},E_{4}$ all have the same probability. Hence they hall
+    % have probability 1/4. Hence $\P\left[E_{3} \right]=1/4$
+
+  \end{enumerate}
+\end{example}
+
+\newpage
+
+% \subsection{Review of Set Operations}
+
+% \begin{example}[Set Operations]
+%   Let's review set operations. Suppose
+%   \begin{equation*}
+%     A= \left[ \text{I brought a black marker to class} \right]
+%     \quad \text{and} \quad
+%     B = \left[ \text{I brought a blue marker to class} \right] 
+%   \end{equation*}
+%   Then the following sets are defined as follows:
+%   \begin{equation*}
+%     A^{c}= \left[ \text{I didn't bring a black marker to class} \right]
+%   \end{equation*}
+%   and
+%   \begin{equation*}
+%     B^{c}= \left[ \text{I didn't bring a blue marker to class} \right]
+%   \end{equation*}
+%   and 
+%   \begin{equation*}
+%     A\cup B = \left[ \text{I brought a black marker OR a blue marker, possibly both} \right] 
+%   \end{equation*}
+%   and
+%   \begin{equation*}
+%     A\cap B = \left[ \text{I brought both a blue and a black marker} \right] 
+%   \end{equation*}
+%   and we also have \demph{De Morgan's Laws:}
+%   \begin{equation*}
+%     \left( A\cup B \right)^{c} = A^{c}\cap B^{c}  = \left[ \text{I brought neither a blue nor a black marker} \right] 
+%   \end{equation*}
+%   \begin{equation*}
+%     \left( A\cap B \right)^{c} = A^{c}\cup B^{c} = \left[ \text{I didn't bring \textit{both} a blue marker and a
+%       black marker (but maybe I brought one)} \right]  
+%   \end{equation*}
+% \end{example}
+\section{2025-02-04 | Week 04 | Lecture 10}
+\textit{This section is based on sections 2.4 in the textbook.}
+
+
+\subsection{Conditional Probability: Examples}
+For any two events $A$ and $B$, conditional probability describes the probability that $A$ happens given
+that we know $B$ happened.
+
+\begin{definition}[Conditional Probability]
+  Let $A,B$ be events, and assume that $\P\left[A\right]>0$. Then the \demph{conditional probability of
+    $B$, given $A$}, denoted $\P\left[B\mid A \right]$, is given by the formula
+  \begin{equation*}
+    \P\left[B\mid A \right] := \frac{\P\left[A\cap B \right]}{\P\left[A \right]}.
+  \end{equation*}
+\end{definition}
+
+
+
+
+
+\begin{example}[Urn - example of multiplication rule]
+  An urn contains 6 white balls and 9 black balls. If 4 balls are drawn at random, what is the
+  probability that the first 2 are white and the last 2 are black?
+
+  \fl{Solution:} Let $A$ be the event that the first two balls are white, and $B$ the event
+  that the last two balls are black. Then the desired probability is
+  \begin{equation}\label{eq:2}
+    \P\left[A\cap B \right] = \P\left[B\mid A \right] \P\left[A \right]
+  \end{equation}
+  Now,
+  \begin{equation*}
+    \P\left[A \right] = \frac{{6\choose 2}}{{15\choose 2}} =\frac{1}{7}.
+  \end{equation*}
+  Moreover, given that $A$ occurs, then $4$ white balls and $9$ black balls remain. So
+  \begin{equation*}
+    \P\left[B\mid A \right] = \frac{{9 \choose 2}}{{13\choose 2}} = \frac{6}{13}.
+  \end{equation*}
+  Therefore by \cref{eq:2},
+  \begin{equation*}
+    \P\left[A\cap B \right] = \frac{1}{7}\cdot \frac{6}{13} = \frac{6}{91}\approx 0.07
+  \end{equation*}
+\end{example}
+
+\subsection{The law of total probability}
+\begin{definition}
+  We say that a collection of events $A_{1},\ldots,A_{n}$ is
+  \demph{exhaustive} if at least one must occur; that is,
+  \begin{equation*}
+    A_{1}\cup A_{2}\cup\ldots\cup A_{n}=S
+  \end{equation*}
+  where $S$ is the sample space.
+\end{definition}
+
+\begin{theorem}[Law of Total Probability]
+  \label{thm:law-total-probability}
+  Let $A_{1},\ldots,A_{n}$ be events which are (1) mutually exclusive and (2)
+  exhaustive. Then for any event $B$,
+  \begin{equation*}
+    \P\left[B \right] = \sum_{k=1}^{n}\P\left[B\mid A_{i} \right]\P\left[A_{i} \right] 
+  \end{equation*}
+\end{theorem}
+
+
+\begin{example}
+  A munitions factory produces 155mm artillery rounds using three machines: $60\%$ of rounds are
+  produced by machine I, $30\% $ by machine II, and $10\%$ by machine III. Engineers discover that
+  \begin{itemize}
+    \item 3\% of rounds produced by machine I are defective
+    \item 2\% of rounds produced by machine II are defective
+    \item 1\% of rounds produced by machine III are defective.
+  \end{itemize}
+  Given a defective round, what is the probability that it was produced by
+  machine III?
+
+  \fl{Solution:} Let's make a diagram to illustrate this:
+  \begin{center}
+    \includegraphics[scale=.3]{images/machines-shells}
+  \end{center}
+
+  Let
+  \begin{align*}
+    D &= [\text{shell is defective}]\\
+    M_{1} &= [\text{shell was made by machine I}]\\
+    M_{2} &= [\text{shell was made by machine II}]\\
+    M_{3} &= [\text{shell was made by machine III}].
+  \end{align*}
+
+  We want to find $\P\left[M_{3}\mid D \right]=\P\left[ \text{machine III}\mid \text{defective} \right]$.
+  \begin{align}\label{eq:31}
+    \P\left[M_{3}\mid D \right]
+    &= \frac{\P\left[M_{3}\cap D \right]}{\P\left[D \right]}
+  \end{align}
+  Now we compute the numerator and denominator separately:
+
+  By the multiplication rule,
+  \begin{equation*}
+    \P\left[M_{3}\cap D \right] = \P\left[D\mid M_{3} \right] \P\left[M_{3} \right] = (.01)(.1) = .001.
+  \end{equation*}
+  Next, we compute the denominator. The following figure illustrates the
+  sample space, which consists of shells produces by machines I, II and III.
+  The grey region represents the event that the randomly selected shell is defective.
+  \begin{center}
+    \includegraphics[scale=.3]{images/defective-shells}
+  \end{center}
+  \begin{align*}
+    \P\left[D \right]
+    &= \P\left[D1 \right] + \P\left[D2 \right] + \P\left[D3 \right]\\
+    &= \P\left[D\cap M_{1} \right]+\P\left[D\cap M_{1} \right]+\P\left[D\cap M_{1} \right]\\
+    &= \P\left[D\mid M_{1} \right]\P\left[M_{1} \right] + \P\left[D\mid M_{2} \right]\P\left[M_{2} \right] + \P\left[D\mid M_{3} \right]\P\left[M_{3} \right]\\
+    &= (.03)(.6)+(.02)(.3)+(.01)(.1)\\
+    &= .025
+  \end{align*}
+  Hence by \cref{eq:31},
+  \begin{equation*}
+    \P\left[M_{3}\mid D \right] = \frac{.001}{.025}=.04.
+  \end{equation*}
+  In other words, $4\%$ of defective rounds are produced by machine III.
+  
+\end{example}
+
+\begin{example}[Conditional probability]
+  Suppose you flip a coin 10 times and get more than $6$ heads. What's the probability that you get less
+  than 9 heads?
+
+  \fl{Solution:} Let $X$ be the number of heads. Let $A=\left[ X < 9\right]$, and let
+  $B = \left[X > 6\right]$. Then
+  \begin{equation*}
+    \P\left[B \right] = \frac{{10\choose 7} + {10\choose 8} + {10\choose 9} + {10\choose 10}}{2^{10}}
+  \end{equation*}
+  Observe that $A\cap B = \left[ X\in \left\{7,8\right\} \right]$. Therefore
+  \begin{equation*}
+    \P\left[A\cap B \right] = \frac{{10\choose 7}+{10\choose 8}}{2^{10}}
+  \end{equation*}
+  Therefore
+  \begin{equation*}
+    \P\left[A\mid B \right] 
+    = \frac{\P\left[A\cap B \right]}{\P\left[B \right]} 
+    = \frac{{10\choose 7} + {10\choose 8}}{{10\choose 7} + {10\choose 8} + {10\choose 9} + {10\choose 10}} 
+    = \frac{15}{16}.
+  \end{equation*}
+\end{example}
+
+
 \newpage
 \section{OLD STUFF}
 \subsection{Powerball}
@@ -1381,354 +1725,6 @@ enough times.
 
 
 \newpage
-
-\subsection{Introduction to craps}
-Craps is a dice-rolling game in which a player, known as the shooter, rolls a
-pair of 6-sided dice. The shooter wins, loses or re-rolls depending on what
-happens.
-
-Here's a set of rules for the shooter:
-\begin{enumerate} 
-  \item You roll two dice and add them up.
-  \begin{itemize}
-    \item If the sum is $2,3$, or $12$, you lose (``craps'')
-    \item If you roll $7$ or $11$, then you win  (``natural'')
-    \item Otherwise you establish ``point'', which is whatever number you got.
-  \end{itemize}
-  \item If you established point, then you must keep rolling until one of two events occurs:
-  \begin{itemize}
-    \item You roll a 7: you lose
-    \item You roll your ``point'' number: you win.
-  \end{itemize}
-\end{enumerate}
-
-
-Tallying the results, we saw that shooters won about 50\% of the time. Is this a fair game? We will set
-out to answer this question. To do so, we'll need to introduce some new ideas. A key idea is that of
-conditional probability:
-
-\subsection{Conditional probability}
-\textit{This section is based on section 2.4 in the text.}
-
-
-
-\begin{definition}[Conditional Probability]
-  \label{def:conditional-probability}
-  Let $A,B$ be events, and assume that $\P\left[A\right]>0$. Then the \demph{conditional probability of
-    $B$, given $A$}, denoted $\P\left[B\mid A \right]$, is given by the formula
-  \begin{equation*}
-    \P\left[B\mid A \right] := \frac{\P\left[A\cap B \right]}{\P\left[A \right]}.
-  \end{equation*}
-\end{definition}
-
-\newpage
-\section{2026-02-02 | Week 04 | Lecture 09}
-
-\subsection{Conditional probability}
-\textit{This section is based on section 2.4 in the text.}
-
-\begin{definition}[Conditional probability]
-  \label{def:conditional-probability}
-  Let $A,B$ be events, and assume that $\P\left[A\right]>0$. Then the
-  \demph{conditional probability of $B$, given $A$}, denoted
-  $\P\left[B\mid A \right]$, is given by the formula
-  \begin{equation*}
-    \P\left[B\mid A \right] = \frac{\P\left[A\cap B \right]}{\P\left[A \right]}.
-  \end{equation*}
-\end{definition}
-
-\fl{Interpretation:} $\P\left[A\mid B \right]$ is the probability of $A$ when
-we know that event $B$ happened.
-
-\Fl{Multiplication rule:} $\P\left[A\cap B \right] = \P\left[B\mid A \right] \P\left[A \right]$
-
-\begin{definition}
-  \label{def:positive-relationship}
-  We say that there exists a \demph{positive relationship} between events $A$
-  and $B$ if
-  \begin{equation*}
-    \P\left[B\mid A \right]> \P\left[B \right],
-  \end{equation*}
-  and a \demph{negative relationship} if
-  \begin{equation*}
-    \P\left[B\mid A \right]< \P\left[B \right].
-  \end{equation*}
-\end{definition}
- 
-
-\begin{itemize}
-  \item Smoking and getting lung canger have a positive relationship: if you
-  know someone is a smoker $(A)$, then the probability that they get lung
-  cancer $(B)$ is higher than if you didn't know they were a smoker.
-  
-  % \item The idea is that if we know that event $A$ has occured, then the
-  % sample space becomes $A$, and the new event is $A\cap B$.
-\end{itemize}
-
-
-\begin{example}[Conditional probability]
-  I roll a dice behind a screen. I tell you that I rolled an even number. What's the probability that the
-  dice roll is a $4$ or a $6$?
-
-  \Fl{Solution:} We have $S = \left\{1,2,3,4,5,6\right\}$, $A= \left\{2,4,6\right\}$,
-  $B= \left\{4,6\right\}$. We want to compute $\P\left[B\mid A \right]$. By \cref{def:conditional-probability},
-  \begin{equation*}
-    \P\left[B\mid A \right] 
-    = \frac{\P\left[AB \right]}{\P\left[A \right]} 
-    = \frac{2/6}{1/2} 
-    = \frac{2}{3}.
-  \end{equation*}
-  Put differently, we have three outcomes in $A$, which are all equally likely. Two of them (4 and 6)
-  mean that event $B$ occurs. So by the enumeration principle, the probability is $2/3$.
-\end{example}
-
-
-
-
-\begin{example}[Similar to examples 2.27 and 2.28 in the textbook]
-  A vampire goes to the blood bank looking to find some type O+ blood (the most delicious type). He finds
-  4 unlabeled bags of blood. Only one of the bags is O+, but the vampire doesn't know which one, so he
-  resorts to taste-testing to find the O+ bag.
-  \begin{enumerate}[(a),itemsep=0em]
-    \item What is the probability that he must test at least 3 bags to find
-    the desired type?
-
-    \fl{Solution:} Let $X$ be the number of tested bags. We
-    want to find $\P\left[X \geq 3\right]$. Let
-    \begin{equation*}
-      A = \left[ \text{first bag isn't O+} \right]
-      \quad \text{and} \quad B = \left[ \text{second bag isn't O+} \right]
-    \end{equation*}
-    \begin{align*}
-      \P\left[ X \geq 3\right] 
-      &= \P\left[A\cap B \right]\\
-      &= \P\left[A \right] \P\left[B\mid A \right]\\
-      &= \frac{3}{4}\cdot \frac{2}{3}\\
-      &= \frac{1}{2}.
-    \end{align*}
-    \item What's the probability that he must test exactly $3$ bags?
-
-    \fl{Solution:} We want $\P\left[X=3 \right]=\P\left[\text{first bag isn't
-        O+ $\cap$ second bag isn't O+ $\cap$ third bag is O+} \right]$.
-
-    \begin{align*}
-      \P\left[X=3 \right] 
-      &= \P\left[\text{third is}\mid  \text{first isn't} \cap
-        \text{second isn't}  \right] \times \P\left[\text{second isn't}\mid \text{first isn't} \right] \cdot
-        \P\left[\text{first isn't} \right]\\
-      &= \frac{1}{2}\cdot \frac{2}{3}\cdot \frac{3}{4}\\
-      &= \frac{1}{4}
-    \end{align*}
-
-    Here we have used the following multiplication rule:
-    \begin{align*}
-      \P\left[A\cap B\cap C \right] 
-      &= \P\left[ C\mid A\cap B\right] \P\left[A\cap B \right]\\
-      &= \P\left[ C\mid A\cap B\right] \P\left[B\mid A \right] \P\left[A \right]
-    \end{align*}
-    with $A=\left[\text{first bag isn't O+} \right]$, $B=\left[\text{second bag isn't O+}
-    \right]$, and $C = \left[ \text{third bag is O+} \right]$.
-
-    % \fl{Solution 2:} Let $E_{i}=[i^{\rm th} \t2ext{ bag is O+}]$ for
-    % $i=1,2,3,4$. The 4 bags are randomly ordered, so the events
-    % $E_{1},E_{2},E_{3},E_{4}$ all have the same probability. Hence they hall
-    % have probability 1/4. Hence $\P\left[E_{3} \right]=1/4$
-
-  \end{enumerate}
-\end{example}
-
-\newpage
-
-% \subsection{Review of Set Operations}
-
-% \begin{example}[Set Operations]
-%   Let's review set operations. Suppose
-%   \begin{equation*}
-%     A= \left[ \text{I brought a black marker to class} \right]
-%     \quad \text{and} \quad
-%     B = \left[ \text{I brought a blue marker to class} \right] 
-%   \end{equation*}
-%   Then the following sets are defined as follows:
-%   \begin{equation*}
-%     A^{c}= \left[ \text{I didn't bring a black marker to class} \right]
-%   \end{equation*}
-%   and
-%   \begin{equation*}
-%     B^{c}= \left[ \text{I didn't bring a blue marker to class} \right]
-%   \end{equation*}
-%   and 
-%   \begin{equation*}
-%     A\cup B = \left[ \text{I brought a black marker OR a blue marker, possibly both} \right] 
-%   \end{equation*}
-%   and
-%   \begin{equation*}
-%     A\cap B = \left[ \text{I brought both a blue and a black marker} \right] 
-%   \end{equation*}
-%   and we also have \demph{De Morgan's Laws:}
-%   \begin{equation*}
-%     \left( A\cup B \right)^{c} = A^{c}\cap B^{c}  = \left[ \text{I brought neither a blue nor a black marker} \right] 
-%   \end{equation*}
-%   \begin{equation*}
-%     \left( A\cap B \right)^{c} = A^{c}\cup B^{c} = \left[ \text{I didn't bring \textit{both} a blue marker and a
-%         black marker (but maybe I brought one)} \right]  
-%   \end{equation*}
-% \end{example}
-\section{2025-02-04 | Week 04 | Lecture 10}
-\textit{This section is based on sections 2.4 in the textbook.}
-
-
-\subsection{Conditional Probability: Examples}
-For any two events $A$ and $B$, conditional probability describes the probability that $A$ happens given
-that we know $B$ happened.
-
-\begin{definition}[Conditional Probability]
-  Let $A,B$ be events, and assume that $\P\left[A\right]>0$. Then the \demph{conditional probability of
-    $B$, given $A$}, denoted $\P\left[B\mid A \right]$, is given by the formula
-  \begin{equation*}
-    \P\left[B\mid A \right] := \frac{\P\left[A\cap B \right]}{\P\left[A \right]}.
-  \end{equation*}
-\end{definition}
-
-\begin{example}[Conditional Probability]
-  I roll two dice and add them up. Call this number $X$. Then $\P\left[X=7 \right]=\frac{1}{6}$, which we
-  can see by counting up the possibilities. Now, what about if I tell you that I rolled the dice and got a
-  sum greater than 4? Now that you have a little additional information, you can exclude the
-  possibilities that $X=1,2,3$ or $X=4$. So with this new information, you should evaluate the
-  probability that $X=7$ as greater than before. That is, now we want
-  \begin{align*}
-    \P\left[X=7 | X>4 \right] 
-    &= \frac{\P\left[X=7 \text{ and } X>4 \right]}{ \P\left[X > 4\right]}\\
-    &=\frac{\P\left[X=7 \right]}{\P\left[X>4 \right]}\\
-    &= \frac{1/6}{30/36}\\
-    &= \frac{1}{5}.
-  \end{align*}
-  This answer makes sense because $\frac{1}{5}>\frac{1}{6}$, consistent with our intution.
-\end{example}
-
-
-
-\begin{example}[Urn - example of multiplication rule]
-  An urn contains 6 white balls and 9 black balls. If 4 balls are drawn at random, what is the
-  probability that the first 2 are white and the last 2 are black?
-
-  \fl{Solution:} Let $A$ be the event that the first two balls are white, and $B$ the event
-  that the last two balls are black. Then the desired probability is
-  \begin{equation}\label{eq:2}
-    \P\left[A\cap B \right] = \P\left[B\mid A \right] \P\left[A \right]
-  \end{equation}
-  Now,
-  \begin{equation*}
-    \P\left[A \right] = \frac{{6\choose 2}}{{15\choose 2}} =\frac{1}{7}.
-  \end{equation*}
-  Moreover, given that $A$ occurs, then $4$ white balls and $9$ black balls remain. So
-  \begin{equation*}
-    \P\left[B\mid A \right] = \frac{{9 \choose 2}}{{13\choose 2}} = \frac{6}{13}.
-  \end{equation*}
-  Therefore by \cref{eq:2},
-  \begin{equation*}
-    \P\left[A\cap B \right] = \frac{1}{7}\cdot \frac{6}{13} = \frac{6}{91}\approx 0.07
-  \end{equation*}
-\end{example}
-
-\subsection{The law of total probability}
-\begin{definition}
-  We say that a collection of events $A_{1},\ldots,A_{n}$ is
-  \demph{exhaustive} if at least one must occur; that is,
-  \begin{equation*}
-    A_{1}\cup A_{2}\cup\ldots\cup A_{n}=S
-  \end{equation*}
-  where $S$ is the sample space.
-\end{definition}
-
-\begin{theorem}[Law of Total Probability]
-  \label{thm:law-total-probability}
-  Let $A_{1},\ldots,A_{n}$ be events which are (1) mutually exclusive and (2)
-  exhaustive. Then for any event $B$,
-  \begin{equation*}
-    \P\left[B \right] = \sum_{k=1}^{n}\P\left[B\mid A_{i} \right]\P\left[A_{i} \right] 
-  \end{equation*}
-\end{theorem}
-
-
-\begin{example}
-  A munitions factory produces 155mm artillery rounds using three machines: $60\%$ of rounds are
-  produced by machine I, $30\% $ by machine II, and $10\%$ by machine III. Engineers discover that
-  \begin{itemize}
-    \item 3\% of rounds produced by machine I are defective
-    \item 2\% of rounds produced by machine II are defective
-    \item 1\% of rounds produced by machine III are defective.
-  \end{itemize}
-  Given a defective round, what is the probability that it was produced by
-  machine III?
-
-  \fl{Solution:} Let's make a diagram to illustrate this:
-  \begin{center}
-    \includegraphics[scale=.3]{images/machines-shells}
-  \end{center}
-
-  Let
-  \begin{align*}
-    D &= [\text{shell is defective}]\\
-    M_{1} &= [\text{shell was made by machine I}]\\
-    M_{2} &= [\text{shell was made by machine II}]\\
-    M_{3} &= [\text{shell was made by machine III}].
-  \end{align*}
-
-  We want to find $\P\left[M_{3}\mid D \right]=\P\left[ \text{machine III}\mid \text{defective} \right]$.
-  \begin{align}\label{eq:31}
-    \P\left[M_{3}\mid D \right]
-    &= \frac{\P\left[M_{3}\cap D \right]}{\P\left[D \right]}
-  \end{align}
-  Now we compute the numerator and denominator separately:
-
-  By the multiplication rule,
-  \begin{equation*}
-    \P\left[M_{3}\cap D \right] = \P\left[D\mid M_{3} \right] \P\left[M_{3} \right] = (.01)(.1) = .001.
-  \end{equation*}
-  Next, we compute the denominator. The following figure illustrates the
-  sample space, which consists of shells produces by machines I, II and III.
-  The grey region represents the event that the randomly selected shell is defective.
-  \begin{center}
-    \includegraphics[scale=.3]{images/defective-shells}
-  \end{center}
-  \begin{align*}
-    \P\left[D \right]
-    &= \P\left[D1 \right] + \P\left[D2 \right] + \P\left[D3 \right]\\
-    &= \P\left[D\cap M_{1} \right]+\P\left[D\cap M_{1} \right]+\P\left[D\cap M_{1} \right]\\
-    &= \P\left[D\mid M_{1} \right]\P\left[M_{1} \right] + \P\left[D\mid M_{2} \right]\P\left[M_{2} \right] + \P\left[D\mid M_{3} \right]\P\left[M_{3} \right]\\
-    &= (.03)(.6)+(.02)(.3)+(.01)(.1)\\
-    &= .025
-  \end{align*}
-  Hence by \cref{eq:31},
-  \begin{equation*}
-    \P\left[M_{3}\mid D \right] = \frac{.001}{.025}=.04.
-  \end{equation*}
-  In other words, $4\%$ of defective rounds are produced by machine III.
-  
-\end{example}
-
-\begin{example}[Conditional probability]
-  Suppose you flip a coin 10 times and get more than $6$ heads. What's the probability that you get less
-  than 9 heads?
-
-  \fl{Solution:} Let $X$ be the number of heads. Let $A=\left[ X < 9\right]$, and let
-  $B = \left[X > 6\right]$. Then
-  \begin{equation*}
-    \P\left[B \right] = \frac{{10\choose 7} + {10\choose 8} + {10\choose 9} + {10\choose 10}}{2^{10}}
-  \end{equation*}
-  Observe that $A\cap B = \left[ X\in \left\{7,8\right\} \right]$. Therefore
-  \begin{equation*}
-    \P\left[A\cap B \right] = \frac{{10\choose 7}+{10\choose 8}}{2^{10}}
-  \end{equation*}
-  Therefore
-  \begin{equation*}
-    \P\left[A\mid B \right] 
-    = \frac{\P\left[A\cap B \right]}{\P\left[B \right]} 
-    = \frac{{10\choose 7} + {10\choose 8}}{{10\choose 7} + {10\choose 8} + {10\choose 9} + {10\choose 10}} 
-    = \frac{15}{16}.
-  \end{equation*}
-\end{example}
-
 
 \newpage
 \section{2026-02-06 | Week 04 | Lecture 11}
