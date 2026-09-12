@@ -1324,8 +1324,39 @@ we know that event $A$ happened.
   This answer makes sense because $\frac{1}{5}>\frac{1}{6}$, consistent with our intution.
 \end{example}
 
+\newpage
+\section{2026-09-11 | Week 03 | Lecture 08}
 
-\end{document}
+
+\textit{Reading assignment: chapter 2.4}
+
+\subsection{Conditional probability examples}
+
+
+
+
+\begin{example}[Urn - example of multiplication rule]
+  An urn contains 6 white balls and 9 black balls. If 4 balls are drawn at random, what is the
+  probability that the first 2 are white and the last 2 are black?
+
+  \fl{Solution:} Let $A$ be the event that the first two balls are white, and $B$ the event
+  that the last two balls are black. Then the desired probability is
+  \begin{equation}\label{eq:2}
+    \P\left[A\cap B \right] = \P\left[B\mid A \right] \P\left[A \right]
+  \end{equation}
+  Now,
+  \begin{equation*}
+    \P\left[A \right] = \frac{{6\choose 2}}{{15\choose 2}} =\frac{1}{7}.
+  \end{equation*}
+  Moreover, given that $A$ occurs, then $4$ white balls and $9$ black balls remain. So
+  \begin{equation*}
+    \P\left[B\mid A \right] = \frac{{9 \choose 2}}{{13\choose 2}} = \frac{6}{13}.
+  \end{equation*}
+  Therefore by \cref{eq:2},
+  \begin{equation*}
+    \P\left[A\cap B \right] = \frac{1}{7}\cdot \frac{6}{13} = \frac{6}{91}\approx 0.07
+  \end{equation*}
+\end{example}
 
 \begin{example}[Similar to examples 2.27 and 2.28 in the textbook]
   A vampire goes to the blood bank looking to find some type O+ blood (the most delicious type). He finds
@@ -1345,8 +1376,8 @@ we know that event $A$ happened.
       \P\left[ X \geq 3\right] 
       &= \P\left[A\cap B \right]\\
       &= \P\left[A \right] \P\left[B\mid A \right]\\
-      &= \frac{3}{4}\cdot \frac{2}{3}\\
-      &= \frac{1}{2}.
+      &= \frac{3}{4}\cdot \frac{2}{3}
+      = \frac{1}{2}.
     \end{align*}
     \item What's the probability that he must test exactly $3$ bags?
 
@@ -1358,8 +1389,8 @@ we know that event $A$ happened.
       &= \P\left[\text{third is}\mid  \text{first isn't} \cap
         \text{second isn't}  \right] \times \P\left[\text{second isn't}\mid \text{first isn't} \right] \cdot
         \P\left[\text{first isn't} \right]\\
-      &= \frac{1}{2}\cdot \frac{2}{3}\cdot \frac{3}{4}\\
-      &= \frac{1}{4}
+      &= \frac{1}{2}\cdot \frac{2}{3}\cdot \frac{3}{4}
+      = \frac{1}{4}
     \end{align*}
 
     Here we have used the following multiplication rule:
@@ -1379,6 +1410,19 @@ we know that event $A$ happened.
   \end{enumerate}
 \end{example}
 
+\begin{example}
+  Suppose two cards are drawn at random from a standard 52 card playing deck.
+  Let
+  \begin{align*}
+    A &= \left[ \text{at least one ace was drawn} \right]\\
+    B &= \left[ \text{both cards drawn are aces} \right]\\
+    C &= \left[ \text{the ace of clubs was drawn} \right]\\
+  \end{align*}
+
+  Are $\P\left(B\mid A \right)$ and $\P \left( B\mid C \right)$ the same?
+\end{example}
+
+\end{document}
 \newpage
 
 % \subsection{Review of Set Operations}
@@ -1415,48 +1459,9 @@ we know that event $A$ happened.
 %       black marker (but maybe I brought one)} \right]  
 %   \end{equation*}
 % \end{example}
-\section{2025-02-04 | Week 04 | Lecture 10}
-\textit{This section is based on sections 2.4 in the textbook.}
-
-
-\subsection{Conditional Probability: Examples}
-For any two events $A$ and $B$, conditional probability describes the probability that $A$ happens given
-that we know $B$ happened.
-
-\begin{definition}[Conditional Probability]
-  Let $A,B$ be events, and assume that $\P\left[A\right]>0$. Then the \demph{conditional probability of
-    $B$, given $A$}, denoted $\P\left[B\mid A \right]$, is given by the formula
-  \begin{equation*}
-    \P\left[B\mid A \right] := \frac{\P\left[A\cap B \right]}{\P\left[A \right]}.
-  \end{equation*}
-\end{definition}
 
 
 
-
-
-\begin{example}[Urn - example of multiplication rule]
-  An urn contains 6 white balls and 9 black balls. If 4 balls are drawn at random, what is the
-  probability that the first 2 are white and the last 2 are black?
-
-  \fl{Solution:} Let $A$ be the event that the first two balls are white, and $B$ the event
-  that the last two balls are black. Then the desired probability is
-  \begin{equation}\label{eq:2}
-    \P\left[A\cap B \right] = \P\left[B\mid A \right] \P\left[A \right]
-  \end{equation}
-  Now,
-  \begin{equation*}
-    \P\left[A \right] = \frac{{6\choose 2}}{{15\choose 2}} =\frac{1}{7}.
-  \end{equation*}
-  Moreover, given that $A$ occurs, then $4$ white balls and $9$ black balls remain. So
-  \begin{equation*}
-    \P\left[B\mid A \right] = \frac{{9 \choose 2}}{{13\choose 2}} = \frac{6}{13}.
-  \end{equation*}
-  Therefore by \cref{eq:2},
-  \begin{equation*}
-    \P\left[A\cap B \right] = \frac{1}{7}\cdot \frac{6}{13} = \frac{6}{91}\approx 0.07
-  \end{equation*}
-\end{example}
 
 \subsection{The law of total probability}
 \begin{definition}
@@ -1535,28 +1540,7 @@ that we know $B$ happened.
   
 \end{example}
 
-\begin{example}[Conditional probability]
-  Suppose you flip a coin 10 times and get more than $6$ heads. What's the probability that you get less
-  than 9 heads?
-
-  \fl{Solution:} Let $X$ be the number of heads. Let $A=\left[ X < 9\right]$, and let
-  $B = \left[X > 6\right]$. Then
-  \begin{equation*}
-    \P\left[B \right] = \frac{{10\choose 7} + {10\choose 8} + {10\choose 9} + {10\choose 10}}{2^{10}}
-  \end{equation*}
-  Observe that $A\cap B = \left[ X\in \left\{7,8\right\} \right]$. Therefore
-  \begin{equation*}
-    \P\left[A\cap B \right] = \frac{{10\choose 7}+{10\choose 8}}{2^{10}}
-  \end{equation*}
-  Therefore
-  \begin{equation*}
-    \P\left[A\mid B \right] 
-    = \frac{\P\left[A\cap B \right]}{\P\left[B \right]} 
-    = \frac{{10\choose 7} + {10\choose 8}}{{10\choose 7} + {10\choose 8} + {10\choose 9} + {10\choose 10}} 
-    = \frac{15}{16}.
-  \end{equation*}
-\end{example}
-
+\end{document}
 
 \newpage
 \section{OLD STUFF}
