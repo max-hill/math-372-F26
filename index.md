@@ -22,6 +22,8 @@ title: lecture notes
  2026-09-04  |  - | applications of counting principles
  2026-09-09  |  - | introduction to craps, conditional probability (chp 2.4)
  2026-09-11  |  - | conditional probability examples (chp 2.4)
+ 2026-09-14  |  - | law of total probability (chp 2.4)
+ 2026-09-16  |  - | diagnostic tests (chp 2.4), independence (chp 2.5)
  
 # other links
 
