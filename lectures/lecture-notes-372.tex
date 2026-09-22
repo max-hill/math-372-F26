@@ -1560,7 +1560,7 @@ we know that event $A$ happened.
 \section{2026-09-16 | Week 04 | Lecture 10}
 \begin{center}
   \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
-    \textit{\textbf{The topic for this lecture: diagnostic tests and independence}}
+    \textit{\textbf{The topic for this lecture:} diagnostic tests and independence}
 
     \textit{\textbf{Reading assignment:} Chapter 2.4, 2.5}
   \end{tcolorbox}
@@ -1733,11 +1733,374 @@ This definition generalizes in the natural way:
   \end{enumerate}
 \end{example}
 
-\end{document}
 \newpage
-\section{OLD STUFF}
-\subsection{Powerball}
+\section{2026-09-18 | Week 04 | Lecture 11}
 
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{The topic for this lecture:} random variables}
+
+    \textit{\textbf{Reading assignment:} Chapter 3.1, 3.2}
+  \end{tcolorbox}
+\end{center}
+
+\subsection{The ``at least one'' trick}
+\begin{example}[Independence, and the ``at least one'' trick]
+  Suppose we roll a 6-sided dice three times. What's the probability that we
+  get at least one 6?
+
+  \Fl{Solution:} The key idea is the following
+  \begin{equation*}
+    \P\left[\text{at least one six is rolled} \right] = 1 - \P\left[\text{no
+        sixes are rolled} \right]
+  \end{equation*}
+
+  To put this idea into practice, let
+  $A_{1}= \left[ \text{the first dice roll is a 6} \right]$,
+  $A_{2} = \left[ \text{the second dice roll is a 6} \right]$, and
+  $A_{3}= \left[ \text{the third dice roll is a 6} \right]$. Clearly,
+  $A_{1},A_{2},A_{3}$ are independent because the dice rolls don't influence
+  each other. Then
+  \begin{align*}
+    \P\left[ \text{at least one six is rolled}\right] 
+    &= \P\left[A_{1}\cup A_{2}\cup A_{3} \right]\\
+    &= 1- \P\left[A_{1}^{c}\cap A_{2}^{c}\cap A_{3}^{c} \right] && \text{by de
+                                                                   Morgan's law}\\
+    &= 1 - \P\left[A_{1}^{c} \right] \P\left[A_{2}^{c} \right]
+      \P\left[A_{3}^{c} \right] &&\text{by independence}\\
+    &= 1 - \left( \frac{5}{6} \right) \left( \frac{5}{6} \right) \left( \frac{5}{6} \right)\\ 
+    &= 1- \left( \frac{5}{6} \right)^{3}.
+  \end{align*}
+  
+\end{example}
+
+\subsection{Dicrete Random Variables}
+\textit{Based on sections 3.1 and 3.2 of the textbook}
+
+We often associate numbers with outcomes of an experiment.
+
+\begin{definition}[Random variables]
+  \label{def:random-variables}
+  Let $S$ be a sample space of an experiment. A \demph{random variable} is any
+  rule that associates a number with each outcome in $S$. In other words, it
+  is a function whose domain is $S$ and whose range is $\R$.
+\end{definition}
+
+The value of a random variable is thought of as varying depending on the
+outcome of the experiment. Random variables are usually denoted with capital
+letters, like $X,Y,Z$.
+
+\begin{example}
+  \label{ex:sum-2d4}
+  Roll a 4-sided dice twice (this is the \textbf{experiment}). There are 16
+  possible \textbf{outcomes}. The \textbf{sample space} is
+  \begin{equation*}
+    S = \left\{(x,y): x,y\in \left\{1,2,3,4\right\} \right\}.
+  \end{equation*}
+  Let $X$ be the sum of the two rolls. We can represent $X$ by the following
+  table:
+  \begin{equation*}
+    \begin{array}{c@{\quad}c|cccc} & \multicolumn{5}{c}{\text{Dice 2}} \\ & &
+      1 & 2 & 3 & 4 \\ \cline{2-6}  & 1 & 2 & 3 & 4 & 5 \\ \text{Dice 1} & 2 & 3 & 4 & 5 & 6 \\ & 3 & 4 & 5 & 6 & 7 \\ & 4 & 5 & 6 & 7 & 8 \end{array}
+  \end{equation*}
+\end{example}
+
+\begin{definition}[Discrete random variable]
+  \label{def:discrete-random-variable}
+  We say that a random variable $X$ is a \demph{discrete random variable} if
+  it can assume only a finite or countably infinite number of distinct values.
+\end{definition}
+
+\begin{definition}[Continuous random variable]
+  \label{def:continuous-random-variable}
+  A random variable $X$ is said to be \demph{continuous} if
+  \begin{enumerate}[label=(\roman*)]
+    \item  it takes values in an interval $I\subseteq \R$ or a union of such
+    intervals; and,
+    \item $\P\left[X = x \right] = 0$ for all $x$.
+  \end{enumerate}
+\end{definition}
+% To be precise, a random variable $x$ is continuous if its cdf
+% \begin{equation*}
+%   F(x) = \P\left[X \leq x\right]
+% \end{equation*}
+% is a continuous function.
+
+
+\begin{example}[Pinwheel]
+  \label{ex:pinwheel}
+  Suppose you have a pinwheel as follows.
+  \begin{center}
+    \includegraphics[scale=0.08]{images/pinwheel}
+  \end{center}
+
+  Suppose we spin the needle. When the needle stops spinning, we measure its
+  angle from the dotted line. Let $X$ be the angle of the needle. So $X$ is a
+  random variable. If $X$ is measured in degrees, then
+  \begin{equation*}
+    X \in  [0,360)
+  \end{equation*}
+  but $X$ could take \textit{any} value between 0 and 360, not just integer
+  values. We have no reason to believe any one angle is more likely than any
+  others -- for our idealized pinwheel, all values between $0$ and $2\pi$
+  should all be equally likely.
+
+  I claim that it must be the case that
+  \begin{equation*}
+    \Pr\left[X=x \right]=0, \quad \text{ for all }x\in [0,360).
+  \end{equation*}
+  We'll prove this by contradiction:
+
+  Suppose on the contrary that $\Pr\left[X=x \right]=c>0$ for all $x$. Let $N$
+  be any positive integer greater than $1/c$. Let $A$ be a set of any $N$
+  numbers between $0$ and $360$. Then using
+  \ref{item:probability-axiom-countable-additivity}
+  \begin{align*}
+    \Pr \left[ X\in A  \right] 
+    &= \sum_{a\in A}\Pr \left[ X=a \right] \\
+    &= \sum_{a\in A} c \\
+    &= c|A| \\
+    &= cN \\
+    &> 1.
+\end{align*}
+  But this contradicts \ref{item:probabilities-are-in-unit-interval}. Thus we
+  must have $c=0$.
+\end{example}
+
+\begin{definition}[Continuous random variable]
+  We 
+\end{definition}
+
+\begin{example}[Bernoulli random variable]
+  Let $p\in (0,1)$. We say that $X$ is a \demph{Bernoulli random variable}
+  with success parameter $p$
+  and write $X\sim \text{Bern}(p)$, if
+  \begin{equation*}
+    X = \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{with probability
+        }p\\0 & \text{with probability }1-p \end{array}\right.
+  \end{equation*}
+  Conceptually, a Bernoulli random variable represents the flip of a biased
+  coin that has probability $p$ of landing on heads.
+\end{example}
+
+
+\begin{definition}[Probability mass function (pmf)]
+  \label{def:probability-mass-function-pmf}
+  Let $X$ be a discrete random variable. The \demph{probability mass function}
+  (or \demph{pmf}) of $X$ is the function
+  \begin{equation*}
+    p(x) = \P\left[X=x \right], \quad x\in \R.
+  \end{equation*}
+\end{definition}
+
+\begin{example}
+  The pmf of $X$ in \cref{ex:sum-2d4} is
+  \begin{equation*}
+    p(2) = 1/16 \quad p(3) = 2/16, \quad p(4) = 3/16, \quad p(5) = 4/16, \quad p(6) = 3/16, \quad p(7)=2/16, \quad p(8) = 1/16
+  \end{equation*}
+  and $p(x)=0$ for all other $x\in \R$. It is often useful to write these as a
+  table, and visualize the distribution of $X$ as a histogram:
+  \begin{center}
+    \begin{tabular}{c@{\qquad}c}
+      \begin{tabular}[c]{l|l}
+        $x$ & $\P[X=x]$ \\ \hline
+        2   & $1/16$ \\
+        3   & $2/16$ \\
+        4   & $3/16$ \\
+        5   & $4/16$ \\
+        6   & $3/16$ \\
+        7   & $2/16$ \\
+        8   & $1/16$
+      \end{tabular}
+            &
+              \begin{tikzpicture}[
+                baseline=(current bounding box.center),
+                x=1cm,
+                y=3.0cm
+                ]
+                \foreach \x/\h in {2/1,3/2,4/3,5/4,6/3,7/2,8/1}{
+                  \draw[fill=blue!30]
+                  ({\x-0.5},0) rectangle ({\x+0.5},{\h/4});
+                }
+
+                \draw[->] (1.3,0) -- (8.8,0) node[right] {$x$};
+                \draw[->] (1.5,0) -- (1.5,1.2)
+                node[above] {$p(x)$};
+
+                \foreach \x in {2,...,8}{
+                  \draw (\x,0.03) -- (\x,-0.03)
+                  node[below] {$\x$};
+                }
+
+                \foreach \h in {1,...,4}{
+                  \draw (1.53,{\h/4}) -- (1.47,{\h/4})
+                  node[left] {$\frac{\h}{16}$};
+                }
+              \end{tikzpicture}
+    \end{tabular}
+  \end{center}  
+\end{example}
+
+\begin{definition}[Cumulative distribution function (cdf)]
+  \label{def:cumulative-distribution-function-cdf}
+  Let $X$ be any random variable. The \demph{cumulative distribution function}
+  (or \demph{cdf}) of $X$ is the function
+  \begin{equation*}
+    F(x) = \P\left[X \leq x\right],
+  \end{equation*}
+  defined for all $x\in \R$.
+\end{definition}
+
+\begin{example}
+  For the random variable in \cref{ex:sum-2d4}, the cdf is given by the
+  following table
+  \begin{center}
+    \begin{tabular}{l|l}
+      $x$ & $F(x) = \P[X \leq x]$ \\ \hline
+      2   & $1/16$     \\
+      3   & $3/16$     \\
+      4   & $6/16$     \\
+      5   & $10/16$    \\
+      6   & $13/16$    \\
+      7   & $15/16$    \\
+      8   & $1$    
+    \end{tabular}
+  \end{center}
+
+  Here is a plot of $F(x)$. It is the step function shown in blue:
+
+  \begin{center}
+    \begin{tikzpicture}[x=1.2cm,y=6cm,scale=.7]
+
+      % axes
+      \draw[->] (0,0) -- (10,0) node[right] {$x$};
+      \draw[->] (0,0) -- (0,1.05) node[above] {$$};
+
+      % x-axis ticks
+      \foreach \x in {1,2,3,4,5,6,7,8,9}
+      {
+        \draw (\x,.01) -- (\x,-0.01);
+        \node[below] at (\x,0) {\small $\x$};
+      }
+
+      % y-axis ticks
+      \foreach \y/\lab in {
+        0.0625/{1/16},
+        0.1875/{3/16},
+        0.3750/{6/16},
+        0.6250/{10/16},
+        0.8125/{13/16},
+        0.9375/{15/16},
+        1/{1}
+      }
+      {
+        \draw (.04,\y) -- (-.04,\y);
+        \node[left] at (0,\y) {\small $\lab$};
+      }
+
+      % horizontal pieces
+      \draw[thick,blue,<-] (0,0) -- (2,0);
+      \draw[thick,blue] (2,0.0625) -- (3,0.0625);
+      \draw[thick,blue] (3,0.1875) -- (4,0.1875);
+      \draw[thick,blue] (4,0.3750) -- (5,0.3750);
+      \draw[thick,blue] (5,0.6250) -- (6,0.6250);
+      \draw[thick,blue] (6,0.8125) -- (7,0.8125);
+      \draw[thick,blue] (7,0.9375) -- (8,0.9375);
+      \draw[thick,blue,->] (8,1.0000) -- (10,1.0000);
+
+      % open circles
+      \foreach \x/\y in {
+        2/0, 3/0.0625, 4/0.1875, 5/0.3750, 6/0.6250, 7/0.8125, 8/0.9375}
+      \draw[blue,fill=white] (\x,\y) circle (1.6pt);
+
+      % closed circles
+      \foreach \x/\y in {
+        2/0.0625, 3/0.1875, 4/0.3750, 5/0.6250, 6/0.8125, 7/0.9375, 8/1.0000}
+      \fill[blue] (\x,\y) circle (1.6pt);
+
+    \end{tikzpicture}
+  \end{center}
+
+  For dicrete random variables, the graph of a cdf will always look similar to
+  the above: it will be an increasing step function with open circles on the
+  right endpoints and filled-in circles on the left endpoints.
+\end{example}
+\newpage
+\section{2026-09-21 | Week 05 | Lecture 12}
+
+
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{The topic for this lecture:} expected value}
+
+    \textit{\textbf{Reading assignment:} Chapter 3.3}
+  \end{tcolorbox}
+\end{center}
+
+
+
+\begin{definition}[Expected value - discrete random-variable]
+  \label{def:expected-value-discrete-random-variable}
+  For a discrete random variable $X$, the \demph{expected value} of $X$,
+  denoted $\E\left[X \right]$, is
+  \begin{equation}\label{eq:expected-value-discrete-rv}
+    \E\left[X \right] = \sum_{x}x \P\left[X=x \right] 
+  \end{equation}
+  where the sum ranges over all distinct values that $X$ can take. (Technical
+  note: the sum on the right hand side of may be an infinite series, which may
+  or may not converge. If the sum on the right-hand side of
+  \cref{eq:expected-value-discrete-rv} does not converge absolutely, then we
+  say that the expected value of $X$ \demph{does not exist}.)
+\end{definition}
+
+\begin{remark}
+  $\E\left[X \right]$ is the long-run average of $X$, if we were to repeat the
+  experiment many times.
+\end{remark}
+
+% \begin{example}
+%   Let $X$ be the random variable in \cref{ex:sum-2d4}. Then
+%   \begin{align*}
+%     \E\left[X \right] 
+%     &= \sum_{x}x \P\left[X=x \right]\\
+%     &=2 \left( \frac{1}{16} \right) +
+%       3 \left( \frac{2}{16} \right) +
+%       4 \left( \frac{3}{16} \right) +  
+%       5 \left( \frac{4}{16} \right) +  
+%       6 \left( \frac{3}{16} \right) +  
+%       7 \left( \frac{2}{16} \right) +  
+%       8 \left( \frac{1}{16} \right)\\
+%     &= \frac{80}{16}\\
+%     &=5.
+%   \end{align*}
+%   Therefore, the sum of two 4-sided dice rolls is, on average, 5.
+% \end{example}
+
+
+The following is a simple but important fact:
+
+\begin{theorem}[Linearity of Expectation]
+  \label{prop:linearity-of-expectation}
+  Let $a,b$ be numbers and $X$ and $Y$ be a random variables. Then
+  \begin{equation*}
+    \E\left[aX+b \right] = a \E\left[X \right] +b
+  \end{equation*}
+  and
+  \begin{equation}\label{eq:linearity-of-expectation-2}
+    \E\left[aX+bY \right] = a\E\left[X \right]+ b\E\left[Y \right].
+  \end{equation}
+\end{theorem}
+
+\begin{corollary}[Linearity of expectation]
+  If $X$ and $Y$ are any random
+  variables, then
+  \begin{equation*}
+    \E\left[X+Y \right] = \E\left[X \right]+ \E\left[Y \right].
+  \end{equation*}
+\end{corollary}
+\begin{proof}
+  Take $a=b=1$ in \cref{eq:linearity-of-expectation-2}.
+\end{proof}
 
 
 \begin{example}[Powerball Lottery]
@@ -1747,57 +2110,77 @@ This definition generalizes in the natural way:
     \item You win \$300,000,000.
     \item You don't win any money.
   \end{itemize}
-  The probability of winning is approximately $\frac{1}{300,000,000}$. Let $X$ be the net payoff from the
-  game, in dollars:
-  \begin{itemize}
-    \item If you lose, then $X=-2$, since you had to pay \$2 to play the game.
-    \item If you win, then your net payoff is $X=299,999,998$. 
-  \end{itemize}
-  What is the expected value of $X$?
+  Assume that
+  \begin{equation*}
+    \P \left[ \text{win} \right] = \frac{1}{300,000,000},
+    \qquad \P \left[ \text{lose} \right] = \frac{299,999,999}{300,000,000}. 
+  \end{equation*}
+  Let $X$ be the net payoff from the game, in dollars. Then, since you had to
+  pay $\$2$ to buy the ticket,
+  \begin{equation*}
+    X = \left\{ \begin{array}{l@{\quad:\quad}l}
+        299,999,998& \text{if you win}\\
+        -2 & \text{if you lose}
+         \end{array}\right.
+  \end{equation*}
+  What is the expected value of $X$? By \cref{def:expected-value-discrete-random-variable},
   \begin{align*}
     \E\left[X \right]
-    &=\P\left[ \text{win}\right]\cdot (-2) + \P\left[\text{lose} \right]\cdot (299,999,998)\\
-    &=\frac{299,999,999}{300,000,000}(-2)+ \frac{1}{300,000,000}(299,999,999)\\
+    &=(299,999,998)\P\left[\text{win} \right]+(-2)\P\left[ \text{lose}\right]\\
+    &=(299,999,999)\left(\frac{1}{300,000,000}\right) + (-2)\left(\frac{299,999,999}{300,000,000}\right)\\
     &=-1.
   \end{align*}
-  \textit{Conclusion:} you ``expect'' to lose \$1 every time you play. Similarly, if you play twice, you
-  expet to lose \$2. If you play 10 times, you expect to lose \$10. Etc. This property is called
-  \textit{linearity} of expectation. Formally, if $X$ and $Y$ are any random
-  variables, then
-  \begin{equation*}
-    \E\left[X+Y \right] = \E\left[X \right]+ \E\left[Y \right]
-  \end{equation*}
+  \textit{Conclusion:} you ``expect'' to lose \$1 every time you play.
+  Similarly, if you play twice, you expet to lose \$2. If you play 10 times,
+  you expect to lose \$10. Etc. This is linearity of expectation.
 \end{example}
 
 
-\subsection{St. Petersburg Paradox}
+\begin{example}[Binomial random variable]
+  Suppose we flip a coin $n$ times. Assume that for each flip, the coin has probability of heads
+  $p$ and probability of tails $1-p$, where $p\in (0,1)$.
 
-The game is the following: repeatedly flip a coin until you get heads. You win $2^{n}$ dollars, where $n$ is
-the number of coin flips. How much would you be willing to pay to play this game????
+  Let
+  \begin{equation*}
+    X = (\text{\# of heads in }n text{ coin flips})
+  \end{equation*}
+  Constructed in this way, the random variable $X$ is a \demph{binomial}
+  random variable with $n$ trials and probability of success $p$, and we write
+  $X\sim \text{Bin}(n,p)$.
 
-Let $X$ be your (random) payoff. The sample space of $X$ is
-\begin{equation*}
-  S = \left\{2,4,8,16,32,\ldots\right\}.
-\end{equation*}
-What is the expected value of $X$?
+  What is $\E\left[X \right]$?
 
-\begin{align*}
-  \E\left[X \right] 
-  &= \sum_{x} x \P\left[X=x \right]\\
-  &= 2\P\left[X=2 \right]+ 4 \P\left[X=4 \right] + 8\P\left[X=8 \right] + 16 \P\left[X=16 \right]+\ldots\\
-\end{align*}
-Next, we observe that $\P\left[X=2^{k} \right] = \frac{1}{2^{k}}$ for all
-$k =1,2,\ldots$. Plugging these probabilities in, we get
-
-\begin{equation*}
-  \E\left[X \right] = 1+1+1+1+1+\ldots   = +\infty.
-\end{equation*}
-The expected value of playing this game is positive infinity!!!!! N matter how
-much you pay to play this game, you will eventually make money if you play
-enough times.
-
-\subsection{Repeated coin flipping (Expectation)}
-
+  \textit{Solution:} For each $k\in \left\{1,2,\ldots,n\right\}$ define
+  \begin{equation*}
+    Y_{k} = \left\{ \begin{array}{l@{\quad:\quad}l}
+        1 & k^{\rm th} \text{ coin flip is heads}\\
+        0  & \text{otherwise} \end{array}\right.
+  \end{equation*}
+  Then the key observation is that
+  \begin{equation*}
+    X = Y_{1}+\ldots+Y_{n}.
+  \end{equation*}
+  Therefore by linearity of expectation,
+  \begin{align}\label{eq:coin-flip-sum}
+    \E\left[X \right] 
+    &= \E \left[ Y_{1}\right]+\ldots+\E\left[Y_{n} \right].
+  \end{align}
+  Now, what is $\E[Y_{k}]$? Observe that for each $k=1,\ldots,n$ we have
+  \begin{equation*}
+    Y_{k} = \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{with probability
+        }p\\0 & \text{with probability }1-p.\end{array}\right.
+  \end{equation*}
+  Therefore by \cref{def:expected-value-discrete-random-variable},
+  \begin{equation*}
+    \E[Y_{k}] = (1)(p)+(0)(1-p)=p
+  \end{equation*}
+  for every $k\in \left\{1,\ldots,n\right\}$. Plugging this into \cref{eq:coin-flip-sum} implies
+  \begin{equation*}
+    \E[X] = np.
+  \end{equation*}
+\end{example}
+\newpage
+\end{document}
 \begin{example}[Repeated coin flipping]
   \label{ex:cool-coin-flipping-example}
   Consider an experiment in which we flip a coin repeatedly until we get a
@@ -1862,320 +2245,45 @@ enough times.
 \end{example}
 
 
-\subsection{Set theory}
-\begin{theorem}[Inclusion-Exclusion Prinicple]
-  \label{thm:inclusion-exclusion-principle}
-  If $A$ and $B$ are events, then
-  \begin{equation*}
-    \P\left[A\cup B \right] = \P\left[A \right]+\P\left[B \right]- \P\left[A\cap B \right]
-  \end{equation*}
-  In particular, if $A$ and $B$ are distjoint, then
-  \begin{equation*}
-    \P\left[A\cup B \right]= \P\left[A \right]+\P\left[B \right].
-  \end{equation*}
-\end{theorem}
-\begin{proof}[Idea of proof]
-  $\P\left[A\cup B \right]$ is the area of the red-shaded region:
-  \begin{center}
-    \includegraphics[scale=.5]{images/venn-diagram-union-2}
-  \end{center}
-  Compare with $\P\left[A \right]+\P\left[B \right]- \P\left[A\cap B \right]$:
-  \begin{center}
-    \includegraphics[scale=.5]{images/inclusion-exclusion}
-  \end{center}
-\end{proof}
-
-\begin{proposition}[De Morgan's Laws]
-  \label{prop:de-morgans-laws}
-  The following equalities hold:
-  \begin{equation*}
-    \left( A\cup B \right)^{c} = A^{c}\cap B^{c}
-    \quad \text{and} \quad 
-    \left( A\cap B \right)^{c} = A^{c}\cap B^{c}.
-  \end{equation*}
-\end{proposition}
-\begin{proof}
-  Draw a picture.
-\end{proof}
-
 
 
 \newpage
-
-\newpage
-\section{2026-02-06 | Week 04 | Lecture 11}
-
-
-\newpage
-\section{2026-02-11 | Week 05 | Lecture 12}
+\section{OLD STUFF}
+\subsection{Powerball}
 
 
-\subsection{Dicrete Random Variables}
-\textit{Based on sections 3.1 and 3.2 of the textbook}
-
-We often associate numbers with outcomes of an experiment.
-
-\begin{definition}[Random variables]
-  \label{def:random-variables}
-  Let $S$ be a sample space of an experiment. A \demph{random variable} is any
-  rule that associates a number with each outcome in $S$. In other words, it
-  is a function whose domain is $S$ and whose range is $\R$.
-\end{definition}
-
-The value of a random variable is thought of as varying depending on the
-outcome of the experiment. Random variables are usually denoted with capital
-letters, like $X,Y,Z$.
-
-\begin{example}
-  \label{ex:sum-2d4}
-  Roll a 4-sided dice twice (this is the \textbf{experiment}). There are 16
-  possible \textbf{outcomes}. The \textbf{sample space} is
-  \begin{equation*}
-    S = \left\{(x,y): x,y\in \left\{1,2,3,4\right\} \right\}.
-  \end{equation*}
-  Let $X$ be the sum of the two rolls. We can represent $X$ by the following
-  table:
-  \begin{equation*}
-    \begin{array}{c@{\quad}c|cccc} & \multicolumn{5}{c}{\text{Dice 2}} \\ & &
-      1 & 2 & 3 & 4 \\ \cline{2-6}  & 1 & 2 & 3 & 4 & 5 \\ \text{Dice 1} & 2 & 3 & 4 & 5 & 6 \\ & 3 & 4 & 5 & 6 & 7 \\ & 4 & 5 & 6 & 7 & 8 \end{array}
-  \end{equation*}
-\end{example}
-
-\begin{definition}[Discrete random variable]
-  We say that a random variable $X$ is a \demph{discrete random variable} if
-  it can assume only a finite or countably infinite number of distinct values.
-\end{definition}
 
 
-\begin{definition}[Probability mass function (pmf)]
-  \label{def:probability-mass-function-pmf}
-  Let $X$ be a discrete random variable. The \demph{probability mass function}
-  (or \demph{pmf}) of $X$ is the function
-  \begin{equation*}
-    p(x) = \P\left[X=x \right],
-  \end{equation*}
-  defined for every $x\in \R$.
-\end{definition}
 
-\begin{example}
-  The pmf of $X$ in \cref{ex:sum-2d4} is
-  \begin{equation*}
-    p(2) = 1/16 \quad p(3) = 2/16, \quad p(4) = 3/16, \quad p(5) = 4/16, \quad p(6) = 3/16, \quad p(7)=2/16, \quad p(8) = 1/16
-  \end{equation*}
-  and $p(x)=0$ for all other $x\in \R$. It is often useful to write these as a
-  table:
-  \begin{center}
-    \begin{tabular}{l|l}
-      $x$ & $\P[X=x]$ \\ \hline
-      2   & $1/16$     \\
-      3   & $2/16$     \\
-      4   & $3/16$     \\
-      5   & $4/16$    \\
-      6   & $3/16$    \\
-      7   & $2/16$    \\
-      8   & $1/16$    
-    \end{tabular}
-  \end{center}
-\end{example}
+\subsection{St. Petersburg Paradox}
 
-\begin{definition}
-  For a discrete random variable $X$, the \demph{expected value} of $X$,
-  denoted $\E\left[X \right]$, is
-  \begin{equation*}
-    \E\left[X \right] = \sum_{x}x \P\left[X=x \right] 
-  \end{equation*}
-  where the sum ranges over all distinct values that $X$ can take.
-\end{definition}
+The game is the following: repeatedly flip a coin until you get heads. You win $2^{n}$ dollars, where $n$ is
+the number of coin flips. How much would you be willing to pay to play this game????
 
-\begin{remark}
-  $\E\left[X \right]$ is the long-run average of $X$, if we were to repeat the
-  experiment many times.
-\end{remark}
-
-\begin{example}
-  Let $X$ be the random variable in \cref{ex:sum-2d4}. Then
-  \begin{align*}
-    \E\left[X \right] 
-    &= \sum_{x}x \P\left[X=x \right]\\
-    &=2 \left( \frac{1}{16} \right) +
-      3 \left( \frac{2}{16} \right) +
-      4 \left( \frac{3}{16} \right) +  
-      5 \left( \frac{4}{16} \right) +  
-      6 \left( \frac{3}{16} \right) +  
-      7 \left( \frac{2}{16} \right) +  
-      8 \left( \frac{1}{16} \right)\\
-    &= \frac{80}{16}\\
-    &=5.
-  \end{align*}
-  Therefore, the sum of two 4-sided dice rolls is, on average, 5.
-\end{example}
-
-\begin{definition}[Cumulative distribution function (cdf)]
-  \label{def:cumulative-distribution-function-cdf}
-  Let $X$ be any random variable. The \demph{cumulative distribution function}
-  (or \demph{cdf}) of $X$ is the function
-  \begin{equation*}
-    F(x) = \P\left[X \leq x\right],
-  \end{equation*}
-  defined for all $x\in \R$.
-\end{definition}
-
-\begin{example}
-  For the random variable in \cref{ex:sum-2d4}, the cdf is given by the
-  following table
-  \begin{center}
-    \begin{tabular}{l|l}
-      $x$ & $F(x) = \P[X \leq x]$ \\ \hline
-      2   & $1/16$     \\
-      3   & $3/16$     \\
-      4   & $6/16$     \\
-      5   & $10/16$    \\
-      6   & $13/16$    \\
-      7   & $15/16$    \\
-      8   & $1$    
-    \end{tabular}
-  \end{center}
-
-  Here is a plot of $F(x)$. It is the step function shown in blue:
-
-  \begin{center}
-    \begin{tikzpicture}[x=1.2cm,y=6cm,scale=.8]
-
-      % axes
-      \draw[->] (0,0) -- (10,0) node[right] {$x$};
-      \draw[->] (0,0) -- (0,1.05) node[above] {$$};
-
-      % x-axis ticks
-      \foreach \x in {1,2,3,4,5,6,7,8,9}
-      {
-        \draw (\x,.01) -- (\x,-0.01);
-        \node[below] at (\x,0) {\small $\x$};
-      }
-
-      % y-axis ticks
-      \foreach \y/\lab in {
-        0.0625/{1/16},
-        0.1875/{3/16},
-        0.3750/{6/16},
-        0.6250/{10/16},
-        0.8125/{13/16},
-        0.9375/{15/16},
-        1/{1}
-      }
-      {
-        \draw (.04,\y) -- (-.04,\y);
-        \node[left] at (0,\y) {\small $\lab$};
-      }
-
-      % horizontal pieces
-      \draw[thick,blue,<-] (0,0) -- (2,0);
-      \draw[thick,blue] (2,0.0625) -- (3,0.0625);
-      \draw[thick,blue] (3,0.1875) -- (4,0.1875);
-      \draw[thick,blue] (4,0.3750) -- (5,0.3750);
-      \draw[thick,blue] (5,0.6250) -- (6,0.6250);
-      \draw[thick,blue] (6,0.8125) -- (7,0.8125);
-      \draw[thick,blue] (7,0.9375) -- (8,0.9375);
-      \draw[thick,blue,->] (8,1.0000) -- (10,1.0000);
-
-      % open circles
-      \foreach \x/\y in {
-        2/0, 3/0.0625, 4/0.1875, 5/0.3750, 6/0.6250, 7/0.8125, 8/0.9375}
-      \draw[blue,fill=white] (\x,\y) circle (1.6pt);
-
-      % closed circles
-      \foreach \x/\y in {
-        2/0.0625, 3/0.1875, 4/0.3750, 5/0.6250, 6/0.8125, 7/0.9375, 8/1.0000}
-      \fill[blue] (\x,\y) circle (1.6pt);
-
-    \end{tikzpicture}
-  \end{center}
-
-  For dicrete random variables, the graph of a cdf will always look similar to
-  the above: it will be an increasing step function with open circles on the
-  right endpoints and filled-in circles on the left endpoints.
-\end{example}
-
-
-\newpage
-\section{2026-02-13 | Week 05 | Lecture 13}
-
-\subsection{Exam review problems}
-We went over some example problems:
-\begin{itemize}
-  \item The solution to problem 1 on homework 2. The key idea involves
-  correctly filling out the venn diagram as shown:
-  \begin{center}
-    \includegraphics[scale=.3]{images/hw2-solution}
-  \end{center}
-  \item The solution to problem 14 on homework 4. 
-  \item An example about computing probabilities invovling the phrase ``at
-  least'' (shown below).
-\end{itemize}
-
-\begin{example}
-  Suppose we roll a 6-sided dice three times. What's the probability that we
-  get at least one 6?
-
-  \Fl{Solution:} The key idea is the following
-  \begin{equation*}
-    \P\left[\text{at least one six is rolled} \right] = 1 - \P\left[\text{no
-        sixes are rolled} \right]
-  \end{equation*}
-
-  To put this idea into practice, let
-  $A_{1}= \left[ \text{the first dice roll is a 6} \right]$,
-  $A_{2} = \left[ \text{the second dice roll is a 6} \right]$, and
-  $A_{3}= \left[ \text{the third dice roll is a 6} \right]$. Clearly,
-  $A_{1},A_{2},A_{3}$ are independent because the dice rolls don't influence
-  each other. Then
-  \begin{align*}
-    \P\left[ \text{at least one six is rolled}\right] 
-    &= \P\left[A_{1}\cup A_{2}\cup A_{3} \right]\\
-    &= 1- \P\left[A_{1}^{c}\cap A_{2}^{c}\cap A_{3}^{c} \right] && \text{by de
-                                                                   Morgan's law}\\
-    &= 1 - \P\left[A_{1}^{c} \right] \P\left[A_{2}^{c} \right]
-      \P\left[A_{3}^{c} \right] &&\text{by independence}\\
-    &= 1 - \left( \frac{5}{6} \right) \left( \frac{5}{6} \right) \left( \frac{5}{6} \right)\\ 
-    &= 1- \left( \frac{5}{6} \right)^{3}.
-  \end{align*}
-  
-\end{example}
-
-\newpage
-
-
-\section{2026-02-23 | Week 07 | Lecture 14}
-\textit{This lecture is based on chapter 3.3 in the textbook.}
-\subsection{Expectation}
-Recall that the \demph{expected value} of a discrete random variable is
+Let $X$ be your (random) payoff. The sample space of $X$ is
 \begin{equation*}
-  \mu = \E\left[X \right] = \sum_{x} x\cdot p(x) 
+  S = \left\{2,4,8,16,32,\ldots\right\}.
 \end{equation*}
-where the $x$ in the summation runs over all possible values of $X$. 
+What is the expected value of $X$?
 
-In words, the expected value is the \textit{long-run average}, meaning that if
-you repeated an experiment many times (independently), the long-run average
-would converge to $\E\left[X \right]$.
+\begin{align*}
+  \E\left[X \right] 
+  &= \sum_{x} x \P\left[X=x \right]\\
+  &= 2\P\left[X=2 \right]+ 4 \P\left[X=4 \right] + 8\P\left[X=8 \right] + 16 \P\left[X=16 \right]+\ldots\\
+\end{align*}
+Next, we observe that $\P\left[X=2^{k} \right] = \frac{1}{2^{k}}$ for all
+$k =1,2,\ldots$. Plugging these probabilities in, we get
 
-\begin{remark}[Notation]
-  We sometimes use the notation $\mu$ or $\mu_{X}$ for $\E\left[X \right]$.
-\end{remark}
+\begin{equation*}
+  \E\left[X \right] = 1+1+1+1+1+\ldots   = +\infty.
+\end{equation*}
+The expected value of playing this game is positive infinity!!!!! N matter how
+much you pay to play this game, you will eventually make money if you play
+enough times.
 
-The following is a simple but important fact:
 
-\begin{proposition}[Linearity of Expectation]
-  \label{prop:linearity-of-expectation}
-  Let $a,b$ be numbers and $X$ and $Y$ be a random variables. Then
-  \begin{equation*}
-    \E\left[aX+b \right] = a \E\left[X \right] +b
-  \end{equation*}
-  and
-  \begin{equation*}
-    \E\left[aX+bY \right] = a\E\left[X \right]+ b\E\left[Y \right].
-  \end{equation*}
-\end{proposition}
-We saw this earlier, when we looked at the expected value of playing the
-lottery once $(-\$1)$ and of playing $10$ times $(-\$10)$, etc.
+
+\newpage
 
 \begin{theorem}[Expectation of a function of $X$] 
   \label{thm:LOTUS-discrete-case}
