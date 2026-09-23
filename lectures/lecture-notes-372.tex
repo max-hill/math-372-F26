@@ -220,7 +220,7 @@ providing a foundation for applications and further study.
     \item Expected values, mean, variance, binomial distribution, Poisson
     distribution. Moment generating functions. (Sections: 3.1-3.6)
   \end{itemize}
-  \item \textbf{End of week 5: Midterm 1 (Friday, September 25)}
+  \item \textbf{End of week 6: Midterm 1 (Friday, October 2)}
   \item \textbf{Weeks 6-7:} Continuous Random variables (1.5 weeks)
   \begin{itemize}
     \item Uniform, exponential, gamma, and normal distributions.
@@ -2180,39 +2180,39 @@ The following is a simple but important fact:
   \end{equation*}
 \end{example}
 \newpage
-\end{document}
+\section{2026-09-23 | Week 05 | Lecture 13}
+
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{The topic for this lecture:} expected value}
+
+    \textit{\textbf{Reading assignment:} Chapter 3.3}
+  \end{tcolorbox}
+\end{center}
+
+
+\section{Expected value examples}
+
 \begin{example}[Repeated coin flipping]
   \label{ex:cool-coin-flipping-example}
   Consider an experiment in which we flip a coin repeatedly until we get a
-  heads. The \textbf{output} of this experiment is \textit{the number of times
-    we flipped the coin}.
-  
-  The sample space of the experiment is
+  heads. The sample space of the experiment is
   \begin{equation*}
     S = \left\{1,2,3,4,\ldots\right\}.
   \end{equation*}
-
-  Let $X = (\text{number of coin flips})$. Here, $X$ is a random quantity
-  which will vary between experiments. Then
+  Let
   \begin{equation*}
-    \P\left[X = 1 \right] = \P\left[\text{first coin flip was heads} \right] = \frac{1}{2}
+    X = (\text{number of coin flips}).
   \end{equation*}
-  and
-  \begin{equation*}
-    \P\left[X = 2 \right] 
-    = \P\left[\text{first flip was tails and second was heads} \right] 
-    = \frac{1}{2}\cdot \frac{1}{2}
-    = \frac{1}{4}.
-  \end{equation*}
-  Similarly,  for any $n=1,2,3,4,\ldots$, we have
+  As discussed in \cref{ex:repeated-coin-flipping}, we have
   \begin{equation}\label{eq:1}
-    \P\left[X=n \right]= \left( \frac{1}{2} \right)^{n} 
+    \P\left[X=n \right]= \left( \frac{1}{2} \right)^{n}, \qquad n\in \left\{1,2,\ldots\right\}.
   \end{equation}
 
-  \Fl{Question 1:} How many times do we expect to flip the coin? In other words,
+  \Fl{Question:} What is the expected number of coin flips? In other words,
   what is $\E\left[X \right]$?
 
-  We use the formula
+  We use the expected value formula
   \begin{equation*}
     \E\left[X \right] = \sum_{n=1}^{\infty}n \P\left[X=n \right] 
   \end{equation*}
@@ -2246,25 +2246,17 @@ The following is a simple but important fact:
 
 
 
+\begin{example}[St. Petersburg Paradox]
+  \label{ex:st.-petersburg-paradox}
+  The game is the following: repeatedly flip a coin until you get heads. You
+  win $2^{n}$ dollars, where $n$ is the number of coin flips. How much would
+  you be willing to pay to play this game????
 
-\newpage
-\section{OLD STUFF}
-\subsection{Powerball}
-
-
-
-
-
-\subsection{St. Petersburg Paradox}
-
-The game is the following: repeatedly flip a coin until you get heads. You win $2^{n}$ dollars, where $n$ is
-the number of coin flips. How much would you be willing to pay to play this game????
-
-Let $X$ be your (random) payoff. The sample space of $X$ is
-\begin{equation*}
-  S = \left\{2,4,8,16,32,\ldots\right\}.
-\end{equation*}
-What is the expected value of $X$?
+  Let $X$ be your (random) payoff. The sample space of $X$ is
+  \begin{equation*}
+    S = \left\{2,4,8,16,32,\ldots\right\}.
+  \end{equation*}
+  What is the expected value of $X$?
 
 \begin{align*}
   \E\left[X \right] 
@@ -2277,15 +2269,13 @@ $k =1,2,\ldots$. Plugging these probabilities in, we get
 \begin{equation*}
   \E\left[X \right] = 1+1+1+1+1+\ldots   = +\infty.
 \end{equation*}
-The expected value of playing this game is positive infinity!!!!! N matter how
-much you pay to play this game, you will eventually make money if you play
+The expected value of playing this game is positive infinity!!!!! No matter
+how much you pay to play this game, you will eventually make money if you play
 enough times.
+\end{example}
+\subsection{Law of the unconscious statistician}
 
-
-
-\newpage
-
-\begin{theorem}[Expectation of a function of $X$] 
+\begin{theorem}[LOTUS - disrete case] 
   \label{thm:LOTUS-discrete-case}
   Let $X$ be a discrete random variable with pmf $p(x)$. Let $h:\R \to \R$ be any function. Then
   \begin{equation*}
@@ -2348,7 +2338,7 @@ enough times.
     &\approx 2.689.
   \end{align*}
 \end{example}
-
+\end{document}
 % We'll be interested in some
 % special cases
 % \begin{itemize}
@@ -2357,6 +2347,8 @@ enough times.
 %   \item $h(x) = e^{tX}$, where $t$ is any fixed real number.
 % \end{itemize}
 
+\newpage
+\section{2026-09-25 | Week 05 | Lecture 14}
 \subsection{Variance}
 \begin{definition}[Variance]
   \label{def:variance}
@@ -2364,20 +2356,93 @@ enough times.
   \begin{equation*}
     \text{Var}(X) := \E\left[(X-\mu)^{2} \right]
   \end{equation*}
-  where $\mu= \E\left[X \right]$. (Note: variance is often denoted by $\sigma^{2}$)
+  where $\mu= \E\left[X \right]$. The positive square root of the variance is
+  called the \demph{standard deviation}.
+
+  (Note: the standard deviation is usually denoted by $\sigma$, and variance
+  by $\sigma^{2}$.)
 \end{definition}
 
-Variance is a measure of how likely the value of a random variable is to be far from its expected value.
-In an ideal world, we would measure this by
+\fl{Interpretation:} Variance is a measure of how spread out the distribution
+of a random variable is, e.g., how likely the value of a random variable is to
+be far from its expected value.
+
+By \cref{thm:LOTUS-discrete-case}, we can write the variance as
 \begin{equation*}
-  \E\left[\left| X-\mu \right| \right] = (\text{expected distance of $X$ from its mean})
+  \Var(X) = \sum_{x}(x-\mu)^{2}\P\left[X=x \right]
 \end{equation*}
-But unfortunately, the absolute value function is mathematically difficult to work with, so instead we
-use
-\begin{equation*}
-  \E\left[(X-\mu)^{2} \right] = \text{Var}(X)
-\end{equation*}
-which is mathematically easer to work with because it doesn't have an absolute value.
+
+
+There is a shortcut for computing variance, given in the next theorem.
+\begin{theorem}[Variance shortcut formula]
+  \label{thm:variance-shortcut-formula}
+  Let $X$ be a random variable with $\E\left[X^{2} \right]<\infty$. Then
+  \begin{align*}
+    \Var(X) 
+    &= \E\left[X^{2} \right] - \left( \E\left[X \right] \right)^{2}
+  \end{align*}
+\end{theorem}
+The condition $\E\left[X^{2} \right]<\infty$ in
+\cref{thm:variance-shortcut-formula} is there to exclude the possibility that
+the right hand side of the formula be the undefined form $\infty-\infty$.
+
+
+
+Variance has several properties that are often useful, described in the next
+theorem.
+
+\begin{theorem}[Properties of Variance]
+  \label{thm:variance-properties}
+  Let $X$ be a random variable. Then:
+  \begin{itemize}
+    \item For any scalars $a,b$,
+    \begin{equation}\label{eq:5}
+      \Var(aX+b) = a^{2}\Var(X).
+    \end{equation}
+    \item If $X$ and $Y$ are independent random variables then
+    \begin{equation}\label{eq:7}
+      \Var(aX+bY+c) = a^{2}\Var(X)+b^{2}\Var(Y).
+    \end{equation}
+  \end{itemize}
+\end{theorem}
+\fl{Implications of \cref{thm:variance-properties}:}
+\begin{itemize}
+  \item Taking $b=0$ in \cref{eq:5} gives
+  \begin{equation}\label{eq:variance-squre-scaling}
+    \Var(aX) = a^{2}\Var(X).
+  \end{equation}
+  \begin{proof}[Here is a direct proof of \cref{eq:variance-squre-scaling}:]
+    \begin{align*}
+      \Var(aX)
+      &= \E\left[\left( aX- \E\left[aX \right] \right)^{2}  \right]
+      &&\text{by \cref{def:variance}}\\
+      &= E\left[  \left( aX- a\E\left[X \right] \right)^{2}  \right]
+      &&\text{by \cref{prop:linearity-of-expectation}}\\
+      &= \E\left[a^{2}\left(X- \E\left[X \right]  \right)  \right]\\
+      &= a^{2} \E\left[ X- \E\left[X \right]   \right] &&\text{by \cref{prop:linearity-of-expectation}}\\
+      &= a^{2}\Var(X) &&\text{by \cref{def:variance} }
+    \end{align*}
+  \end{proof}
+  \item Taking $a=1$ in \cref{eq:5} gives
+  \begin{equation*}
+    \Var(X+b) = \Var(X)
+  \end{equation*}
+  which says that adding a nonrandom quantity to a random variable doesn't
+  change its variance.
+  \item Taking $a=b=1$ and $c=0$ in \cref{eq:7} implies that
+  \begin{equation}\label{eq:additivity-of-variance}
+    \Var(X+ Y) = \Var(X) + \Var(Y).
+  \end{equation}
+  This says that for independent random variables, variance is additive.
+
+  (Of course, we always have
+  $\E\left[X+Y \right] = \E\left[X \right]+ \E\left[Y \right]$, even if $X$
+  and $Y$ are not independent. This is called \demph{linearity of
+    expectation}. But for variance, we need $X$ and $Y$ to be independent to
+  do something similar.)
+\end{itemize}
+
+\subsection{Variance examples}
 
 \begin{example}
   Let $X$ and $Y$ be random variables defined as follows:
@@ -2410,37 +2475,53 @@ which is mathematically easer to work with because it doesn't have an absolute v
   \end{align*}
 \end{example}
 
-\newpage
-\section{2026-02-25 | Week 07 | Lecture 15}
 
+\begin{definition}[Binomial random variable]
+  \label{def:binomial-random-variable}
+  A random variable is said to be a \demph{Binomial random variable} with $n$
+  trials and success probability $p$ if
+  \begin{equation*}
+    \P\left[X=k\right] = {n\choose k} p^{k}(1-p)^{n-k}
+  \end{equation*}
+  for every $k\in \left\{0,1,\ldots,n\right\}$. In this case, we write
+  $X\sim \text{Bin}(n,p)$.
+\end{definition}
 
-\subsection{Properties of Variance}
-Recall that the \demph{variance} of a random variable $X$ is
-\begin{equation*}
-  \Var(X) = \E\left[(X-\mu)^{2} \right]
-\end{equation*}
-where $\mu= \E\left[X \right]$.
+\begin{remark}[Useful characterization of binomial random variables]
+  \label{rmk:useful-characterization-binomial-random-variables}
+  If $X$ is a Binomial random variable with $n$
+  trials and success probability $p$, then we can write
+  \begin{equation*}
+    X = \xi_{1}+\ldots+\xi_{n}
+  \end{equation*}
+  where
+  \begin{equation*}
+    \xi_{i} = \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{with probability
+        }p\\0 & \text{with probability }1-p \end{array}\right..
+  \end{equation*}
+  In words $\xi_{i}$ is either one or zero depending on whether the
+  $i^{\rm th}$ coin flip was `heads' or not. Hence, the sum
+  $\xi_{1}+\ldots+\xi_{n}$ counts the number of heads in $n$ coin flips.
+\end{remark}
 
-For a discrete random variable $X$, this expectation can be written as
-\begin{equation*}
-  \Var(X) = \sum_{x}(x-\mu)^{2}\P\left[X=x \right]
-\end{equation*}
-by \cref{thm:LOTUS-discrete-case}.
+\begin{example}
+  Suppose we wish to compute $\E\left[X \right]$, when $X$ is binomial with
+  $n$ trials and success parameter $p$.
 
-The positive square root of the variance is called the \demph{standard deviation}.
-
-There is a shortcut for computing variance, given in the next theorem.
-\begin{theorem}[Variance shortcut formula]
-  \label{thm:variance-shortcut-formula}
-  Let $X$ be a random variable with $\E\left[X^{2} \right]<\infty$. Then
+  To do this computation, we'll use the idea of
+  \cref{rmk:useful-characterization-binomial-random-variables}:
   \begin{align*}
-    \Var(X) 
-    &= \E\left[X^{2} \right] - \left( \E\left[X \right] \right)^{2}
+    \E\left[X \right] 
+    &= \E\left[\xi_{1}+\ldots+\xi_{n} \right]\\ 
+    &= \E\left[\xi_{1} \right]+\ldots+ \E\left[\xi_{n} \right] &&\text{by \cref{prop:linearity-of-expectation}}.
   \end{align*}
-\end{theorem}
-The condition $\E\left[X^{2} \right]<\infty$ in
-\cref{thm:variance-shortcut-formula} is there to exclude the possibility that
-the right hand side of the formula be the undefined form $\infty-\infty$.
+  Observe that $\E\left[\xi_{i} \right]=1\cdotp+0\cdot(1-p)=p$ for all $i\in
+  \left\{1,\ldots,n\right\}$, and hence
+  \begin{equation*}
+    \E\left[X \right]= n p.
+  \end{equation*}
+\end{example}
+\newpage
 
 % \begin{example}
 %   Suppose
@@ -2532,59 +2613,6 @@ Hopefully this example doesn't give you the impression that variance is useless.
 important measure. The issue is just that random variables can ``vary'' in lots of different ways that
 can be hard to summarize as a single value.
 
-Variance has several properties that are often useful, described in the next
-theorem.
-
-\begin{theorem}[Properties of Variance]
-  \label{thm:variance-properties}
-  Let $X$ be a random variable. Then:
-  \begin{itemize}
-    \item For any scalars $a,b$,
-    \begin{equation}\label{eq:5}
-      \Var(aX+b) = a^{2}\Var(X).
-    \end{equation}
-    \item If $X$ and $Y$ are independent random variables then
-    \begin{equation}\label{eq:7}
-      \Var(aX+bY+c) = a^{2}\Var(X)+b^{2}\Var(Y).
-    \end{equation}
-  \end{itemize}
-\end{theorem}
-\fl{Implications of \cref{thm:variance-properties}:}
-\begin{itemize}
-  \item Taking $b=0$ in \cref{eq:5} gives
-  \begin{equation}\label{eq:variance-squre-scaling}
-    \Var(aX) = a^{2}\Var(X).
-  \end{equation}
-  \begin{proof}[Here is a direct proof of \cref{eq:variance-squre-scaling}:]
-    \begin{align*}
-      \Var(aX)
-      &= \E\left[\left( aX- \E\left[aX \right] \right)^{2}  \right]
-      &&\text{by \cref{def:variance}}\\
-      &= E\left[  \left( aX- a\E\left[X \right] \right)^{2}  \right]
-      &&\text{by \cref{prop:linearity-of-expectation}}\\
-      &= \E\left[a^{2}\left(X- \E\left[X \right]  \right)  \right]\\
-      &= a^{2} \E\left[ X- \E\left[X \right]   \right] &&\text{by \cref{prop:linearity-of-expectation}}\\
-      &= a^{2}\Var(X) &&\text{by \cref{def:variance} }
-    \end{align*}
-  \end{proof}
-  \item Taking $a=1$ in \cref{eq:5} gives
-  \begin{equation*}
-    \Var(X+b) = \Var(X)
-  \end{equation*}
-  which says that adding a nonrandom quantity to a random variable doesn't
-  change its variance.
-  \item Taking $a=b=1$ and $c=0$ in \cref{eq:7} implies that
-  \begin{equation}\label{eq:additivity-of-variance}
-    \Var(X+ Y) = \Var(X) + \Var(Y).
-  \end{equation}
-  This says that for independent random variables, variance is additive.
-
-  (Of course, we always have
-  $\E\left[X+Y \right] = \E\left[X \right]+ \E\left[Y \right]$, even if $X$
-  and $Y$ are not independent. This is called \demph{linearity of
-    expectation}. But for variance, we need $X$ and $Y$ to be independent to
-  do something similar.)
-\end{itemize}
 
 
 
@@ -2625,51 +2653,7 @@ out an example, say $n=5$ and $k=3$, and the general idea will become clear.
 
 The precise definition of a binomial random variable is as follows:
 
-\begin{definition}[Binomial random variable]
-  \label{def:binomial-random-variable}
-  A random variable is said to be a \demph{Binomial random variable} with $n$
-  trials and success probability $p$ if
-  \begin{equation*}
-    \P\left[X=k\right] = {n\choose k} p^{k}(1-p)^{n-k}
-  \end{equation*}
-  for every $k\in \left\{0,1,\ldots,n\right\}$. In this case, we write
-  $X\sim \text{Bin}(n,p)$.
-\end{definition}
 
-\begin{remark}[Useful characterization of binomial random variables]
-  \label{rmk:useful-characterization-binomial-random-variables}
-  If $X$ is a Binomial random variable with $n$
-  trials and success probability $p$, then we can write
-  \begin{equation*}
-    X = \xi_{1}+\ldots+\xi_{n}
-  \end{equation*}
-  where
-  \begin{equation*}
-    \xi_{i} = \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{with probability
-        }p\\0 & \text{with probability }1-p \end{array}\right..
-  \end{equation*}
-  In words $\xi_{i}$ is either one or zero depending on whether the
-  $i^{\rm th}$ coin flip was `heads' or not. Hence, the sum
-  $\xi_{1}+\ldots+\xi_{n}$ counts the number of heads in $n$ coin flips.
-\end{remark}
-
-\begin{example}
-  Suppose we wish to compute $\E\left[X \right]$, when $X$ is binomial with
-  $n$ trials and success parameter $p$.
-
-  To do this computation, we'll use the idea of
-  \cref{rmk:useful-characterization-binomial-random-variables}:
-  \begin{align*}
-    \E\left[X \right] 
-    &= \E\left[\xi_{1}+\ldots+\xi_{n} \right]\\ 
-    &= \E\left[\xi_{1} \right]+\ldots+ \E\left[\xi_{n} \right] &&\text{by \cref{prop:linearity-of-expectation}}.
-  \end{align*}
-  Observe that $\E\left[\xi_{i} \right]=1\cdotp+0\cdot(1-p)=p$ for all $i\in
-  \left\{1,\ldots,n\right\}$, and hence
-  \begin{equation*}
-    \E\left[X \right]= n p.
-  \end{equation*}
-\end{example}
 \newpage
 \section{2026-02-27 | Week 07 | Lecture 16}
 
