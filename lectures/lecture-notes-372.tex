@@ -1838,11 +1838,11 @@ letters, like $X,Y,Z$.
   angle from the dotted line. Let $X$ be the angle of the needle. So $X$ is a
   random variable. If $X$ is measured in degrees, then
   \begin{equation*}
-    X \in  [0,360)
+    0 \leq X < 360
   \end{equation*}
   but $X$ could take \textit{any} value between 0 and 360, not just integer
   values. We have no reason to believe any one angle is more likely than any
-  others -- for our idealized pinwheel, all values between $0$ and $2\pi$
+  others -- for our idealized pinwheel, all values between $0$ and $360$
   should all be equally likely.
 
   I claim that it must be the case that
@@ -2137,6 +2137,7 @@ The following is a simple but important fact:
 
 
 \begin{example}[Binomial random variable]
+  \label{ex:binomial-random-variable}
   Suppose we flip a coin $n$ times. Assume that for each flip, the coin has probability of heads
   $p$ and probability of tails $1-p$, where $p\in (0,1)$.
 
@@ -2338,7 +2339,7 @@ enough times.
     &\approx 2.689.
   \end{align*}
 \end{example}
-\end{document}
+
 % We'll be interested in some
 % special cases
 % \begin{itemize}
@@ -2349,29 +2350,148 @@ enough times.
 
 \newpage
 \section{2026-09-25 | Week 05 | Lecture 14}
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{The topic for this lecture:} variance}
+
+    \textit{\textbf{Reading assignment:} Chapter 3.3}
+  \end{tcolorbox}
+\end{center}
+
+\subsection{Some distributions}
+We begin by illustrating the distributions of some random variables we've seen
+so far. In the plots below, for each $x$, the height of the bar at $x$ is the
+probability that the rv takes vales $x$ (ie it is the value of $p(x)$). Note
+that the shaded areas sum to one.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[x=1cm,y=5cm]
+
+    % Identical axes, ticks, and scales in all four panels
+    \foreach \sx/\sy in {0/4.2,7.5/4.2,0/0,7.5/0}{
+      \begin{scope}[shift={(\sx cm,\sy cm)}]
+        \draw[->] (0,0) -- (6.1,0) node[right] {$x$};
+        \draw[->] (0,0) -- (0,0.55) node[above] {$p(x)$};
+
+        \foreach \x in {0,...,10}{
+          \draw ({0.55+0.5*\x},0.007) --
+          ({0.55+0.5*\x},-0.007)
+          node[below] {$\x$};
+        }
+      \end{scope}
+    }
+
+    % Top left: fair six-sided die
+    \begin{scope}[shift={(0cm,4.2cm)}]
+      \foreach \x in {1,...,6}{
+        \draw[fill=blue!30]
+        ({0.30+0.5*\x},0) rectangle
+        ({0.80+0.5*\x},{1/6});
+      }
+      \draw (-0.06,{1/6}) -- (0.06,{1/6});
+      \node[left] at (-0.08,{1/6}) {$\frac16$};
+      \node at (3.05,-0.20) {6-sided dice};
+    \end{scope}
+
+    % Top right: positive Geometric(1/2)
+    \begin{scope}[shift={(7.5cm,4.2cm)}]
+      \foreach \x in {1,...,10}{
+        \pgfmathsetmacro{\h}{1/(2^\x)}
+        \draw[fill=blue!30]
+        ({0.30+0.5*\x},0) rectangle
+        ({0.80+0.5*\x},\h);
+      }
+      \foreach \h/\lab in {
+        0.125/{\frac18},
+        0.25/{\frac14},
+        0.5/{\frac12}
+      }{
+        \draw (-0.06,\h) -- (0.06,\h);
+        \node[left] at (-0.08,\h) {$\lab$};
+      }
+      \node at (3.05,-0.20) {$\operatorname{Geom}(1/2)$};
+    \end{scope}
+
+    % Bottom left: Binomial(4,1/2)
+    \begin{scope}
+      \foreach \x/\h in {0/1,1/4,2/6,3/4,4/1}{
+        \draw[fill=blue!30]
+        ({0.30+0.5*\x},0) rectangle
+        ({0.80+0.5*\x},{\h/16});
+      }
+      \foreach \h/\lab in {
+        0.0625/{\frac{1}{16}},
+        0.25/{\frac14},
+        0.375/{\frac38}
+      }{
+        \draw (-0.06,\h) -- (0.06,\h);
+        \node[left] at (-0.08,\h) {$\lab$};
+      }
+      \node at (3.05,-0.20) {$\operatorname{Bin}(4,1/2)$};
+    \end{scope}
+
+    % Bottom right: Binomial(10,1/2)
+    \begin{scope}[shift={(7.5cm,0cm)}]
+      \foreach \x/\h in {
+        0/1,1/10,2/45,3/120,4/210,5/252,
+        6/210,7/120,8/45,9/10,10/1
+      }{
+        \draw[fill=blue!30]
+        ({0.30+0.5*\x},0) rectangle
+        ({0.80+0.5*\x},{\h/1024});
+      }
+      \draw (-0.06,{120/1024}) -- (0.06,{120/1024});
+      \node[left] at (-0.08,{120/1024}) {$\frac{15}{128}$};
+      \draw (-0.06,{252/1024}) -- (0.06,{252/1024});
+      \node[left] at (-0.08,{252/1024}) {$\frac{63}{256}$};
+      \node at (3.05,-0.20) {$\operatorname{Bin}(10,1/2)$};
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{The distributions fora 6-sided dice (top left),
+    the coin-fliping random variable from \cref{ex:repeated-coin-flipping} (top right),
+    and binomial random variables with parameters $(n,p)=(4,.5)$ (bottom left)
+    and $(n,p)=(10,.5)$ (bottom right).}
+\end{figure}
+
+\Fl{Question:} How can we measure how much variation a random variable
+exibits? That is, how spread out or concentrated is its distribution?
+
+One useful measure is called the \textit{variance}.
+
 \subsection{Variance}
 \begin{definition}[Variance]
   \label{def:variance}
-  The \demph{variance} of a random variable $X$ is
+  Let $X$ be a random variable. The \demph{variance} of $X$ is
   \begin{equation*}
     \text{Var}(X) := \E\left[(X-\mu)^{2} \right]
   \end{equation*}
   where $\mu= \E\left[X \right]$. The positive square root of the variance is
-  called the \demph{standard deviation}.
-
-  (Note: the standard deviation is usually denoted by $\sigma$, and variance
-  by $\sigma^{2}$.)
+  called the \demph{standard deviation} of $X$.
 \end{definition}
 
-\fl{Interpretation:} Variance is a measure of how spread out the distribution
-of a random variable is, e.g., how likely the value of a random variable is to
-be far from its expected value.
+\begin{remark}
+  Some notes about the above formula:
+  \begin{itemize}
+    \item The random quantity $X-\mu$ is the deviation of $X$ from its mean.
+    Since this gets squared, large deviations are amplified.
+    \item Since $(X-\mu)^{2}\geq 0$, the variance is always nonnegative.
+    \item Notation: standard deviation is usually denoted by $\sigma$, and
+    variance by $\sigma^{2}$.
+    \item \textbf{Interpretation of variance:} Variance is a measure of how spread
+    out the distribution of a random variable is, e.g., how likely the value
+    of a random variable is to be far from its expected value.
+  \end{itemize}
+\end{remark}
 
-By \cref{thm:LOTUS-discrete-case}, we can write the variance as
+
+Taking $h(x)= (x-\mu)^{2}$ in \cref{thm:LOTUS-discrete-case}, we can write the
+variance as
 \begin{equation*}
-  \Var(X) = \sum_{x}(x-\mu)^{2}\P\left[X=x \right]
+  \Var(X) = \sum_{x}(x-\mu)^{2}p(x)
 \end{equation*}
-
+where $p$ is the pmf of $X$.
 
 There is a shortcut for computing variance, given in the next theorem.
 \begin{theorem}[Variance shortcut formula]
@@ -2393,57 +2513,83 @@ theorem.
 
 \begin{theorem}[Properties of Variance]
   \label{thm:variance-properties}
-  Let $X$ be a random variable. Then:
-  \begin{itemize}
-    \item For any scalars $a,b$,
-    \begin{equation}\label{eq:5}
-      \Var(aX+b) = a^{2}\Var(X).
-    \end{equation}
-    \item If $X$ and $Y$ are independent random variables then
-    \begin{equation}\label{eq:7}
-      \Var(aX+bY+c) = a^{2}\Var(X)+b^{2}\Var(Y).
-    \end{equation}
-  \end{itemize}
-\end{theorem}
-\fl{Implications of \cref{thm:variance-properties}:}
-\begin{itemize}
-  \item Taking $b=0$ in \cref{eq:5} gives
+  Let $X$ be a random variable, and $a\in \R$ a scalar. Then
+  \begin{equation}\label{eq:variance-shift-invariance}
+    \Var(X+a) = \Var(X).
+  \end{equation}
+  and
   \begin{equation}\label{eq:variance-squre-scaling}
-    \Var(aX) = a^{2}\Var(X).
+    \Var(aX) = a^{2}\Var(X)
   \end{equation}
-  \begin{proof}[Here is a direct proof of \cref{eq:variance-squre-scaling}:]
-    \begin{align*}
-      \Var(aX)
-      &= \E\left[\left( aX- \E\left[aX \right] \right)^{2}  \right]
-      &&\text{by \cref{def:variance}}\\
-      &= E\left[  \left( aX- a\E\left[X \right] \right)^{2}  \right]
-      &&\text{by \cref{prop:linearity-of-expectation}}\\
-      &= \E\left[a^{2}\left(X- \E\left[X \right]  \right)  \right]\\
-      &= a^{2} \E\left[ X- \E\left[X \right]   \right] &&\text{by \cref{prop:linearity-of-expectation}}\\
-      &= a^{2}\Var(X) &&\text{by \cref{def:variance} }
-    \end{align*}
-  \end{proof}
-  \item Taking $a=1$ in \cref{eq:5} gives
-  \begin{equation*}
-    \Var(X+b) = \Var(X)
-  \end{equation*}
-  which says that adding a nonrandom quantity to a random variable doesn't
-  change its variance.
-  \item Taking $a=b=1$ and $c=0$ in \cref{eq:7} implies that
-  \begin{equation}\label{eq:additivity-of-variance}
-    \Var(X+ Y) = \Var(X) + \Var(Y).
-  \end{equation}
-  This says that for independent random variables, variance is additive.
+\end{theorem}
+In words, \cref{eq:variance-shift-invariance} says that shifting the
+distribution of an r.v.~to the left or right does not change its variance.
+\cref{eq:variance-squre-scaling} say that scaling a random variable by $a$
+results in a quadratic scaling of its variance.
 
-  (Of course, we always have
-  $\E\left[X+Y \right] = \E\left[X \right]+ \E\left[Y \right]$, even if $X$
-  and $Y$ are not independent. This is called \demph{linearity of
-    expectation}. But for variance, we need $X$ and $Y$ to be independent to
-  do something similar.)
-\end{itemize}
+By linearity of expectation, $\E[X+Y]= \E[X]+\E[Y]$. The next theorem shows
+that a similar property holds for variance, provided the random variables are
+indpendent.
+\begin{theorem}[Additivity of variance]
+  \label{thm:additivity-variance}
+  If $X$ and $Y$ are independent random variables, then
+  \begin{equation}\label{eq:additivity-of-variance}
+    \Var(X+Y) = \Var(X)+\Var(Y).
+  \end{equation}
+\end{theorem}
+This formula can be though of as analogous to the Pythagorean theorem.
 
 \subsection{Variance examples}
 
+
+\begin{definition}[Binomial random variable]
+  \label{def:binomial-random-variable}
+  A random variable  $X$ is said to be a \demph{Binomial random variable} with $n$
+  trials and success probability $p$ if it has pmf
+  \begin{equation*}
+    p(x) = {n\choose x} p^{x}(1-p)^{n-x}, \qquad x\in \left\{0,1,\ldots,n\right\}.
+  \end{equation*}
+  In this case, we write $X\sim \text{Bin}(n,p)$.
+\end{definition}
+
+\begin{remark}[Useful characterization of binomial random variables]
+  \label{rmk:useful-characterization-binomial-random-variables}
+  If $X$ is a Binomial random variable with $n$ trials and success probability
+  $p$, then we can write it as a sum of independent random variables
+  $Y_{1},\ldots,Y_{n}$:
+  \begin{equation*}
+    X = Y_{1}+\ldots+Y_{n}
+  \end{equation*}
+  where
+  \begin{equation*}
+    Y_{i} = \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{with probability
+        }p\\0 & \text{with probability }1-p \end{array}\right..
+  \end{equation*}
+  In words $Y_{i}$ is either one or zero depending on whether the
+  $i^{\rm th}$ coin flip was `heads' or not. Hence, the sum
+  $Y_{1}+\ldots+Y_{n}$ counts the number of heads in $n$ coin flips.
+\end{remark}
+
+\begin{example}[Variance of binomial rv]
+  \label{ex:variance-binomial-rv}
+
+  In \cref{ex:binomial-random-variable}, we showed that $\E[X] = np$. Now we
+  compute the variance. Using the shortcut formula (\cref{thm:variance-shortcut-formula}),
+  \begin{equation*}
+    \Var(Y_{i}) = p-p^{2} = p(1-p).
+  \end{equation*}
+  Since $Y_{1},\ldots,Y_{n}$ are independent, \cref{thm:additivity-variance}
+  gives
+  \begin{align*}
+    \Var(X) 
+    &= \Var(Y_{1})+\ldots +\Var(Y_{n})\\
+    &=p(1-p)+\ldots+p(1-p)\\
+    &=np(1-p).
+  \end{align*}
+  Note that the variance increases with $n$, and is m
+\end{example}
+
+\end{document}
 \begin{example}
   Let $X$ and $Y$ be random variables defined as follows:
   \begin{equation*}
@@ -2475,54 +2621,12 @@ theorem.
   \end{align*}
 \end{example}
 
+\subsection{Limitations of variance}
 
-\begin{definition}[Binomial random variable]
-  \label{def:binomial-random-variable}
-  A random variable is said to be a \demph{Binomial random variable} with $n$
-  trials and success probability $p$ if
-  \begin{equation*}
-    \P\left[X=k\right] = {n\choose k} p^{k}(1-p)^{n-k}
-  \end{equation*}
-  for every $k\in \left\{0,1,\ldots,n\right\}$. In this case, we write
-  $X\sim \text{Bin}(n,p)$.
-\end{definition}
-
-\begin{remark}[Useful characterization of binomial random variables]
-  \label{rmk:useful-characterization-binomial-random-variables}
-  If $X$ is a Binomial random variable with $n$
-  trials and success probability $p$, then we can write
-  \begin{equation*}
-    X = \xi_{1}+\ldots+\xi_{n}
-  \end{equation*}
-  where
-  \begin{equation*}
-    \xi_{i} = \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{with probability
-        }p\\0 & \text{with probability }1-p \end{array}\right..
-  \end{equation*}
-  In words $\xi_{i}$ is either one or zero depending on whether the
-  $i^{\rm th}$ coin flip was `heads' or not. Hence, the sum
-  $\xi_{1}+\ldots+\xi_{n}$ counts the number of heads in $n$ coin flips.
-\end{remark}
-
-\begin{example}
-  Suppose we wish to compute $\E\left[X \right]$, when $X$ is binomial with
-  $n$ trials and success parameter $p$.
-
-  To do this computation, we'll use the idea of
-  \cref{rmk:useful-characterization-binomial-random-variables}:
-  \begin{align*}
-    \E\left[X \right] 
-    &= \E\left[\xi_{1}+\ldots+\xi_{n} \right]\\ 
-    &= \E\left[\xi_{1} \right]+\ldots+ \E\left[\xi_{n} \right] &&\text{by \cref{prop:linearity-of-expectation}}.
-  \end{align*}
-  Observe that $\E\left[\xi_{i} \right]=1\cdotp+0\cdot(1-p)=p$ for all $i\in
-  \left\{1,\ldots,n\right\}$, and hence
-  \begin{equation*}
-    \E\left[X \right]= n p.
-  \end{equation*}
-\end{example}
-\newpage
-
+While variance does give us some information, it's only a single number and so the amount of information
+it gives us about the random variable is actually very limited, and it is impossible to interpret it
+precisely without additional information about the random variable. This is illustrated in the following
+example.
 % \begin{example}
 %   Suppose
 %   \begin{equation*}
@@ -2566,10 +2670,6 @@ theorem.
 % \end{example}
 
 
-While variance does give us some information, it's only a single number and so the amount of information
-it gives us about the random variable is actually very limited, and it is impossible to interpret it
-precisely without additional information about the random variable. This is illustrated in the following
-example.
 
 \begin{example}
   Let $M = 1,000,000$. And let
@@ -2613,45 +2713,6 @@ Hopefully this example doesn't give you the impression that variance is useless.
 important measure. The issue is just that random variables can ``vary'' in lots of different ways that
 can be hard to summarize as a single value.
 
-
-
-
-
-\subsection{Binomial random variable}
-
-% \begin{example}[Bernoulli random variable]
-%   Any random varible whose only values are 0 or 1. For any fixed value $0<\alpha<1$, we say that $X$ \demph{is a
-%     Bernoulli random variable with success parameter $\sigma$} if
-%   \begin{equation*}
-%     X = \left\{ \begin{array}{l@{\quad}l} 1 & \text{with probability } \alpha\\0  & \text{with
-%           probability } 1-\alpha \end{array}\right.
-%   \end{equation*}
-%   In this case, we write $X\sim \text{Bern}(\alpha)$. 
-%   The pmf of $X$ is the function taking the following values:
-%   \begin{equation*}
-%     p(1) = \alpha,
-%     \quad  p(0) = 1-\alpha,
-%     \quad \text{and} \quad p(x)=0 \text{ for all other values of }x
-%   \end{equation*}
-  
-%   A Bernoulli random variable is nothing other than a coin flip (with a coin that lands `head' with
-%   probability $\alpha$.)
-% \end{example}
-
-Next we introduce an important type of random variable, called the
-``binomial'' random variable. The motivation is the following idea: if you
-flip a coin $n$ times, and let $p\in (0,1)$ be the probability of `heads'
-on any given coin flip. We can define a random variable
-$X=\text{(\# of heads in $n$ flips)}$.
-
-The probability that you get exactly $k$ heads in $n$ flips is given by the formula:
-\begin{equation}\label{eq:32}
-  {n\choose k} p^{k}(1-p)^{n-k}.
-\end{equation}
-This is the probability that $X=k$. To see where \cref{eq:32} comes from, work
-out an example, say $n=5$ and $k=3$, and the general idea will become clear.
-
-The precise definition of a binomial random variable is as follows:
 
 
 \newpage
@@ -6032,4 +6093,4 @@ $y=C+Dt$, set up the equation $A^{\top}Ax=A^{\top}b$ and solve it for $x=
 %   that $\ker(A^{\top}A)=\left\{0\right\}$. Therefore $A^{\top}A$ is
 %   invertible.
 % \end{proof}
-\end{document}
+\end{document}.
