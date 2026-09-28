@@ -2192,7 +2192,7 @@ The following is a simple but important fact:
 \end{center}
 
 
-\section{Expected value examples}
+\subsection{Expected value examples}
 
 \begin{example}[Repeated coin flipping]
   \label{ex:cool-coin-flipping-example}
@@ -2354,11 +2354,11 @@ enough times.
   \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
     \textit{\textbf{The topic for this lecture:} variance}
 
-    \textit{\textbf{Reading assignment:} Chapter 3.3}
+    \textit{\textbf{Reading assignment:} Chapter 3.3, 3.4}
   \end{tcolorbox}
 \end{center}
 
-\subsection{Some distributions}
+\subsection{The ``spread'' of a distribution}
 We begin by illustrating the distributions of some random variables we've seen
 so far. In the plots below, for each $x$, the height of the bar at $x$ is the
 probability that the rv takes vales $x$ (ie it is the value of $p(x)$). Note
@@ -2539,7 +2539,7 @@ indpendent.
 \end{theorem}
 This formula can be though of as analogous to the Pythagorean theorem.
 
-\subsection{Variance examples}
+\subsection{Variance of the binomial distribution}
 
 
 \begin{definition}[Binomial random variable]
@@ -2586,47 +2586,27 @@ This formula can be though of as analogous to the Pythagorean theorem.
     &=p(1-p)+\ldots+p(1-p)\\
     &=np(1-p).
   \end{align*}
-  Note that the variance increases with $n$, and is m
+  Note that the variance increases with $n$. As a function of $p$ it is
+  maximized when $p=1/2$.
 \end{example}
 
-\end{document}
-\begin{example}
-  Let $X$ and $Y$ be random variables defined as follows:
-  \begin{equation*}
-    X = \left\{ \begin{array}{l@{\quad:\quad}l} +1 & \text{with probability
-        }\frac{1}{2} \\ -1& \text{with probability }\frac{1}{2} \end{array}\right.
-    \quad \text{and} \quad
-    Y = \left\{ \begin{array}{l@{\quad:\quad}l} +1000 & \text{with probability
-        }\frac{1}{2} \\ -1000& \text{with probability }\frac{1}{2} \end{array}\right.
-  \end{equation*}
-  In both cases, $\E\left[X \right]=0$ and $\E\left[Y \right] = 0$. But
-  despite having the same expected value, these are very different random
-  variables: the value of $Y$ deviates from its mean much more than $X$ does.
-  Indeed, direct computation (shown below) shows the variance of $Y$ to be
-  much larger than the variance of $X$:
-  \begin{align*}
-    \Var(X) 
-    &= \E\left[(X- \mu)^{2} \right] \\
-    &= \E\left[X^{2} \right] &&\text{ since $\mu= \E\left[X \right]=0$ }\\
-    &= (1)^{2}(.5)+(-1)^{2}(.5) &&\text{ by \cref{thm:LOTUS-discrete-case} }\\
-    &= 1.
-  \end{align*}
-  On the other hand,
-  \begin{align*}
-    \Var(Y) 
-    &= \E\left[(Y- \mu)^{2} \right] \\
-    &= \E\left[Y^{2} \right] &&\text{ since $\mu= \E\left[Y \right]=0$ }\\
-    &= (1000)^{2}(.5)+(-1000)^{2}(.5) &&\text{ by \cref{thm:LOTUS-discrete-case} }\\
-    &= 1000000.
-  \end{align*}
-\end{example}
+\newpage
 
-\subsection{Limitations of variance}
+\section{2026-09-28 | Week 06 | Lecture 15}
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{Topic of this lecture:} Poisson distribution}
 
-While variance does give us some information, it's only a single number and so the amount of information
-it gives us about the random variable is actually very limited, and it is impossible to interpret it
-precisely without additional information about the random variable. This is illustrated in the following
-example.
+    \textit{\textbf{Reading assignment:} chapters 3.4, 3.6}
+  \end{tcolorbox}
+\end{center}
+
+
+% \subsection{Limitations of variance}
+
+% While variance does give us some information, it's only a single number and so the amount of information
+% it gives us about the random variable is actually very limited, and it is impossible to interpret it
+% precisely without additional information about the random variable. 
 % \begin{example}
 %   Suppose
 %   \begin{equation*}
@@ -2670,55 +2650,377 @@ example.
 % \end{example}
 
 
+% \begin{example}
+%   Let $X$ and $Y$ be random variables defined as follows:
+%   \begin{equation*}
+%     X = \left\{ \begin{array}{l@{\quad:\quad}l} +1 & \text{with probability
+%         }\frac{1}{2} \\ -1& \text{with probability }\frac{1}{2} \end{array}\right.
+%     \quad \text{and} \quad
+%     Y = \left\{ \begin{array}{l@{\quad:\quad}l} +1000 & \text{with probability
+%         }\frac{1}{2} \\ -1000& \text{with probability }\frac{1}{2} \end{array}\right.
+%   \end{equation*}
+%   In both cases, $\E\left[X \right]=0$ and $\E\left[Y \right] = 0$. But
+%   despite having the same expected value, these are very different random
+%   variables: the value of $Y$ deviates from its mean much more than $X$ does.
+%   Indeed, direct computation (shown below) shows the variance of $Y$ to be
+%   much larger than the variance of $X$:
+%   \begin{align*}
+%     \Var(X) 
+%     &= \E\left[(X- \mu)^{2} \right] \\
+%     &= \E\left[X^{2} \right] &&\text{ since $\mu= \E\left[X \right]=0$ }\\
+%     &= (1)^{2}(.5)+(-1)^{2}(.5) &&\text{ by \cref{thm:LOTUS-discrete-case} }\\
+%     &= 1.
+%   \end{align*}
+%   On the other hand,
+%   \begin{align*}
+%     \Var(Y) 
+%     &= \E\left[(Y- \mu)^{2} \right] \\
+%     &= \E\left[Y^{2} \right] &&\text{ since $\mu= \E\left[Y \right]=0$ }\\
+%     &= (1000)^{2}(.5)+(-1000)^{2}(.5) &&\text{ by \cref{thm:LOTUS-discrete-case} }\\
+%     &= 1000000.
+%   \end{align*}
+% \end{example}
+
+
+% \begin{example}
+%   Let $M = 1,000,000$. And let
+%   \begin{equation*}
+%     X = \left\{ \begin{array}{l@{\quad:\quad}l} 0 & \text{with probability } .99  \\ 10M &
+%         \text{with probability }.01 \end{array}\right.
+%   \end{equation*}
+%   The random variable $X$ is like winning the lottery.
+
+%   On the other hand,  let
+%   \begin{equation*}
+%     Y = \left\{ \begin{array}{l@{\quad:\quad}l} -10 & \text{with probability }\frac{1}{2}\\ 10 & \text{with probability }\frac{1}{2} \end{array}\right.
+%   \end{equation*}
+
+%   In the case of $X$, we have
+%   \begin{align*}
+%     \Var(X) 
+%     &= \E\left[X^{2} \right] - \left( \E\left[X \right] \right)^{2}\\
+%     &= \left[(10M)^{2}(0.01)+ 0^{2}(0.99)\right] - \left[10M(0.01)+ 0(0.99)\right]^{2}\\
+%     &= M^{2} - \frac{M^{2}}{100}\\
+%     &= \frac{99}{100}M^{2}
+%   \end{align*}
+%   This is a HUGE variance, because $M=10,000,000$. But for the most part, intuitvely, few people would
+%   say that this r.v. ``varies'' all that much. After all, it's almost always $0$.
+
+
+%   On the other hand, what if we compute the variance of $Y$? In this, we have $\E\left[Y
+%   \right]=-10\frac{1}{2}+10\frac{1}{2}=0$, so
+%   \begin{align*}
+%     \Var(Y) 
+%     &= \E\left[Y^{2} \right]-0\\
+%     &= (-10)^{2}\frac{1}{2} + (10)^{2}\frac{1}{2}\\
+%     &= 100
+%   \end{align*}
+%   In this case, the variance is pretty big---not huge, but pretty big. Yet the random variable $Y$
+%   doesn't really seem to ``vary'' all that much: after all, we know it is always either 10 more than the
+%   mean (which is zero), or 10 less than the mean.
+% \end{example}
+\subsection{Motivation}
+
+Fix a small positive number $\lambda>0$. For each $i\in
+\left\{1,\ldots,n\right\}$ let
+\begin{equation*}
+  Y_{i}= \left\{ \begin{array}{l@{\quad:\quad}l} 1 &\text{with probability }\frac{\lambda}{n} \\
+      0& \text{with probability } 1-\frac{\lambda}{n} \end{array}\right.
+\end{equation*}
+Assume that $Y_{1},\ldots,Y_{n}$ are independent. Informally, we think of them
+as coin flips, where $\P[\mathtt{HEADS}]=\frac{\lambda}{n}$. Now consider
+their sum:
+\begin{align*}
+  S_{n} 
+  &= Y_{1}+\ldots+Y_{n}\\
+  &= \left(\text{\# of heads in $n$ flips, assuming $\P[\mathtt{HEADS}]=\frac{\lambda}{n}$} \right).
+\end{align*}
+Since $S_{n}\sim \text{Binom}(n, \frac{\lambda}{n})$, our earlier computations
+with binomial rvs in
+\cref{ex:binomial-random-variable,ex:variance-binomial-rv} gives
+\begin{equation*}
+  \E\left[S_{n} \right]= n \left( \frac{\lambda}{n} \right) = \lambda 
+\end{equation*}
+and
+\begin{equation*}
+  \Var(S_{n}) = n \left( \frac{\lambda}{n} \right) \left( 1-\frac{\lambda}{n} \right) = \lambda \left( 1-\frac{\lambda}{n} \right).
+\end{equation*}
+
+\fl{Question:} What happens as $n \to \infty$? Think! As $n$ grows, the
+probability of heads is getting smaller, but the number of coins is
+increasing. These two forces balance out, so that the expected number of heads
+is always $\lambda$, which doesn't change as $n$ grows. Could this procedure
+converge to a new random variable that we haven't seen yet? What would it look
+like?
+
+\textit{If there exists a random variable $X$ such that
+  $X = \lim_{n\to\infty}S_{n}$}, then we anticipate that it should satisfy
+\begin{equation*}
+  \E[X] = \lim_{n\to\infty} \E[S_{n}] = \lambda
+\end{equation*}
+and
+\begin{equation*}
+  \Var(X) = \lim_{n\to\infty} \Var(S_{n}) = \lim_{n\to\infty} \lambda \left( 1- \frac{\lambda}{n} \right) = \lambda. 
+\end{equation*}
+
+Such a random variable exists. It is called a
+Poisson random variable, and we introduce it next.
+
+\subsection{The Poisson distribution}
+
+
+\begin{theorem}[The exponential function]
+  \label{thm:exponential-function}
+  For any real number $x$, the \demph{exponential function}, denoted $e^{x}$,
+  is the function
+  \begin{equation*}
+    e^{x} = \sum_{n=0}^{\infty}\frac{x^{n} }{n!}.
+  \end{equation*}
+\end{theorem}
+
+
+\begin{definition}[Poisson (``Pwason'')]
+  Let $\lambda>0$. A random variable $X$ is a \demph{Poisson random variable}
+  with mean $\lambda>0$ if it has probability mass function
+  \begin{equation*}
+    p(k) = e^{-\lambda} \frac{\lambda^{k}}{k!} \quad \text{ for }k\in \left\{0,1,2,\ldots\right\}.
+  \end{equation*}
+  Equivalently, we say that $X$ has a \demph{Poisson distribution} with mean
+  $\lambda$, and write $X\sim \operatorname{Pois}(\lambda)$.
+\end{definition}
+
+\begin{remark}
+  Before continuing, we should check that $p(k)$ is a valid probability mass
+  function. This means we need to check two things:
+  \begin{itemize}
+    \item Check that $p(k) \geq 0$ for all $k$.
+    \item Check that $\sum_{k}p(k)=1$.
+  \end{itemize}
+  It is clear that $p(k) = \frac{e^{-\lambda}\lambda^{k}}{k}\geq 0$, so the
+  first condition is satisfied. To check the second condition, we have:
+  \begin{align*}
+    \sum_{k=0}^{\infty}  p(k) 
+    &= \sum_{k=0}^{\infty}e^{-\lambda}\frac{\lambda^{k}}{k!} \\
+    &=e^{-\lambda}\left(\sum_{k=0}^{\infty}\frac{\lambda^{k}}{k!}\right) \\
+    &= e^{-\lambda} e^{\lambda} &&\text{by \cref{thm:exponential-function} }\\
+    &=1.
+  \end{align*}
+  Therefore $p$ is indeed a valid pmf.
+\end{remark}
+
+\begin{proposition}
+  Let $X\sim \text{Pois}(\lambda)$. Then
+  \begin{equation*}
+    \E\left[X \right]= \lambda \quad \text{and} \quad \Var(X) = \lambda
+  \end{equation*}
+\end{proposition}
+
+The Poisson distribution is commonly-used to model \textit{accidents}.
 
 \begin{example}
-  Let $M = 1,000,000$. And let
+  \label{ex:poisson-car-accidents}
+  Oahu has about a million cars and averages about 6 car accidents per day. The probability that any one
+  car will have an accident is very small, and they are all (nearly) independent from each other, bus
+  since there are so many cars, you expect 6 accidents, on average. But actual number of accidents each
+  day is $X=0$ or $1$ or $2$ or $\ldots$. The number of car accidents is thus poisson distributed with
+  mean $\lambda=6$ What is
   \begin{equation*}
-    X = \left\{ \begin{array}{l@{\quad:\quad}l} 0 & \text{with probability } .99  \\ 10M &
-        \text{with probability }.01 \end{array}\right.
+    \P\left[X \leq 2\right]?
   \end{equation*}
-  The random variable $X$ is like winning the lottery.
-
-  On the other hand,  let
+  
+  The probabilities of no accidents, one accident, and two accidents
+  are
   \begin{equation*}
-    Y = \left\{ \begin{array}{l@{\quad:\quad}l} -10 & \text{with probability }\frac{1}{2}\\ 10 & \text{with probability }\frac{1}{2} \end{array}\right.
+    p(0) = e^{-6} \frac{6^{0}}{0!} = e^{-6} \approx 0.002
+  \end{equation*}
+  \begin{equation*}
+    p(1) = e^{-6} \frac{6^{1}}{1!} = 6e^{-6} \approx 0.015
+  \end{equation*}
+  \begin{equation*}
+    p(2) = e^{-6} \frac{6^{2}}{2!} = 18e^{-6} \approx 0.045
   \end{equation*}
 
-  In the case of $X$, we have
-  \begin{align*}
-    \Var(X) 
-    &= \E\left[X^{2} \right] - \left( \E\left[X \right] \right)^{2}\\
-    &= \left[(10M)^{2}(0.01)+ 0^{2}(0.99)\right] - \left[10M(0.01)+ 0(0.99)\right]^{2}\\
-    &= M^{2} - \frac{M^{2}}{100}\\
-    &= \frac{99}{100}M^{2}
-  \end{align*}
-  This is a HUGE variance, because $M=10,000,000$. But for the most part, intuitvely, few people would
-  say that this r.v. ``varies'' all that much. After all, it's almost always $0$.
-
-
-  On the other hand, what if we compute the variance of $Y$? In this, we have $\E\left[Y
-  \right]=-10\frac{1}{2}+10\frac{1}{2}=0$, so
-  \begin{align*}
-    \Var(Y) 
-    &= \E\left[Y^{2} \right]-0\\
-    &= (-10)^{2}\frac{1}{2} + (10)^{2}\frac{1}{2}\\
-    &= 100
-  \end{align*}
-  In this case, the variance is pretty big---not huge, but pretty big. Yet the random variable $Y$
-  doesn't really seem to ``vary'' all that much: after all, we know it is always either 10 more than the
-  mean (which is zero), or 10 less than the mean.
+  Therefore $\P \left[ X \leq 2\right] = p(0)+p(1)+p(2)\approx
+  0.002+0.015+0.045  = 0.062$. Hence there is about $6.2\%$ chance that a
+  given day has $2$ or fewer accidents.
+  are 
 \end{example}
 
-Hopefully this example doesn't give you the impression that variance is useless. It's actually a really
-important measure. The issue is just that random variables can ``vary'' in lots of different ways that
-can be hard to summarize as a single value.
+
+\begin{theorem}[The Poisson approximation]
+  \label{thm:poisson-approximation}
+  Assume that $X \sim \operatorname{Binom}(n,p)$. This means that $X$ has pmf
+  \begin{equation*}
+    \P\left[X = k \right] = {n\choose k}p^{k}(1-p)^{n-k}, \qquad k\in \left\{0,1,\ldots,n\right\} 
+  \end{equation*}
+  Let $\lambda=np$. When $n$ is large and $p$ is small (e.g., $n>50$ and $\lambda<5$), then we have the
+  following approximation:
+  \begin{equation*}
+    \P\left[X  = k \right] \approx e^{-\lambda}\frac{\lambda^{k}}{k!}, \qquad k\in \left\{0,1,\ldots\right\} 
+  \end{equation*}
+\end{theorem}
+
+\begin{remark}
+  In other words, \cref{thm:poisson-approximation} says that when $n$ is large
+  and $p$ is small, the probability distribution of $X$ is well-approximated
+  by a Poisson distribution with parameter $\lambda=np$. That is,
+  \begin{equation*}
+    \operatorname{Binom}(n,p) \approx \operatorname{Pois}(\lambda),
+  \end{equation*}
+  where $\lambda=np$.
+\end{remark}
+\end{document}
+
+
+\newpage
+
+
+How accurate is the Poisson approximation of \cref{thm:poisson-approximation}?
+
+\begin{example}[Poisson approximation]
+  In \textit{Dungeons and Dragons}, a 20-sided dice is used (aka the `d20'). When you roll a 1 out of 20,
+  that's called a \demph{critical failure}, which usually results in something terrible happening.
+
+  Suppose that in the course of a game, a twenty side dice is rolled $n=100$ times. Let $X$ be the number of
+  critical failures. The probability of a critical failure is $p=1/20=.05$. So
+  \begin{equation*}
+    X \sim \text{Bin}\left(100,\frac{1}{20}\right).
+  \end{equation*}
+  The expected value of $X$ is five. The pmf of $X$ is
+  \begin{equation*}
+    \P\left[X=k \right] = {100\choose k} \left( \frac{1}{20} \right) ^{k}\left( 1-\frac{1}{20} \right)
+    ^{100-k}, \qquad k\in \left\{0,1,\ldots,100\right\}.
+  \end{equation*}
+
+  Since $p=0.05$ is small and $n=100$ is large, we can approximate $X$ with a Poisson random variable $Y$
+  with parameter $\lambda=np = 5$. That is, $Y\sim \text{Pois}(5)$. The pmf of $Y$ is
+  \begin{equation*}
+    \P\left[ Y=k\right] = e^{-5}\cdot\frac{5^{k}}{k!}, \text{ for } k=0,1,2,\ldots
+  \end{equation*}
+  
+  Let's compute some probabilities, rounding to three decimal places
+  \begin{center}
+    \begin{tabular}{|l|l|l|}
+      \hline
+      $x$ & $\P\left[X=k \right]$ & $\P\left[Y=k \right]$ \\ \hline
+      0 &  $.006 $    & $.007 $    \\ \hline
+      1 &   $.031 $   &   $.034 $   \\ \hline
+      2 &  $.081 $    &   $.084 $   \\ \hline
+      3 &   $.140 $   &  $.140 $    \\ \hline
+      4 &    $.178 $  &    $.175 $  \\ \hline
+    \end{tabular}
+  \end{center}
+  
+\end{example}
 
 
 
 \newpage
-\section{2026-02-27 | Week 07 | Lecture 16}
+\section{Poisson old}
 
-\subsection{Application of the Law of Total Probability: The probability of winning at craps}
+
+Fix $\lambda\in (0,1)$. Suppose have the following coins:
+\begin{itemize}
+  \item Coin \#1 has probability of heads $\lambda$
+  \item Coin \#2 has probability of heads $\frac{\lambda}{2}$
+  \item Coin \#3 has probability of heads $\frac{\lambda}{3}$
+  \item And so forth.
+\end{itemize}
+Consider the following sequence of experiments:
+\begin{itemize}
+  \item Experiment 1: Flip coin \#1 once. 
+  \item Experiment 2: Flip coin \#2 twice.
+  \item Experiment 3: Flip coin \#3 three times.
+  \item Experiment $n$: Flip coin $\#n$, $n$ times. 
+\end{itemize}
+
+Let us focus now on the $n^{\rm th}$ experiment. Let $\xi_{1},\ldots,\xi_{n}$ represent the $n$ coin flips, where
+\begin{equation*}
+  \xi_{k} = \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{ $k^{\rm th}$ coin flip is heads} \\ 0 & \text{otherwise}\end{array}\right.
+\end{equation*}
+for each $k\in \left\{1,\ldots,n\right\}$.
+
+Let
+\begin{equation*}
+  X_{n} = \xi_{1}+\xi_{2}+\ldots+\xi_{n} = \text{(\# of heads in $n$ flips)}
+\end{equation*}
+
+\Fl{Question:} How many heads do we expect to get? We can use the linearity of
+expectation:
+\begin{align*} 
+  \E\left[X_{n} \right] 
+  &= \E\left[ \xi_{1}+\xi_{2}+\ldots+\xi_{n} \right] \\
+  &= \E\left[\xi_{1} \right]+ \E\left[\xi_{2} \right]+\ldots+ \E\left[\xi_{n} \right]\\
+  &= \underbrace{\frac{\lambda}{n}+ \frac{\lambda}{n} + \ldots+\frac{\lambda}{n}}_{n\text{ terms}}\\
+  &=\lambda.
+\end{align*}
+
+So the expected number of heads that we get doesn't change from experiment to experiment, even if we send
+$n \to \infty$. Think!---for each experiment, the probability of heads is $\frac{\lambda}{n}$ and that is
+getting smaller. However the total number of coin flips is getting larger and larger.
+
+\Fl{Question} Is it possible that as $n \to \infty$, the random variable $X_{n}$ converges to some new
+random variable $Y$, one that we haven't seen yet? What properties would that new
+random variable have?
+
+
+\begin{itemize}
+  \item Its expectation should be $\lambda$, since $\E\left[Y
+  \right]=\lim_{n\to\infty} \E\left[X_{n} \right] = \lambda$
+  \item It should be able to take any positive integer value, and not any
+  other values.
+\end{itemize}
+
+\Fl{Question:} What do we expect the variance of $Y$ to be?
+
+To answer this, observe that, as the sum of $n$ coin flips (each with
+$\P\left[\text{Heads} \right]=\frac{\lambda}{n}$), it follows by
+\cref{rmk:useful-characterization-binomial-random-variables} that
+$X_{n}\sim \text{Bin}(n,\lambda/n)$.
+
+Using the variance calculation from \cref{ex:variance-binomial-rv}, we find
+that
+\begin{equation*}
+  \Var(X_{n}) = \lambda\left( 1-\frac{\lambda}{n} \right).
+\end{equation*}
+Therefore we expect the following to be true of $Y$:
+\begin{equation*}
+  \Var(Y) = \lim_{n\to\infty} \Var(X_{n}) = \lim_{n\to\infty} \lambda\left( 1-\frac{\lambda}{n} \right) = \lambda.
+\end{equation*}
+If this limit were $0$, then we would expect our final result to not vary at
+all---in other words, we'd expect the limit to be a fixed number, rather than
+a random quantity. But since the limiting variance $\lambda$ is positive, we
+expect the limit to be a random variable. 
+
+\Fl{Qustion:} What should the probability mass function of $Y$ look like?
+
+
+By \cref{def:binomial-random-variable}, the probability mass function of $X_{n}$
+is
+\begin{equation*}
+  \P\left[X_{n} = k \right] = {n\choose k }p^{k}(1-p)^{n-k}, \quad k=0,1,2,\ldots
+\end{equation*}
+It turns out that when $n$ is large and $p$ is small, the following
+approximation holds:
+\begin{equation*}
+  {n\choose k }p^{k}(1-p)^{n-k} \approx e^{-\lambda}\frac{\lambda^{k}}{k!}
+\end{equation*}
+So we might expect that in the limit, if our our coin-flipping process
+converges to a random variable $Y$, that random variable should have
+probability mass function
+\begin{equation*}
+  \P\left[Y=k \right] = e^{-\lambda}\frac{\lambda^{k}}{k!}.
+\end{equation*}
+
+
+\end{document}
+
+
+
+\section{2026-09-30}
+
+
+\subsection{The probability of winning at craps}
 
 Recall the rules of craps:
 \begin{enumerate} 
@@ -2748,7 +3050,7 @@ and for each $k=2,3,4,\ldots,12$, define
 
 \fl{Solution:} By the \textit{Law of Total Probability}, we have
 \begin{equation}\label{eq:6}
-  \P\left[W  \right] =  \sum_{k=2}^{12} \P\left[W\mid F_{k}\right]\times \P\left[F_{k} \right] 
+  \P\left[W  \right] =  \sum_{k=2}^{12} \P\left[W\mid F_{k}\right]\P\left[F_{k} \right] 
 \end{equation}
 In words,
 \begin{equation*}
@@ -2832,329 +3134,18 @@ Continue in this manner to get all the values of the table. Then plugging the va
   +\ldots
   + 0\cdot \frac{1}{36} = 0.492999...
 \end{equation*}
-Your chance of winning is about 49.3\%.
-
-
-\subsection{Binomial random variable (continued)}
-(\textit{Based on chapter 3.4 in the textbook.})
-
-Recall that a random variable is called a \demph{binomial random variable}
-with number of trials $n$ and success probability $p\in (0,1)$ if
-\begin{equation*}
-  \P\left[X=k \right] = {n\choose k} p^{k}(1-p)^{n-k}
-\end{equation*}
-for every $k\in \left\{0,\ldots,n\right\}$. 
-
-\Fl{Interpretation:} If $p$ is the probability of a coin landing on
-heads, then
-\begin{equation*}
-  X = (\text{\# of heads in $n$ coin tosses}).
-\end{equation*}
-
-\begin{example}[Variance of a binomial random variable]
-  \label{ex:variance-binomial-random-variable}
-  Let $X$ be a binomial random variable. In the last lecture we showed that
-  \begin{equation*}
-    \E\left[X \right] = np.
-  \end{equation*}
-
-  \textit{Question:} What is the variance of $X$?
-
-  \textit{Solution:} Recall that we can write
-  \begin{equation*}
-    X= \xi_{1}+\ldots+\xi_{n},
-  \end{equation*}
-  where
-  \begin{equation*}
-    \xi_{i} = \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{with probability
-        }p\\0 & \text{with probability }1-p \end{array}\right..
-  \end{equation*}
-  Therefore, using the additivity of variance
-  (\cref{thm:variance-properties}), we have
-  \begin{equation}\label{eq:33}
-    \Var(X) = \Var( \xi_{1}+\ldots+\xi_{n}) = \Var(\xi_{1})+\ldots+\Var(\xi_{n}).
-  \end{equation}
-  We need to compute $\Var(\xi_{i})$, for $i=1,\ldots,n$. Observe that by the
-  shortcut formula for variance (\cref{thm:variance-shortcut-formula}, for
-  every $i$, we have
-  \begin{align*}
-    \Var(\xi_{i}) 
-    &= \E\left[\xi_{i}^{2} \right]- \left( \E\left[\xi_{i} \right] \right)^{2}\\
-    &= p - p^{2}\\
-    &= p(1-p).
-  \end{align*}
-  Plugging this into \cref{eq:33} implies that
-  \begin{equation}\label{eq:34}
-    \Var(X) = np(1-p).
-  \end{equation}
-\end{example}
-
-
-\newpage
-
-\section{2026-03-02 | Week 08 | Lecture 17}
-The next example presents another important discrete random variable: the
-geometric random variable.
-
-\subsection{Poisson random variable}
-Fix $\lambda\in (0,1)$. Suppose have the following coins:
-\begin{itemize}
-  \item Coin \#1 has probability of heads $\lambda$
-  \item Coin \#2 has probability of heads $\frac{\lambda}{2}$
-  \item Coin \#3 has probability of heads $\frac{\lambda}{3}$
-  \item And so forth.
-\end{itemize}
-Consider the following sequence of experiments:
-\begin{itemize}
-  \item Experiment 1: Flip coin \#1 once. 
-  \item Experiment 2: Flip coin \#2 twice.
-  \item Experiment 3: Flip coin \#3 three times.
-  \item Experiment $n$: Flip coin $\#n$, $n$ times. 
-\end{itemize}
-
-Let us focus now on the $n^{\rm th}$ experiment. Let $\xi_{1},\ldots,\xi_{n}$ represent the $n$ coin flips, where
-\begin{equation*}
-  \xi_{k} = \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{ $k^{\rm th}$ coin flip is heads} \\ 0 & \text{otherwise}\end{array}\right.
-\end{equation*}
-for each $k\in \left\{1,\ldots,n\right\}$.
-
-Let
-\begin{equation*}
-  X_{n} = \xi_{1}+\xi_{2}+\ldots+\xi_{n} = \text{(\# of heads in $n$ flips)}
-\end{equation*}
-
-\Fl{Question:} How many heads do we expect to get? We can use the linearity of
-expectation:
-\begin{align*} 
-  \E\left[X_{n} \right] 
-  &= \E\left[ \xi_{1}+\xi_{2}+\ldots+\xi_{n} \right] \\
-  &= \E\left[\xi_{1} \right]+ \E\left[\xi_{2} \right]+\ldots+ \E\left[\xi_{n} \right]\\
-  &= \underbrace{\frac{\lambda}{n}+ \frac{\lambda}{n} + \ldots+\frac{\lambda}{n}}_{n\text{ terms}}\\
-  &=\lambda.
-\end{align*}
-
-So the expected number of heads that we get doesn't change from experiment to experiment, even if we send
-$n \to \infty$. Think!---for each experiment, the probability of heads is $\frac{\lambda}{n}$ and that is
-getting smaller. However the total number of coin flips is getting larger and larger.
-
-\Fl{Question} Is it possible that as $n \to \infty$, the random variable $X_{n}$ converges to some new
-random variable $Y$, one that we haven't seen yet? What properties would that new
-random variable have?
-
-
-\begin{itemize}
-  \item Its expectation should be $\lambda$, since $\E\left[Y
-  \right]=\lim_{n\to\infty} \E\left[X_{n} \right] = \lambda$
-  \item It should be able to take any positive integer value, and not any
-  other values.
-\end{itemize}
-
-\Fl{Question:} What do we expect the variance of $Y$ to be?
-
-To answer this, observe that, as the sum of $n$ coin flips (each with
-$\P\left[\text{Heads} \right]=\frac{\lambda}{n}$), it follows by
-\cref{rmk:useful-characterization-binomial-random-variables} that
-$X_{n}\sim \text{Bin}(n,\lambda/n)$.
-
-Applying \cref{eq:34} from \cref{ex:variance-binomial-random-variable}, we
-find that
-\begin{equation*}
-  \Var(X_{n}) = \lambda\left( 1-\frac{\lambda}{n} \right).
-\end{equation*}
-Therefore we expect the following to be true of $Y$:
-\begin{equation*}
-  \Var(Y) = \lim_{n\to\infty} \Var(X_{n}) = \lim_{n\to\infty} \lambda\left( 1-\frac{\lambda}{n} \right) = \lambda.
-\end{equation*}
-If this limit were $0$, then we would expect our final result to not vary at
-all---in other words, we'd expect the limit to be a fixed number, rather than
-a random quantity. But since the limiting variance $\lambda$ is positive, we
-expect the limit to be a random variable. 
-
-\Fl{Qustion:} What should the probability mass function of $Y$ look like?
-
-
-By \cref{def:binomial-random-variable}, the probability mass function of $X_{n}$
-is
-\begin{equation*}
-  \P\left[X_{n} = k \right] = {n\choose k }p^{k}(1-p)^{n-k}, \quad k=0,1,2,\ldots
-\end{equation*}
-It turns out that when $n$ is large and $p$ is small, the following
-approximation holds:
-\begin{equation*}
-  {n\choose k }p^{k}(1-p)^{n-k} \approx e^{-\lambda}\frac{\lambda^{k}}{k!}
-\end{equation*}
-So we might expect that in the limit, if our our coin-flipping process
-converges to a random variable $Y$, that random variable should have
-probability mass function
-\begin{equation*}
-  \P\left[Y=k \right] = e^{-\lambda}\frac{\lambda^{k}}{k!}.
-\end{equation*}
-
-\begin{theorem}[The exponential function]
-  \label{thm:exponential-function}
-  For any real number $x$, the \demph{exponential function}, denoted $e^{x}$,
-  is the function
-  \begin{equation*}
-    e^{x} = \sum_{n=0}^{\infty}\frac{x^{n} }{n!}.
-  \end{equation*}
-\end{theorem}
-
-
-\begin{definition}[Poisson (``Pwason'')]
-  Let $\lambda>0$. A random variable $X$ that takes on the values $0,1,2,\ldots$ is a \demph{Poisson}
-  random variable with parameter $\lambda$ if its probability mass function is
-  \begin{equation*}
-    p(k) := \P\left[X = k \right] = e^{-\lambda} \frac{\lambda^{k}}{k!} \quad \text{ for }k=0,1,2,\ldots.
-  \end{equation*}
-  Before explaining this, we should check that it is actually a probability mass function: remember, it
-  needs to sum to 1:
-  \begin{align*}
-    \sum_{k=0}^{\infty}  p(k) 
-    &= \sum_{k=0}^{\infty}e^{-\lambda}\frac{\lambda^{k}}{k!} \\
-    &=e^{-\lambda}\sum_{k=0}^{\infty}\frac{\lambda^{k}}{k!} \\
-    &= e^{-\lambda} e^{\lambda} &&\text{by \cref{thm:exponential-function} }\\
-    &=1.
-  \end{align*}
-\end{definition}
-
-\begin{proposition}
-  Let $X\sim \text{Pois}(\lambda)$. Then
-  \begin{equation*}
-    \E\left[X \right]= \lambda \quad \text{and} \quad \Var(X) = \lambda
-  \end{equation*}
-\end{proposition}
-
-The Poisson distribution is a common model since it models ``accidents''.
-
-We didn't finish the following example, so I'll start next time with it.
-
-\begin{example}
-  Oahu has about a million cars and averages about 6 car accidents per day. The probability that any one
-  car will have an accident is very small, and they are all (nearly) independent from each other, bus
-  since there are so many cars, you expect 6 accidents, on average. But actual number of accidents each
-  day is $X=0$ or $1$ or $2$ or $\ldots$. The number of car accidents is thus poisson distributed with
-  mean $\lambda=6$ What is
-  \begin{equation*}
-    F(2) = \P\left[X \leq 2\right]?
-  \end{equation*}
-  
-  The probabilities of no accidents, one accident, and two accidents
-  are
-  \begin{equation*}
-    p(0) = e^{-6} \frac{6^{0}}{0!} = e^{-6} \approx 0.002
-  \end{equation*}
-  \begin{equation*}
-    p(1) = e^{-6} \frac{6^{1}}{1!} = 6e^{-6} \approx 0.015
-  \end{equation*}
-  \begin{equation*}
-    p(2) = e^{-6} \frac{6^{2}}{2!} = 18e^{-6} \approx 0.045
-  \end{equation*}
-
-  Therefore $F(2) = p(0)+p(1)+p(2)\approx 0.002+0.015+0.045  = 0.062$
-\end{example}
-
-
-\newpage
+Hence, the shooter's chance of winning is about 49.3\%. The house has a slight advantage.
 
 \section{2026-03-04 | Week 08 | Lecture 18}
 \subsection{Applications of the Poisson random variable}
 \textit{(Based on section 3.6 in the textbook.)}
 
 
-Recall that a random variable $X$ is said to have a \demph{Poisson
-  distribution} with mean $\lambda>0$ if
-\begin{equation*}
-  \P\left[X = k \right] = e^{-\lambda} \frac{\lambda^{k}}{k!} \quad \text{ for }k=0,1,2,\ldots.
-\end{equation*}
-The Poisson distribution is a common model for modeling the number of
-``accidents''. Recall that the expected value and variance of a Poisson random
-variable are both equal to $\lambda$. 
-
-\begin{example}
-  Oahu has about a million cars and averages about 6 car accidents per day. The probability that any one
-  car will have an accident is very small, and they are all (nearly) independent from each other, bus
-  since there are so many cars, you expect 6 accidents, on average. But actual number of accidents each
-  day is $X=0$ or $1$ or $2$ or $\ldots$. The number of car accidents is thus poisson distributed with
-  mean $\lambda=6$ What is
-  \begin{equation*}
-    F(2) = \P\left[X \leq 2\right]?
-  \end{equation*}
-  
-  The probabilities of no accidents, one accident, and two accidents
-  are
-  \begin{equation*}
-    p(0) = e^{-6} \frac{6^{0}}{0!} = e^{-6} \approx 0.002
-  \end{equation*}
-  \begin{equation*}
-    p(1) = e^{-6} \frac{6^{1}}{1!} = 6e^{-6} \approx 0.015
-  \end{equation*}
-  \begin{equation*}
-    p(2) = e^{-6} \frac{6^{2}}{2!} = 18e^{-6} \approx 0.045
-  \end{equation*}
-
-  Therefore $F(2) = p(0)+p(1)+p(2)\approx 0.002+0.015+0.045  = 0.062$
-\end{example}
-
 In the previous lecture, we introduce the Poisson distribution as a mystery
 limit of coin flips, where (1) the number of coin flips is increasing and (2)
 the probability of heads is decreasing at a proportional rate. Let us now
 formalized that idea in the following theorem:
 
-\begin{theorem}[Poisson approximation]
-  \label{thm:poisson-approximation}
-  Recall that if  $X \sim \text{Binom}(n,p)$, that means
-  \begin{equation*}
-    \P\left[X = k \right] = {n\choose k}p^{k}(1-p)^{n-k}, \quad \text{for }k=0,1,2,\ldots.
-  \end{equation*}
-  Let $\lambda=np$. When $n$ is large and $p$ is small (e.g., $n>50$ and $\lambda<5$), then we have the
-  following approximation:
-  \begin{equation*}
-    \P\left[X  = k \right] \approx e^{-\lambda}\frac{\lambda^{k}}{k!} \quad \text{for }k=0,1,2,\ldots.
-  \end{equation*}
-  In other words, when $n$ is large and $p$ is small, $X$ is well-approximated by a Poisson distribution
-  with parameter $\lambda=np$.
-\end{theorem}
-
-
-Let's try an application of this:
-
-\begin{example}[Poisson approximation]
-  In \textit{Dungeons and Dragons}, a 20-sided dice is used (aka the `d20'). When you roll a 1 out of 20,
-  that's called a \demph{critical failure}, which usually results in something terrible happening.
-
-  Suppose that in the course of a game, a twenty side dice is rolled $n=100$ times. Let $X$ be the number of
-  critical failures. The probability of a critical failure is $p=1/20=.05$. So
-  \begin{equation*}
-    X \sim \text{Bin}\left(100,\frac{1}{20}\right).
-  \end{equation*}
-  So, for example, we have $\E\left[X \right] = 100\times \frac{1}{20} = 5$.
-
-  The pmf of $X$ is
-  \begin{equation*}
-    \P\left[X=k \right] = {100\choose k} \left( \frac{1}{20} \right) ^{k}\left( 1-\frac{1}{20} \right)
-    ^{100-k}, \text{ for }k=0,1,2,\ldots,100
-  \end{equation*}
-
-  Since $p=0.05$ is small and $n=100$ is large, we can approximate $X$ with a Poisson random variable $Y$
-  with parameter $\lambda=np = 5$. That is, $Y\sim \text{Pois}(5)$. The pmf of $Y$ is
-  \begin{equation*}
-    \P\left[ Y=k\right] = e^{-5}\cdot\frac{5^{k}}{k!}, \text{ for } k=0,1,2,\ldots
-  \end{equation*}
-  
-  Let's compute some probabilities, rounding to three decimal places
-  \begin{center}
-    \begin{tabular}{|l|l|l|}
-      \hline
-      $x$ & $\P\left[X=k \right]$ & $\P\left[Y=k \right]$ \\ \hline
-      0 &  $.006 $    & $.007 $    \\ \hline
-      1 &   $.031 $   &   $.034 $   \\ \hline
-      2 &  $.081 $    &   $.084 $   \\ \hline
-      3 &   $.140 $   &  $.140 $    \\ \hline
-      4 &    $.178 $  &    $.175 $  \\ \hline
-    \end{tabular}
-  \end{center}
-  
-\end{example}
 
 % \subsection{Geometric random variable}
 
@@ -3249,6 +3240,7 @@ called continuous random variables.
   The graph of $f_{X}$ is called the \demph{density curve} of $X$.
 \end{definition}
 
+\newpage
 \newpage
 \section{2026-03-06 | Week 08 | Lecture 19}
 
