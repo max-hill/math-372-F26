@@ -1,0 +1,419 @@
+\documentclass[10pt]{article}
+% Math Packages
+\usepackage{amsmath, mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{breqn}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
+\usepackage{forest}
+\usepackage{tikz-qtree}
+\graphicspath{ {./images/} }
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\usepackage[shortlabels]{enumitem}
+\usetikzlibrary{arrows,matrix,positioning}
+\usepackage{multicol}
+
+% for the pipe symbol
+\usepackage[T1]{fontenc}
+
+% Citing theorems by name. (source: https://tex.stackexchange.com/questions/109843/cleveref-and-named-theorems)
+\makeatletter
+\newcommand{\ncref}[1]{\cref{#1}\mynameref{#1}{\csname r@#1\endcsname}}
+
+\def\mynameref#1#2{%
+  \begingroup
+  \edef\@mytxt{#2}%
+  \edef\@mytst{\expandafter\@thirdoffive\@mytxt}%
+  \ifx\@mytst\empty\else
+  \space(\nameref{#1})\fi
+  \endgroup
+}
+\makeatother
+
+% Colorful Notes
+\usepackage{color} \definecolor{Red}{rgb}{1,0,0} \definecolor{Blue}{rgb}{0,0,1}
+\definecolor{Purple}{rgb}{.5,0,.5} \def\red{\color{Red}} \def\blue{\color{Blue}}
+\def\gray{\color{gray}} \def\purple{\color{Purple}}
+\newcommand{\rnote}[1]{{\red [#1]}} % \rnote{foo} gives '[foo]' in red
+\newcommand{\pnote}[1]{{\purple [#1]}} % \pnote{foo} gives '[foo]' in purple
+\newcommand{\bnote}[1]{{\blue #1}} % \bnote{foo} gives 'foo' in blue
+\newcommand{\gnote}[1]{{\gray #1}} % \gnote{foo} gives 'foo' in gray
+\newcommand{\Max}[1]{{\purple [#1]}} % \bnote{foo} then 'foo' is blue
+
+
+% Claim numbering (the counter restarts after each proof environment)
+\newcounter{claimcount}
+\setcounter{claimcount}{0}
+\newenvironment{claim}{\refstepcounter{claimcount}\par\addvspace{\medskipamount}\noindent\textbf{Claim \arabic{claimcount}:}}{}
+\usepackage{etoolbox}
+\AtBeginEnvironment{proof}{\setcounter{claimcount}{0}}
+\newenvironment{claimproof}{\par\addvspace{\medskipamount}\noindent\textit{Proof of Claim  \arabic{claimcount}.}}{\hfill\ensuremath{\qedsymbol} \tiny{Claim}
+
+  \medskip}
+% Add claim support to cleverref
+\crefname{claimcount}{Claim}{Claims}
+
+
+% Math Environments
+\newtheorem{theorem}{Theorem}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+
+% Matrices and Column Vectors. 
+\usepackage{stackengine}
+\setstackgap{L}{1.0\normalbaselineskip}
+\usepackage{tabstackengine}
+\setstackEOL{;}% row separator
+\setstackTAB{,}% column separator
+\setstacktabbedgap{1ex}% inter-column gap
+\setstackgap{L}{1.5\normalbaselineskip}% inter-row baselineskip
+\let\nmatrix\bracketMatrixstack  %Usage: \nmatrix{1,2,3\4,5,6}
+\newcommand\cv[1]{\setstackEOL{,}\bracketMatrixstack{#1}} %usage: \cv{1,2,3}
+
+% Custom Math Coqmmands
+\newcommand{\vt}{\vskip 5mm} % vertical space
+\newcommand{\fl}{\noindent\textbf} % first line
+\newcommand{\Fl}{\vt\noindent\textbf} % first line with space above
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert} % norm
+\newcommand{\pnorm}[1]{\left\lVert#1\right\rVert_p} % p-norm
+\newcommand{\qnorm}[1]{\left\lVert#1\right\rVert_q} % q-norm
+\newcommand{\1}[1]{\textbf{1}_{\left[#1\right]}} % indicator function 
+\def\limn{\lim_{n\to\infty}} % shortcut for lim as n-> infinity
+\def\sumn{\sum_{n=1}^{\infty}} % shortcut for sum from n=1 to infinity
+\def\sumkn{\sum_{k=1}^{n}} % shortcut for sum from k=1 to n
+\def\sumin{\sum_{i=1}^{n}} % shortcut for sum from i=1 to n
+\def\SAs{\sigma\text{-algebras}} % shortcut for $\sigma$-algebras
+\def\SA{\sigma\text{-algebra}} % shortcut for $\sigma$-algebra
+\def\Ft{\mathcal{F}_t} % time-indexed sigma-algebra (t)
+\def\Fs{\mathcal{F}_s} % time-indexed sigma-algebra (s)
+\def\F{\mathcal{F}} % sigma-algebra
+\def\G{\mathcal{G}} % sigma-algebra
+\def\R{\mathbb{R}} % Real numbers
+\def\N{\mathbb{N}} % Natural numbers
+\def\Z{\mathbb{Z}} % Integers
+\def\E{\mathbb{E}} % Expectation
+\def\P{\mathbb{P}} % Probability
+\def\Q{\mathbb{Q}} % Q probability
+\def\dist{\text{dist}} %Text 'dist' for things like 'dist(x,y)'
+\newcommand{\indep}{\perp \!\!\! \perp}  %independence symbol
+\def\Var{\mathrm{Var}} % Variance
+\def\tr{\mathrm{tr}} % trace
+
+% Brackets and Parentheses
+\def\[{\left [}
+    \def\]{\right ]}
+% \def\({\left (}
+%   \def\){\right )}
+
+
+
+\usepackage{color}
+\definecolor{Red}{rgb}{1,0,0}
+\definecolor{Blue}{rgb}{0,0,1}
+\definecolor{Purple}{rgb}{.5,0,.5}
+\def\red{\color{Red}}
+\def\blue{\color{Blue}}
+\def\gray{\color{gray}}
+\def\purple{\color{Purple}}
+\definecolor{RoyalBlue}{cmyk}{1, 0.50, 0, 0}
+\newcommand{\dempfcolor}[1]{{\color{RoyalBlue}#1}} 
+\DeclareRobustCommand{\demph}[1]{% definitions
+  \ifmmode
+  {\color{Blue}#1}%
+  \else
+  {\color{Blue}\bfseries\slshape #1}%
+  \fi
+}
+% comment exactly one of the following line to show / hide the solutions
+% \newcommand{\solution}[1]{{\purple #1}} % uncomment to show the solutions
+\newcommand{\solution}[1]{} % uncomment to hide the solutions
+
+
+
+\title{Lecture Notes for Math 372: \\Elementary Probability and Statistics}
+\date{Last updated: \today}
+% \author{mh}
+
+\begin{document}
+\begin{center}
+  \section*{Math 372: Homework 06}
+  \textit{Due Monday, October 12}
+\end{center}
+
+
+\begin{problem}[Variance shortcut formula]
+  Let $X$ be a random variable, and let $\mu= \E\left[X \right]$. By
+  definition of variance, we know that
+  $\Var(X) = \E\left[(X-\mu)^{2} \right].$ Show that $\Var(X) = \E\left[X^{2} \right] - \mu^{2}.$
+\end{problem}
+
+
+\begin{problem}  
+  \label{ex:prussian-officers-killed-horsekick}
+  Let $K$ be the number of Prussian cavalry officers killed by horsekick in a random year. Because of
+  careful data collection by the Prussian military\footnote{This problem actually comes from real
+    data collected by the Prussian army, and was one of the first known applications of the Poisson
+    distribution, by Russian mathematician L. Bortkewitsch in 1898; see
+    \url{https://www.jstor.org/stable/2348169?seq=3}}, we know that $K$ has the following distribution:
+  \begin{equation*}
+    p(0) = .51, \quad p(1) = .33, \quad p(2) = .11, \quad p(3) = .04, \quad p(4) = .01, \quad \text{and} \quad  \P\left[K \geq 5\right] =0.
+  \end{equation*}
+  
+  \begin{enumerate}[(a)]
+    \item What is the expectation of the random variable $K$? %(Ans: $\approx 0.71$). 
+    \item What is the variance of $K$? %(Ans: $\approx 0.79$)
+    \item Let $\lambda= \E\left[K \right]$, rounded to 1 decimal place, which
+    you computed in part $(a)$. Using this value, let $Y$ be a Poisson random
+    variable with rate parameter $\lambda$, and let
+    $q(y) := \P\left[Y=y \right]$ be the pmf of $Y$. Compute
+    $q(0),q(1),q(2),q(3),q(4),$ and $\P\left[Y \geq 5\right]$, and compare the
+    probability mass functions $p$ and $q$.
+  \end{enumerate}
+\end{problem}
+
+
+\begin{problem}
+  Given an example with dice that show that, in general,
+  \begin{equation*}
+    \P(B) \neq \P(B|A) + \P(B|A^{c}).
+  \end{equation*}
+\end{problem}
+
+
+
+\begin{problem}
+  Compute $\E\left[X \right]$, $\E\left[X^{2} \right]$ and $\Var(X)$ for the
+  following random variables:
+  \begin{enumerate}[(a)]
+    \item $X = (\text{value of one roll of a 6-sided dice})$.
+    \item A fair coin toss.
+    $Y = \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{with probability
+        }\frac{1}{2}\\0 & \text{with probability
+        }\frac{1}{2} \end{array}\right.$
+    \item A biased coin toss. $Z = \left\{ \begin{array}{l@{\quad:\quad}l} 1 &  \text{with
+          probability }p\\0 & \text{with probability }1-p \end{array}\right.$
+  \end{enumerate}
+\end{problem}
+
+
+\begin{problem}%[independence]
+  Alice rolls six dice and wins if she rolls at least one six. Bob rolls
+  twelve dice and wins if he rolls at least two sixes. Who has the greater
+  probability of winning? \textit{[Hint: calculate the probabilities to lose.]}
+\end{problem}
+
+
+
+\begin{problem}
+  A certain brand of upright freezer is available in three different rated
+  capacities: $16$,  $18$, and $20$ cubic feet. Let $X$ be the rated capacity
+  of a freezer of this brand sold at a certain store. Suppose that $X$ has
+  probability mass function
+  \begin{center}
+    \begin{tabular}[c]{c|ccc}
+      $x$&16&18&20\\ 
+      \hline
+      $p(x)$&.2&.5&.3 
+    \end{tabular}
+  \end{center}
+  \begin{enumerate}[(a)]
+    \item Compute $\E\left[X \right], \E\left[X^{2} \right], \Var(X)$.
+    \item If the price of a freezer having capacity $X$ is $70X-650$, what is
+    the expected price paid by the next customer to buy a freezer?
+    \item What is the variance of the price paid by the next customer?
+    \item Suppose that although the rated capacity of a freezer is $X$, the
+    actual capacity is $h(X)=X-.008X^{2}$. What is the expected actual
+    capacity of the freezer purchased by the next customer.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[Exploding Dice]
+  Compute the expectation of an exploding 6-sided dice.
+  \textit{\textbf{Note: }An `exploding' dice roll is a mechanic used in various tabletop games whereby the player rolls a dice,
+  and then if they rolled the maximum number on the die, they get to roll it again and add the new roll to
+  the old one. This can happen more than once.} 
+\end{problem}
+
+
+
+
+\begin{problem}[Geometric random variable]
+  A basketball player is shooting hoops. Suppose that for each shot, the
+  probability of successfully making the shot is $p\in (0,1)$, (where $p$
+  depends on the skill of the player), and the probability of missing the shot
+  is $1-p$. Let
+  \begin{equation*}
+    X = \text{(\# of throws until they make a basket)}
+  \end{equation*}
+ 
+  \begin{enumerate}[(a)]
+    \item Explain why the pmf of $X$ is
+    \begin{equation*}
+      \P\left[X=k \right] = \left\{ \begin{array}{l@{\quad:\quad}l} (1-p)^{k-1}p & k=1,2,\ldots\\0 &\text{otherwise} \end{array}\right.
+    \end{equation*}
+    (A random variable with this pmf is called a \demph{geometric random
+      variable} with success probability $p$, and we write
+    $X\sim \operatorname{Geom}(p)$. The parameter $p$ is called the
+    \demph{success probability}.)
+    \item Compute $\P\left[X \leq k\right]$ for $k=1,2,\ldots$. \textit{Hint:} first
+    compute $\P\left[X>t \right]$.
+    \item Plot the cdf $F$ of $X$ for $p=1/2$. (Note: it should be a
+    nondecreasing step function with $F(-\infty)=0$ and $F(+\infty)=1$.)
+    \item Suppose that $X$ is a geometric random
+    variable with success parameter $p\in (0,1)$. Show that 
+    \begin{equation*}
+      \P\left[X=m+k \mid X>m\right] = \P\left[X=k \right] \quad \text{for
+        integers $m>0$ and $k>1$.}
+    \end{equation*}
+    Explain why this is called the \textit{memoryless property} of the geometric distribution.
+    % \item Now suppose that $T\sim \exp(\lambda)$ (in other words, $T$ is an exponential random variable
+    % rate $\lambda>0$). Show that
+    % \begin{equation*}
+    %   \P\left[ T>s+t\mid T>s\right] = \P\left[T>t \right]
+    % \end{equation*}
+    % and interpret this result.
+  \end{enumerate}
+\end{problem}
+
+
+\begin{problem}
+  The human genome consists of 3.2 billion nucleotides
+  $(\mathtt{A},\mathtt{G},\mathtt{C},\mathtt{T})$. For this problem we can
+  think of the human genome as a sequence of nucleotides
+  \begin{center}
+    \texttt{CAGGAAGCATTTATATAGAGGTAATAATTAAATTTAACTTTTTATTATTCTCTATGCCCAAGAGAATGTG...}
+  \end{center}
+  consisting of 3,200,000,000 nucleotide letters. The DNA mutation rate in
+  humans is approximately $2\times 10^{-8}=0.00000002$ mutations per
+  nucleotide per generation. Assume that nucleotides mutate
+  \textit{independently}, that is, whether one nucleotide undergoes mutates is
+  independent from any other nucleotides.
+
+  
+  Let $X$ be the number of mutations in
+  the genome of a randomly selected newborn baby.
+  \begin{enumerate}[(a)]
+    \item Explain why $X$ is a binomial random variable.
+    Identify the value of the two parameters $n$
+    (number of trials) and $p$ (success probability).
+    \item \label{item:3} The average number of mutations in a newborn baby's genome is
+    $\mu:=\E\left[X \right]$. Find $\mu$.
+    \item  For statistical
+    reasons that we will get to later in the class,\footnote{The Central Limit
+      Theorem} over 95\% of babies will have a number of mutations in the
+    interval
+    \begin{equation*}
+      (\mu-\sigma,\mu+\sigma)
+    \end{equation*}
+    where $\sigma = \sqrt{\Var(X)}$. Find $\sigma$ and (using your answer to
+    \ref{item:3}) find the interval $(\mu-\sigma,\mu+\sigma)$.
+    \item Attempt to compute some probabilities, such as $\P\left[X=1 \right]$ and $\P\left[X=60
+    \right]$, and $\P\left[X \leq 100\right]$. I do not expect you to be successful with this. What
+    makes this task difficult?
+    \item Let $Y$ be a Poisson
+    distribution with mean $\mu$. Explain why $Y$ can be used to approximate
+    $X$, and compute the following probabilities:
+    \begin{enumerate}[label=(\roman*)] 
+      \item $\P\left[Y=0 \right]$
+      \item $\P\left[Y=1 \right]$
+      \item $\P\left[Y=5 \right]$
+      \item $\P\left[Y \geq 3\right]$
+    \end{enumerate}
+  \end{enumerate}
+\end{problem}
+
+
+
+\begin{problem}
+  Let $Y$ be a Poisson random variable with parameter $\lambda$. Find $\E\left[\frac{1}{Y+1} \right]$.
+\end{problem}
+
+
+
+% \begin{problem}[Properties of the geometric distribution]
+%   Let $\alpha\in (0,1)$, and let $X$ be a random variable with probability mass function
+%   \begin{equation*}
+%     p(x) = \left\{ \begin{array}{l@{\quad}l} \left( 1-\alpha \right)^{x-1}\alpha  & \text{if }x=1,2,3\ldots\\0 & \text{otherwise.} \end{array}\right.
+%   \end{equation*}
+%   (A random variable with this probability mass function is called a \textit{geometric random variable} with success parameter $\alpha$.)
+
+%   \begin{enumerate}[(a)]
+%     \item We know that in general probability mass functions should always sum
+%     up to one. Let's check that it is indeed the case here. Specifically,
+%     carefully show that $p(1)+p(2)+p(3)+\ldots =1$, making sure to justify
+%     your steps.
+%     \item Next we will compute the expected value of $X$ using the formula 
+%     \begin{equation*}
+%       \E\left[X \right] := \sum_{x}x p(x),
+%     \end{equation*}
+%     where $x$ ranges over all possible values of $X$.
+%     \begin{enumerate}[(i)]
+%       \item \label{item:1} Expand out above summation, including the first five terms followed by ``+\dots''
+%       \item \label{item:2} The geometric series formula tells us that as long as $|x|<1$, the following
+%       formula holds:
+%       \begin{equation*}
+%         a + ax+ax^{2}+ax^{3}+ax^{4}+ax^{5}+\ldots = \frac{a}{1-x}.
+%       \end{equation*}
+%       Differentiate both sides of the above equation with respect to $x$. 
+%       \item Use your answers to parts \ref{item:1} and\ref{item:2} to deduce the value of
+%       $\E\left[X \right]$
+%       \item What is the value of $\E\left[X \right]$ if $\alpha=\frac{1}{2}$? What about if
+%       $\alpha=\frac{2}{3}$?
+%     \end{enumerate}
+%   \end{enumerate}
+% \end{problem}
+
+
+% \begin{problem}
+%   Consider another approach where we show that
+%   \begin{equation*}
+%     \E\left[e^{tX} \right] = \exp \left( \lambda \left( e^{t}-1 \right)  \right) 
+%   \end{equation*}
+%   and then differentiate once or twice, and then set $t=0$. This would be a nice problem to introduce mgfs
+% \end{problem}
+
+
+
+
+
+
+
+
+% \begin{problem}[Extra credit]
+%   Suppose you draw a pair of cards from a standard deck of cards. Let $B$ denote the event that both
+%   cards are aces. Let $A$ be the event that you have at least one ace. Let $S$ be the event that you
+%   have the ace of spaces. In Homework 4, we saw that
+%   \begin{equation*}
+%     \P\left[B\mid A \right] = \frac{1}{33} \approx 0.03
+%   \end{equation*}
+%   and that
+%   \begin{equation*}
+%     \P\left[B\mid S \right] = \frac{1}{17}\approx 0.06
+%   \end{equation*}
+%   This is such a strange result! Why is the second one twice as big as the first? Could we have made a
+%   mistake?
+
+%   Write program using any language that estimates the conditional probability $\P\left[B\mid A \right]$.
+%   Also write a program that estimates conditional probability $\P\left[B\mid S \right]$. What
+%   estimates do you get?
+% \end{problem}
+
+
+\end{document}
+
