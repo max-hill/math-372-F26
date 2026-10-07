@@ -29,6 +29,10 @@ title: lecture notes
  2026-09-23  |  - | expected value, LOTUS (chp 3.3)
  2026-09-25  |  - | variance
  2026-09-28  |  - | the Poisson distribution (chp 3.4, 3.6)
+ 2026-09-30  |  - | the law of rare events
+ 2026-10-02  |  - | midterm day
+ 2026-10-04  |  - | probability of winning craps, continuous rv
+ 2026-10-07  |  [worksheet](hw/homework-07/homework-07.pdf) | continuous rv
  
 # other links
 
