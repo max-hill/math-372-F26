@@ -13,4 +13,5 @@ permalink: /homework/
 2026-09-18  | [homework-04](hw/homework-04/homework-04.pdf) | turn in on Lamaku
 2026-09-28  | [homework-05](hw/homework-05/homework-05.pdf) | turn in on Lamaku
 2026-10-12  | [homework-06](hw/homework-06/homework-06.pdf) | turn in on Lamaku
+2026-10-15  | [homework-07](hw/homework-07/homework-07.pdf) | turn in on Lamaku
 
