@@ -3277,11 +3277,143 @@ The cdf has plot
 \end{proposition}
 
 
-\end{document}
 
 \newpage
+\section{2026-10-07 | Week 07 | Lecture 19}
+
+
+worked on in-class worksheet (due as homework)
 \newpage
-\section{2026-03-06 | Week 08 | Lecture 19}
+
+\section{2026-10-09 | Week 07 | Lecture 20}
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{Topic of this lecture:} Continuous random variables}
+
+    \textit{\textbf{Reading assignment:} Chapters 4.1, 4.2}
+  \end{tcolorbox}
+\end{center}
+
+\begin{example}[Diffuse reflection of light]
+  When light hits a matte surface, such as a sheet of paper, it
+  scatters in many directions. For a single photon, the angle of reflection is random:
+
+  \begin{center}
+    \begin{tikzpicture}[scale=1.2, >=stealth]
+
+      % Matte surface
+      \draw[thick] (-4,0) -- (4,0);
+      \node[below] at (0,-0.2) {matte surface};
+
+      % Point of incidence
+      \fill (0,0) circle (.1pt);
+
+      % Incoming ray
+      \draw[->,thick,dashed, red] (-3,2.5) -- (0,0);
+      \node[above left] at (-2.5,2.5) {photon};
+
+      % Possible reflected rays
+      \draw[->,dotted] (0,0) -- (-1.7,0.9);
+      \draw[->,dotted] (0,0) -- (-0.4,1.8);
+      \draw[->,dotted] (0,0) -- (1.3,1.7);
+      \draw[->,dotted] (0,0) -- (2.2,0.7);
+
+      % Question marks
+      \node at (-2.0,1.2) {$?$};
+      \node at (-0.5,2.1) {$?$};
+      \node at (1.5,2.0) {$?$};
+      \node at (2.5,1.0) {$?$};
+
+    \end{tikzpicture}
+  \end{center}
+  Let $X$ be the random angle $\theta$ between the reflected ray and the
+  normal vector to the surface, as shown:
+  \begin{center}
+    \begin{tikzpicture}[scale=2.2, >=stealth]
+      \def\rayAngle{35} % Angle from the normal, in degrees
+      \coordinate (O) at (0,0);
+      \coordinate (C) at (0,1);
+      \coordinate (P) at ({sin(2*\rayAngle)}, {1+cos(2*\rayAngle)});
+
+      % Surface and normal
+      \draw[thick] (-1.35,0) -- (1.60,0) node[midway, below] {matte surface};
+      \draw[thick,->] (0,0) -- (0,1.8) node[above] {normal vector};
+
+      % Reflected ray
+      \draw[dotted,->] (O) -- (P);
+
+      % Angle from the normal
+      \draw[->] (0,0.48) arc[start angle=90, end angle={90-\rayAngle}, radius=0.48];
+      \node at ({0.70*sin(\rayAngle/2)}, {0.70*cos(\rayAngle/2)}) {$\theta$};
+    \end{tikzpicture}
+  \end{center}
+  Measuring the angle in radians, we have
+  \begin{equation*}
+    -\frac{\pi}{2}\leq \theta\leq \frac{\pi}{2},
+  \end{equation*}
+  where
+  \begin{itemize}
+    \item A positive angle means the ray exits to the right of the normal
+    vector;
+    \item A negative angle means it exits to the left.
+  \end{itemize}
+  \emph{Lambert's cosine law} implies that the probability density at angle
+  $\theta$ is proportional to $\cos(\theta)$; that is, the pdf of $X$ is
+  \begin{equation*}
+    f(\theta) = C\cos(\theta), \qquad -\frac{\pi}{2}\leq \theta \leq \frac{\pi}{2}
+  \end{equation*}
+  for some constant $C$.
+
+  \fl{Question 1.} Find $C$.
+
+  \fl{Solution:} The total area under a pdf is always 1. Since $f(\theta)=0$ for all $\theta\notin \left[
+    -\frac{\pi}{2},\frac{\pi}{2} \right]$, we have
+  \begin{equation*}
+    \int_{-\theta/2}^{\pi/2}  f(\theta) d\theta =1.
+  \end{equation*}
+  Therefore 
+  \begin{equation*}
+    C\int_{-\pi/2}^{\pi/2}\cos(\theta)d\theta=1 
+  \end{equation*}
+  The integral evaluates to $2$, and hence
+  \begin{equation*}
+    C=\frac{1}{2}.
+  \end{equation*}
+  Therefore, the pdf of $X$ is
+  \begin{equation*}
+    f(\theta) = \left\{ \begin{array}{l@{\quad:\quad}l} \frac{1}{2}\cos(\theta) & -\frac{\pi}{2}\leq \theta \leq \frac{\pi}{2}\\0 & \text{otherwise/} \end{array}\right.
+  \end{equation*}
+
+  \fl{Question 2.} What is the probability that the photon bounces off the
+  surface at an angle of less than $30^{\circ}$ from the normal vector?
+
+  \fl{Solution:} Since $30^{\circ}$ is $\pi/6$ radians, 
+  \begin{align*}
+    \P \left[ -\frac{\pi}{6}\leq X \leq \frac{\pi}{6}\right] 
+    &= \int_{-\pi/6}^{\frac{\pi}{6}}f(\theta)d\theta\\
+    &= \frac{1}{2}\int_{-\pi/6}^{\frac{\pi}{6}}\cos(\theta)d\theta\\
+    &= \frac{1}{2} \left[ \sin(\theta) \right]^{\pi/6}_{-\pi/6}\\ 
+    &= \frac{1}{2} \left[ \frac{1}{2} - \left( - \frac{1}{2} \right)  \right]\\ 
+    &= \frac{1}{2}.
+  \end{align*}
+
+  \fl{Question 3.} What is the expected angle of the reflectced photon ray?
+
+  \fl{Solution:} We want to compute $\E[X]$.
+
+  \begin{align*}
+    \E[X] 
+    &= \int_{-\infty}^{\infty}\theta f(\theta)\,d\theta\\
+    &= \frac{1}{2}\int_{-\pi/2}^{\pi/2} \theta \cos(\theta)\,d\theta\\
+    &= 0,
+  \end{align*}
+  where we used the fact that (1) the function $\theta\cos(\theta)$ is odd, and
+  (2) the domain of integration $[-\pi/2,\pi/2]$ is symmetric around the origin.
+  (You can check that the integral equals zero using integration by parts).
+
+\end{example}
+
+\end{document}
 
 \subsection{Continuous random variables}
 \textit{(This lecture is based on sections 4.1-4.3 in the textbook)}
@@ -3383,7 +3515,6 @@ The cdf has plot
 \end{remark}
 
 \newpage
-\section{2026-03-09 | Week 09 | Lecture 20}
 
 \subsection{Continuous random variables}
 \begin{example}[Waiting times]

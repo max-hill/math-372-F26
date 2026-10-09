@@ -33,6 +33,7 @@ title: lecture notes
  2026-10-02  |  - | midterm day
  2026-10-04  |  - | probability of winning craps, continuous rv
  2026-10-07  |  [worksheet](hw/homework-07/homework-07.pdf) | continuous rv
+ 2026-10-07  |  - | continued worksheet, photon reflection (chp 4.1, 4.2)
  
 # other links
 
