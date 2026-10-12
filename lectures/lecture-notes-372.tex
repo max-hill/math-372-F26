@@ -3404,202 +3404,138 @@ worked on in-class worksheet (due as homework)
 
 \end{example}
 
-\end{document}
-
-\subsection{Continuous random variables}
-\textit{(This lecture is based on sections 4.1-4.3 in the textbook)}
 
 
+% \begin{example}[Pinwheel example continued]
+%   Recall the example of the pinwheel \cref{ex:pinwheel}, with the angle $X$ measured in radians, so that
+%   the state space of $X$ is $[0,2\pi)$, with all values equally likely. Recall that we computed the pdf as
+%   \begin{equation*}
+%     f_{X}(x) = \frac{1}{2\pi}\cdot\mathbf{1}_{[0,2\pi)}(x) = \left\{ \begin{array}{l@{\quad:\quad}l} \frac{1}{2\pi} & x\in [0,2\pi)\\0 &x\notin [0,2\pi) \end{array}\right.
+%   \end{equation*}
+%   \begin{center}
+%     \includegraphics[scale=.045]{images/pinwheel-density-curve}
+%   \end{center}
+%   Recall also that the cdf is defined as
+%   \begin{equation*}
+%     F_{X}(x) := \int_{-\infty}^{x}f_{X}(t)dt.
+%   \end{equation*}
+%   So that for the pinwheel angle $X$, we have
+%   \begin{align}\label{eq:10}
+%     F_{X}(x) 
+%     &= \int_{-\infty}^{x} \frac{1}{2\pi}\cdot \mathbf{1}_{[0,2\pi)}(t)dt\nonumber\\
+%     &= \frac{1}{2\pi}\int_{-\infty}^{x}  \mathbf{1}_{[0,2\pi)}(t)dt.
+%   \end{align}
+%   To evaluate an integral of this form, we have to consider three cases:
+%   \begin{itemize}
+%     \item $x < 0$ (i.e. when $x$ is to the left of the interval)
+%     \item $x \geq 2\pi$ (i.e. when $x$ is to the right of the interval)
+%     \item $0 \leq x<2\pi $ (i.e. when $x$ is in the interval)
+%   \end{itemize}
+%   Let's think through these cases:
+%   \begin{itemize}
+%     \item When $x<0$, the integral on the right-hand side of \cref{eq:10} is
+%     zero.
+%     \item When $x \geq 2\pi$, the integral equals
+%     \begin{equation*}
+%       \int_{-\infty}^{0}0dt + \frac{1}{2\pi}\int_{0}^{2\pi} dt + \int_{2\pi}^{x}0dt = 0+1+0=1 
+%     \end{equation*}
+%     \item When $0 \leq x<2\pi$, the integral equals
+%     \begin{equation*}
+%       \int_{-\infty}^{0}0dt+ \frac{1}{2\pi}\int_{0}^{x} dt =0+ \frac{x}{2\pi} = \frac{x}{2\pi}
+%     \end{equation*}
+%   \end{itemize}
+%   From this analysis and \cref{eq:10}, we can conclude that
+%   \begin{equation*}
+%     F_{X}(x) = \left\{ \begin{array}{l@{\quad:\quad}l}
+%         0 & x < 0\\
+%         \frac{x}{2\pi} & 0 \leq x<2\pi\\
+%         1 & x \geq 2\pi \end{array}\right.
+%   \end{equation*}
 
-\begin{example}[Pinwheel example continued]
-  Recall the example of the pinwheel \cref{ex:pinwheel}, with the angle $X$ measured in radians, so that
-  the state space of $X$ is $[0,2\pi)$, with all values equally likely. Recall that we computed the pdf as
-  \begin{equation*}
-    f_{X}(x) = \frac{1}{2\pi}\cdot\mathbf{1}_{[0,2\pi)}(x) = \left\{ \begin{array}{l@{\quad:\quad}l} \frac{1}{2\pi} & x\in [0,2\pi)\\0 &x\notin [0,2\pi) \end{array}\right.
-  \end{equation*}
-  \begin{center}
-    \includegraphics[scale=.045]{images/pinwheel-density-curve}
-  \end{center}
-  Recall also that the cdf is defined as
-  \begin{equation*}
-    F_{X}(x) := \int_{-\infty}^{x}f_{X}(t)dt.
-  \end{equation*}
-  So that for the pinwheel angle $X$, we have
-  \begin{align}\label{eq:10}
-    F_{X}(x) 
-    &= \int_{-\infty}^{x} \frac{1}{2\pi}\cdot \mathbf{1}_{[0,2\pi)}(t)dt\nonumber\\
-    &= \frac{1}{2\pi}\int_{-\infty}^{x}  \mathbf{1}_{[0,2\pi)}(t)dt.
-  \end{align}
-  To evaluate an integral of this form, we have to consider three cases:
-  \begin{itemize}
-    \item $x < 0$ (i.e. when $x$ is to the left of the interval)
-    \item $x \geq 2\pi$ (i.e. when $x$ is to the right of the interval)
-    \item $0 \leq x<2\pi $ (i.e. when $x$ is in the interval)
-  \end{itemize}
-  Let's think through these cases:
-  \begin{itemize}
-    \item When $x<0$, the integral on the right-hand side of \cref{eq:10} is
-    zero.
-    \item When $x \geq 2\pi$, the integral equals
-    \begin{equation*}
-      \int_{-\infty}^{0}0dt + \frac{1}{2\pi}\int_{0}^{2\pi} dt + \int_{2\pi}^{x}0dt = 0+1+0=1 
-    \end{equation*}
-    \item When $0 \leq x<2\pi$, the integral equals
-    \begin{equation*}
-      \int_{-\infty}^{0}0dt+ \frac{1}{2\pi}\int_{0}^{x} dt =0+ \frac{x}{2\pi} = \frac{x}{2\pi}
-    \end{equation*}
-  \end{itemize}
-  From this analysis and \cref{eq:10}, we can conclude that
-  \begin{equation*}
-    F_{X}(x) = \left\{ \begin{array}{l@{\quad:\quad}l}
-        0 & x < 0\\
-        \frac{x}{2\pi} & 0 \leq x<2\pi\\
-        1 & x \geq 2\pi \end{array}\right.
-  \end{equation*}
-
-  \begin{center}
-    \begin{tikzpicture}
-      % Axes
-      \draw[->] (-2,0) -- (6,0) node[right] {$x$};%
-      \draw[->] (0,-0.4) -- (0,2.2) node[above] {Probability};%
+%   \begin{center}
+%     \begin{tikzpicture}
+%       % Axes
+%       \draw[->] (-2,0) -- (6,0) node[right] {$x$};%
+%       \draw[->] (0,-0.4) -- (0,2.2) node[above] {Probability};%
       
-      % Function segments
-      \draw[thick,blue,<-] (-2,0) -- (0,0);% % f(x) = 0 for x < 0
-      \draw[thick,blue] (0,0) -- (3.14,1);% % f(x) = x / (2π) for 0 ≤ x ≤ 2π
-      \draw[thick,blue,->] (3.14,1) -- (6,1);% % f(x) = 1 for x > 2π
+%       % Function segments
+%       \draw[thick,blue,<-] (-2,0) -- (0,0);% % f(x) = 0 for x < 0
+%       \draw[thick,blue] (0,0) -- (3.14,1);% % f(x) = x / (2π) for 0 ≤ x ≤ 2π
+%       \draw[thick,blue,->] (3.14,1) -- (6,1);% % f(x) = 1 for x > 2π
 
-      % tick marks
-      \draw (-0.1,1) -- (0.1,1); % Tick at y = 1
-      \draw (3.14,0.1) -- (3.14,-0.1); % Tick at x = π
-      % Labels
-      \node[below] at (0,-0.4) {$0$};%
-      \node[below] at (3.14,0) {$2\pi$};%
-      \node[left] at (0,1) {$1$};%
-    \end{tikzpicture}
-  \end{center}
-\end{example}
+%       % tick marks
+%       \draw (-0.1,1) -- (0.1,1); % Tick at y = 1
+%       \draw (3.14,0.1) -- (3.14,-0.1); % Tick at x = π
+%       % Labels
+%       \node[below] at (0,-0.4) {$0$};%
+%       \node[below] at (3.14,0) {$2\pi$};%
+%       \node[left] at (0,1) {$1$};%
+%     \end{tikzpicture}
+%   \end{center}
+% \end{example}
 
 
-\begin{definition}[Uniform random variable]
-  \label{def:uniform-random-variable}
-  Let $I$ be an interval with endpoints $a$ and $b$, such that $a<b$. A continuous random variable $X$
-  has \demph{uniform distribution} on $I$ if it has pdf
-  \begin{equation*}
-    f(x) = \left\{ \begin{array}{l@{\quad:\quad}l} \frac{1}{b-a} & x\in I\\0 & x\notin I \end{array}\right.
-  \end{equation*}
-  In this case, $X$ is called a \demph{uniform} random variable.
-\end{definition}
+% \begin{example}[Waiting times]
+%   \label{ex:waiting-times}
+%   Suppose you station yourself at spot on a road and watch as cars pass by. Let $T$ be the time in
+%   minutes until the first car passes by. This random variable is called the \textit{waiting time}.
 
-\begin{definition}[Exponential random variable]
-  \label{def:exponential-random-variable}
-  We say that $X$ is an \demph{exponential} random variable with rate
-  $\lambda>0$ if it has pdf
-  \begin{equation*}
-    f(x)= \lambda e^{-\lambda x}\mathbf{1}_{\left[ x \geq 0\right]}.
-  \end{equation*}
-\end{definition}
+%   Under certain circumstances, it is reasonable for $T$ to have pdf
+%   \begin{equation}
+%     \label{eq:exponential-density}
+%     f(x) = \lambda e^{-\lambda x}\mathbf{1}_{\left[ x \geq 0 \right] }
+%   \end{equation}
+%   for a certain (fixed) value of $\lambda>0$.
 
-\begin{remark}
-  In \cref{def:exponential-random-variable}, the term
-  $\mathbf{1}_{\left[ x \geq 0 \right] }$ is an ``indicator function'' which takes value $1$ when
-  $x \geq 0$ and $0$ if $x<0$. 
-\end{remark}
+%   For concreteness, let's assume that $\lambda=3$, so
+%   \begin{equation*}
+%     f(x) = 3e^{-3x} \mathbf{1}_{\left[ x \geq 0\right] }
+%   \end{equation*}
+%   Then the cdf is
+%   \begin{align*}
+%     F(t) 
+%     &= \int_{-\infty}^{t}f_{T}(x)dx\\
+%     &= \int_{0}^{t}3 e^{-3 x}dx\\ 
+%     &=3 \left[ \frac{-e^{-4 x}}{3} \right]^{t}_{0}\\
+%     &= 1-e^{-3t}.
+%   \end{align*}
+%   Equivalently,
+%   \begin{equation*}
+%     \P\left[T>t \right] = e^{-3t}.
+%   \end{equation*}
+%   For example the probability that you have to wait more than $t=30$ seconds for a car to pass by is
+%   \begin{equation*}
+%     \P\left[T>5 \right] = e^{-3\cdot 0.5}\approx .22
+%   \end{equation*}
+%   What about
+%   \begin{equation*}
+%     \E\left[T \right]?
+%   \end{equation*}
+%   If the cars come at a rate of $\lambda=3$ cars per minute, then on average how long would you have to
+%   wait for a car to arrive? This should be $20$ seconds.
+
+%   % Let's do the calculation and check:
+%   % \begin{align*}
+%   %   \E\left[T \right] 
+%   %   &=\int_{-\infty}^{\infty} x f_{T}(x) dx\\
+%   %   &= \int_{0}^{\infty}3xe^{-3x}dx\\ 
+%   %   &= \int_{0}^{\infty}3x \frac{d}{dx}\left[ -\frac{1}{3}e^{-3x} \right]dx\\  
+%   %   &= \left[ \left( 3x \right)\left( -\frac{1}{3}e^{-3x} \right) \right]^{\infty}_{0}  - \int_{0}^{\infty} \frac{d}{dx}\left[ 3x \right] \left( -\frac{1}{3}e^{-3x} \right)dx\\     
+%   %   &= \int_{0}^{\infty} e^{-3x}dx\\
+%   %   &= \left[ -\frac{1}{3}e^{-3x} \right]^{\infty}_{0}\\
+%   %   &= 0 - (-\frac{1}{3})\\
+%   %   &= \frac{1}{3}\\
+%   %   &= 20 \text{ seconds}
+%   % \end{align*}
+%   % So if the rate of cars coming is $\lambda=3$ cars per minute, then on average, we'll have to wait 20
+%   % seconds.
+% \end{example}
+
+
 
 \newpage
+\section{2026-10-12 | Week 08 | Lecture 21}
 
-\subsection{Continuous random variables}
-\begin{example}[Waiting times]
-  \label{ex:waiting-times}
-  Suppose you station yourself at spot on a road and watch as cars pass by. Let $T$ be the time in
-  minutes until the first car passes by. This random variable is called the \textit{waiting time}.
-
-  Under certain circumstances, it is reasonable for $T$ to have pdf
-  \begin{equation}
-    \label{eq:exponential-density}
-    f(x) = \lambda e^{-\lambda x}\mathbf{1}_{\left[ x \geq 0 \right] }
-  \end{equation}
-  for a certain (fixed) value of $\lambda>0$.
-
-  For concreteness, let's assume that $\lambda=3$, so
-  \begin{equation*}
-    f(x) = 3e^{-3x} \mathbf{1}_{\left[ x \geq 0\right] }
-  \end{equation*}
-  Then the cdf is
-  \begin{align*}
-    F(t) 
-    &= \int_{-\infty}^{t}f_{T}(x)dx\\
-    &= \int_{0}^{t}3 e^{-3 x}dx\\ 
-    &=3 \left[ \frac{-e^{-4 x}}{3} \right]^{t}_{0}\\
-    &= 1-e^{-3t}.
-  \end{align*}
-  Equivalently,
-  \begin{equation*}
-    \P\left[T>t \right] = e^{-3t}.
-  \end{equation*}
-  For example the probability that you have to wait more than $t=30$ seconds for a car to pass by is
-  \begin{equation*}
-    \P\left[T>5 \right] = e^{-3\cdot 0.5}\approx .22
-  \end{equation*}
-  What about
-  \begin{equation*}
-    \E\left[T \right]?
-  \end{equation*}
-  If the cars come at a rate of $\lambda=3$ cars per minute, then on average how long would you have to
-  wait for a car to arrive? This should be $20$ seconds.
-
-  % Let's do the calculation and check:
-  % \begin{align*}
-  %   \E\left[T \right] 
-  %   &=\int_{-\infty}^{\infty} x f_{T}(x) dx\\
-  %   &= \int_{0}^{\infty}3xe^{-3x}dx\\ 
-  %   &= \int_{0}^{\infty}3x \frac{d}{dx}\left[ -\frac{1}{3}e^{-3x} \right]dx\\  
-  %   &= \left[ \left( 3x \right)\left( -\frac{1}{3}e^{-3x} \right) \right]^{\infty}_{0}  - \int_{0}^{\infty} \frac{d}{dx}\left[ 3x \right] \left( -\frac{1}{3}e^{-3x} \right)dx\\     
-  %   &= \int_{0}^{\infty} e^{-3x}dx\\
-  %   &= \left[ -\frac{1}{3}e^{-3x} \right]^{\infty}_{0}\\
-  %   &= 0 - (-\frac{1}{3})\\
-  %   &= \frac{1}{3}\\
-  %   &= 20 \text{ seconds}
-  % \end{align*}
-  % So if the rate of cars coming is $\lambda=3$ cars per minute, then on average, we'll have to wait 20
-  % seconds.
-\end{example}
-
-\begin{definition}[Expected value -- continuous random variables]
-  \label{def:expected-value-continuous-random-variables}
-  The \demph{expected value} of a continuous random variable $X$ is 
-  \begin{equation*}
-    \E\left[X \right] := \int_{-\infty}^{\infty}xf(x)dx 
-  \end{equation*}
-  where $f(x)$ is the pdf of $X$. (Provided that the integral above converges absolutely).
-\end{definition}
-
-We also have an analogue of the law of the unconscious statistician
-(\cref{thm:LOTUS-discrete-case})
-
-\begin{theorem}[LOTUS - continuous case]
-  \label{thm:lotus-continuous-case}
-  Let $X$ be a continous random variable with pdf $f$. Then for any function
-  $h:\R \to \R$,
-  \begin{equation*}
-    \E\left[h(X) \right]= \int_{-\infty}^{\infty}h(x)f(x)dx,
-  \end{equation*}
-  provided that the integral exists and is finite.
-\end{theorem}
-
-
-Suppose $\mu= \E\left[X \right]$. Applying \cref{thm:lotus-continuous-case} to
-the function $h(x)= (x- \mu)^{2}$ gives the following formula for the variance
-of a continuous random variable:
-\begin{equation*}
-  \Var(X) := \E\left[(X-\mu)^{2} \right]=\int_{-\infty}^{\infty}(x-\mu)^{2}f(x)dx.
-\end{equation*}
-
-And again, we have the shortcut formula
-\begin{equation*}
-  \Var(X) = \E\left[X^{2} \right]- \left( \E\left[X \right] \right)^{2} .
-\end{equation*}
-
-\section{2026-03-11 | Week 09 | Lecture 21}
 
 \subsection{Normal random variables}
 \textit{This section is based on chapter 4.3}.
@@ -3680,6 +3616,23 @@ And again, we have the shortcut formula
   Note that $\mu$ determines where the peak of the bell curve is
   located, and $\sigma$ determines how wide or narrow it is.
 \end{remark}
+
+\begin{definition}
+  The \demph{standard normal curve} is the graph of the standard normal
+  density
+  \begin{equation*}
+    f(z) = \frac{1}{\sqrt{2\pi}}\exp \left( -\frac{z^{2}}{2} \right) 
+  \end{equation*}
+  If $Z$ is a standard normal random variable, we denote its cdf by
+  \begin{equation*}
+    \demph{\Phi(z)}:= \P \left[ Z \leq z\right] = \int_{-\infty}^{z}\frac{1}{\sqrt{2\pi}}\exp \left( -\frac{z^{2}}{2} \right)dz.   
+  \end{equation*}
+  Further, we denote by $\demph{z_{\alpha}}$ the value on the $x$-axis for
+  which $\alpha$ of the area under the curve lies to the right of
+  $z_{\alpha}$. We call $z_{\alpha}$ the $100(1-\alpha)^{\rm th}$ percentile
+  of the standard normal distribution.
+\end{definition}
+
 % Normal random variables have a ``bell-curve'' distribution. Here are some example density curves for
 % various values of $\mu$ and $\sigma$. Note that $\mu$ determines where the peak of the bell curve is
 % located, and $\sigma$ determines how wide or narrow it is:
@@ -3741,6 +3694,73 @@ The next example shows how we can use standardization to do calculations:
   665 and 735 watts.
 \end{example}
 
+
+
+
+\subsection{Continuous random variables}
+\textit{(This lecture is based on sections 4.1-4.3 in the textbook)}
+
+
+\begin{definition}[Uniform random variable]
+  \label{def:uniform-random-variable}
+  Let $I$ be an interval with endpoints $a$ and $b$, such that $a<b$. A continuous random variable $X$
+  has \demph{uniform distribution} on $I$ if it has pdf
+  \begin{equation*}
+    f(x) = \left\{ \begin{array}{l@{\quad:\quad}l} \frac{1}{b-a} & x\in I\\0 & x\notin I \end{array}\right.
+  \end{equation*}
+  In this case, $X$ is called a \demph{uniform} random variable.
+\end{definition}
+
+\begin{definition}[Exponential random variable]
+  \label{def:exponential-random-variable}
+  We say that $X$ is an \demph{exponential} random variable with rate
+  $\lambda>0$ if it has pdf
+  \begin{equation*}
+    f(x)= \lambda e^{-\lambda x}\mathbf{1}_{\left[ x \geq 0\right]}.
+  \end{equation*}
+\end{definition}
+
+\begin{remark}
+  In \cref{def:exponential-random-variable}, the term
+  $\mathbf{1}_{\left[ x \geq 0 \right] }$ is an ``indicator function'' which takes value $1$ when
+  $x \geq 0$ and $0$ if $x<0$. 
+\end{remark}
+
+\begin{definition}[Expected value -- continuous random variables]
+  \label{def:expected-value-continuous-random-variables}
+  The \demph{expected value} of a continuous random variable $X$ is 
+  \begin{equation*}
+    \E\left[X \right] := \int_{-\infty}^{\infty}xf(x)dx 
+  \end{equation*}
+  where $f(x)$ is the pdf of $X$. (Provided that the integral above converges absolutely).
+\end{definition}
+
+We also have an analogue of the law of the unconscious statistician
+(\cref{thm:LOTUS-discrete-case})
+
+\begin{theorem}[LOTUS - continuous case]
+  \label{thm:lotus-continuous-case}
+  Let $X$ be a continous random variable with pdf $f$. Then for any function
+  $h:\R \to \R$,
+  \begin{equation*}
+    \E\left[h(X) \right]= \int_{-\infty}^{\infty}h(x)f(x)dx,
+  \end{equation*}
+  provided that the integral exists and is finite.
+\end{theorem}
+
+
+Suppose $\mu= \E\left[X \right]$. Applying \cref{thm:lotus-continuous-case} to
+the function $h(x)= (x- \mu)^{2}$ gives the following formula for the variance
+of a continuous random variable:
+\begin{equation*}
+  \Var(X) := \E\left[(X-\mu)^{2} \right]=\int_{-\infty}^{\infty}(x-\mu)^{2}f(x)dx.
+\end{equation*}
+
+And again, we have the shortcut formula
+\begin{equation*}
+  \Var(X) = \E\left[X^{2} \right]- \left( \E\left[X \right] \right)^{2} .
+\end{equation*}
+\end{document}
 \newpage
 \section{2026-03-23  | Week 10 | Lecture 22}
 \subsection{Joint distributions - discrete case}
