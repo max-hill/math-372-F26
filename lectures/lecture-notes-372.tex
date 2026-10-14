@@ -3779,23 +3779,25 @@ case where the random variables are discrete.
   Let $X$ and $Y$ be two discrete random variables. The \demph{joint pmf} of
   $X$ and $Y$ is the function
   \begin{equation*}
-    p(x,y) = \P\left[X=x,Y=y \right],
+    p(x,y) = \P\left[X=x,Y=y \right], \qquad x,y\in \R.
   \end{equation*}
-  defined for all $x,y\in \R$.
 \end{definition}
 
 \begin{remark}
-  \begin{itemize}
-    \item[]
-    \item It must be the case that $p(x,y) \geq 0$ and
-    $\sum_{x,y}p(x,y)=1$.
-    \item Let $A$ be any set consisting of pairs of $(x,y)$ values. Then the
-    probability
-    \begin{equation*}
-      \P\left[(X,Y)\in A\right] = \sum_{(x,y)\in A} p(x,y)
-    \end{equation*}
-  \end{itemize}
+  To be a valid joint pmf, two conditions must hold:
+  \begin{enumerate}
+    \item  $p(x,y) \geq 0$
+    \item $\sum_{x,y}p(x,y)=1$
+  \end{enumerate}
 \end{remark}
+
+\begin{theorem}
+  If $A$ is 2-dimensional set (e.g., consisting of pairs
+  of $(x,y)$ values), then
+  \begin{equation*}
+    \P\left[(X,Y)\in A\right] = \sum_{(x,y)\in A} p(x,y)
+  \end{equation*}
+\end{theorem}
 
 \begin{example}
   Cars made in a factory experience two kinds of defects: defective joint welds, and and improperly
@@ -3804,7 +3806,7 @@ case where the random variables are discrete.
     \item $X = $ number of defective welds in a new car
     \item $Y = $ number of improperly tightened bolts
   \end{itemize}
-  Past data suggests that the joint pdf of $(X,Y)$ is given by the following table:
+  Past data suggests that the joint pmf $p(x,y)$ of $(X,Y)$ is given by the following table:
   \begin{center}
     \begin{tabular}{ll|llll}
       &   & & \quad Y    \\
@@ -3814,23 +3816,67 @@ case where the random variables are discrete.
       & 2 & .010 & .005 & .004 & .001
     \end{tabular}
   \end{center}
-  The probability that there are no defects in the car is
+
+  For example, the probability that a car has exactly one defective weld and
+  three improperly tightened bolts is
   \begin{equation*}
-    p(0,0) = \P\left[X=0,Y=0 \right] = .84
+    p(1,3) = 0.008.
   \end{equation*}
-  The probability that there will be exactly one defect is
-  \begin{equation*}
-    p(0,1)+p(1,0) = \P\left[X=0,Y=1 \right]+ \P\left[X=1,Y=0 \right] = .06+.03 = .09.
-  \end{equation*}
-  What is the probability that there will be no improperly tightened bolts? This concerns only the
-  variable $Y$. This can be obtained by summing  over all values of $x$:
-  \begin{align*}
-    \P\left[Y=0 \right] 
-    &= \sum_{x=0}^{2}\P\left[X=x, Y=0 \right]\\
-    &= p(0,0)+p(1,0)+p(2,0)\\
-    &= .84+.06+.01\\
-    &= .91
-  \end{align*}
+  
+  \begin{itemize}
+    \item {Question 0.} Is $p(x,y)$ a valid pmf?
+
+    \textit{Answer:} Yes. The entries of the table are (1) nonnegative and (2)
+    sum to one, so $p(x,y)$ is a valid pmf.
+    
+    \item {Question 1.} What is the probability that a car has \textit{no defects}?
+
+    \textit{Answer:} The probability that there are no defects in the car is
+    \begin{equation*}
+      p(0,0) = \P\left[X=0,Y=0 \right] = 0.84.
+    \end{equation*}
+
+    \item {Question 2.} What is the probability that a car has \textit{exactly one} defect?
+
+    \textit{Answer:} The probability that there will be exactly one defect is
+    \begin{equation*}
+      p(0,1)+p(1,0) = \P\left[X=0,Y=1 \right]+ \P\left[X=1,Y=0 \right] = .06+.03 = .09.
+    \end{equation*}
+
+    \item {Question 3.} What is the probability that there will be no improperly
+    tightened bolts?
+
+    \textit{Answer: } This question concerns only the variable $Y$. The
+    probability can be obtained by summing over all values of $x$:
+    \begin{align*}
+      \P\left[Y=0 \right] 
+      &= \sum_{x=0}^{2}\P\left[X=x, Y=0 \right]\\
+      &= p(0,0)+p(1,0)+p(2,0)\\
+      &= .84+.06+.01\\
+      &= 0.91.
+    \end{align*}
+    Therefore 91\% of cars produced by the factory have no improperly tightened
+    bolts.
+    
+    To find this value, observe that we summed over all values in the $0$-column
+    of the table above. This is called a \demph{column sum}.
+
+    \item {Question 4.} What is the probability that there is exactly one defective
+    weld?
+
+    \textit{Answer:} The probability is
+    \begin{align*}
+      \P \left[ X=1 \right] 
+      &= \sum_{y=0}^{3}p(1,y)\\ 
+      &= p(1,0)+p(1,1)+p(1,2)+p(1,3)\\
+      &=.060+.010+.008+.002\\
+      &=.08.
+    \end{align*}
+    So $8\%$ of cars produced by the factory have exactly one defective weld.
+
+    To find this value, we summed over all values in the $1$-row of the table.
+    This is called a \demph{row sum}.
+  \end{itemize}
 \end{example}
 
 Given the joint pmf for a two-dimensional discrete random vector $(X,Y)$, it
@@ -3841,11 +3887,11 @@ the previous example.
 \begin{definition}
   If $p(x,y)$ is the pmf of $(X,Y)$, then the \demph{marginal pmf} of $X$ is
   \begin{equation*}
-    p_{X}(x)=  \P\left[X=x \right] = \sum_{\text{all }y}p(x,y).
+    p_{X}(x)=  \P\left[X=x \right] = \sum_{\text{all }y}p(x,y), \qquad x\in \R.
   \end{equation*}
   Similary, the \demph{marginal pmf} of $Y$
   \begin{equation*}
-    p_{Y}(y) = \P\left[Y = y \right] = \sum_{\text{all } x}p(x,y).
+    p_{Y}(y) = \P\left[Y = y \right] = \sum_{\text{all } x}p(x,y), \qquad y\in \R.
   \end{equation*}
 \end{definition}
 Recall that two events are independent if knowledge that one has occurred
@@ -3853,11 +3899,12 @@ gives no information about whether the other has occurred. We can extend this
 idea to random variables:
 \begin{definition}[Independence of rvs - discrete case]
   Let $X,Y$ be discrete random variables with joint pmf $p(x,y)$. We say that
-  $X$ and $Y$ are \demph{independent} if for every pair of $(x,y)$-values,
-  \begin{equation*}
-    p(x,y) = p_{X}(x)\cdot p_{Y}(y)
-  \end{equation*}
-  If this condition isn't satisfied for all $(x,y)$, then $X$ and $Y$ are said to be \demph{dependent}.
+  $X$ and $Y$ are \demph{independent} if 
+  \begin{equation}\label{eq:independence-criteria-for-discrete-rv}
+    p(x,y) = p_{X}(x)\cdot p_{Y}(y), \qquad \text{for all }x,y\in \R.
+  \end{equation}
+  If this condition isn't satisfied for all pairs $(x,y)$, then $X$ and $Y$
+  are said to be \demph{dependent}.
 \end{definition}
 
 The intuition is this: two random variables are independent if observing one of them doesn't give you any
@@ -3875,32 +3922,41 @@ information about the other.
       & 2 & .010 & .005 & .004 & .001
     \end{tabular}
   \end{center}
-  where, for example $p(1,3) = .002$.
-  
-  The marginal pmfs are given by the following tables:
-  \begin{center}
-    \begin{tabular}{l|l}
-      $x$ & $p_X(x)$\\ \hline
-      0& .9\\
-      1& .08\\
-      2& .02\\
-    \end{tabular}
-    \quad \text{and} \quad
-    \begin{tabular}{l|l}
-      $y$ & $p_Y(y)$\\ \hline
-      0& .91\\
-      1& .045\\
-      2& .032\\
-      3& .013\\
-    \end{tabular}
-  \end{center}
-  Are $X$ and $Y$ independent? Having computed the pmfs, we can verify that
-  $X$ and $Y$ are \textbf{not independent}. This is because
-  \begin{equation*}
-    p(0,0) = .84 \neq (.9)(.91) = .819 = p_{X}(0)p_{Y}(0).
-  \end{equation*}
+
+  \begin{itemize}
+    \item Question 5. What are the marginal pmfs $p_{X}$ and $p_{Y}$?
+
+    \textit{Answer:} The marginal pmfs are given by the following tables:
+    \begin{center}
+      \begin{tabular}{l|l}
+        $x$ & $p_X(x)$\\ \hline
+        0& .9\\
+        1& .08\\
+        2& .02\\
+      \end{tabular}
+      \quad \text{and} \quad
+      \begin{tabular}{l|l}
+        $y$ & $p_Y(y)$\\ \hline
+        0& .91\\
+        1& .045\\
+        2& .032\\
+        3& .013\\
+      \end{tabular}
+    \end{center}
+    
+    \item Question 6. Are $X$ and $Y$ independent?
+
+    \textit{Answer:} No. Observe that
+    \begin{equation*}
+      p(0,0) = .84 \neq (.9)(.91) = .819 = p_{X}(0)p_{Y}(0).
+    \end{equation*}
+    Therefore \cref{eq:independence-criteria-for-discrete-rv} is not
+    satisfied. Hence $X$ and $Y$ are dependent.
+  \end{itemize}
+   
 \end{example}
 
+\end{document}
 \subsection{Joint distributions - continuous case}
 
 \textit{Based on chapter 5.1 in the textbook -- in particular, please read
