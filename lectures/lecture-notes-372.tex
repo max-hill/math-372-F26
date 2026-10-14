@@ -3696,80 +3696,83 @@ The next example shows how we can use standardization to do calculations:
 
 
 
-
-\subsection{Continuous random variables}
-\textit{(This lecture is based on sections 4.1-4.3 in the textbook)}
-
-
-\begin{definition}[Uniform random variable]
-  \label{def:uniform-random-variable}
-  Let $I$ be an interval with endpoints $a$ and $b$, such that $a<b$. A continuous random variable $X$
-  has \demph{uniform distribution} on $I$ if it has pdf
-  \begin{equation*}
-    f(x) = \left\{ \begin{array}{l@{\quad:\quad}l} \frac{1}{b-a} & x\in I\\0 & x\notin I \end{array}\right.
-  \end{equation*}
-  In this case, $X$ is called a \demph{uniform} random variable.
-\end{definition}
-
-\begin{definition}[Exponential random variable]
-  \label{def:exponential-random-variable}
-  We say that $X$ is an \demph{exponential} random variable with rate
-  $\lambda>0$ if it has pdf
-  \begin{equation*}
-    f(x)= \lambda e^{-\lambda x}\mathbf{1}_{\left[ x \geq 0\right]}.
-  \end{equation*}
-\end{definition}
-
-\begin{remark}
-  In \cref{def:exponential-random-variable}, the term
-  $\mathbf{1}_{\left[ x \geq 0 \right] }$ is an ``indicator function'' which takes value $1$ when
-  $x \geq 0$ and $0$ if $x<0$. 
-\end{remark}
-
-\begin{definition}[Expected value -- continuous random variables]
-  \label{def:expected-value-continuous-random-variables}
-  The \demph{expected value} of a continuous random variable $X$ is 
-  \begin{equation*}
-    \E\left[X \right] := \int_{-\infty}^{\infty}xf(x)dx 
-  \end{equation*}
-  where $f(x)$ is the pdf of $X$. (Provided that the integral above converges absolutely).
-\end{definition}
-
-We also have an analogue of the law of the unconscious statistician
-(\cref{thm:LOTUS-discrete-case})
-
-\begin{theorem}[LOTUS - continuous case]
-  \label{thm:lotus-continuous-case}
-  Let $X$ be a continous random variable with pdf $f$. Then for any function
-  $h:\R \to \R$,
-  \begin{equation*}
-    \E\left[h(X) \right]= \int_{-\infty}^{\infty}h(x)f(x)dx,
-  \end{equation*}
-  provided that the integral exists and is finite.
-\end{theorem}
+% \subsection{Continuous random variables}
+% \textit{(This lecture is based on sections 4.1-4.3 in the textbook)}
 
 
-Suppose $\mu= \E\left[X \right]$. Applying \cref{thm:lotus-continuous-case} to
-the function $h(x)= (x- \mu)^{2}$ gives the following formula for the variance
-of a continuous random variable:
-\begin{equation*}
-  \Var(X) := \E\left[(X-\mu)^{2} \right]=\int_{-\infty}^{\infty}(x-\mu)^{2}f(x)dx.
-\end{equation*}
+% \begin{definition}[Uniform random variable]
+%   \label{def:uniform-random-variable}
+%   Let $I$ be an interval with endpoints $a$ and $b$, such that $a<b$. A continuous random variable $X$
+%   has \demph{uniform distribution} on $I$ if it has pdf
+%   \begin{equation*}
+%     f(x) = \left\{ \begin{array}{l@{\quad:\quad}l} \frac{1}{b-a} & x\in I\\0 & x\notin I \end{array}\right.
+%   \end{equation*}
+%   In this case, $X$ is called a \demph{uniform} random variable.
+% \end{definition}
 
-And again, we have the shortcut formula
-\begin{equation*}
-  \Var(X) = \E\left[X^{2} \right]- \left( \E\left[X \right] \right)^{2} .
-\end{equation*}
-\end{document}
+% \begin{definition}[Exponential random variable]
+%   \label{def:exponential-random-variable}
+%   We say that $X$ is an \demph{exponential} random variable with rate
+%   $\lambda>0$ if it has pdf
+%   \begin{equation*}
+%     f(x)= \lambda e^{-\lambda x}\mathbf{1}_{\left[ x \geq 0\right]}.
+%   \end{equation*}
+% \end{definition}
+
+% \begin{remark}
+%   In \cref{def:exponential-random-variable}, the term
+%   $\mathbf{1}_{\left[ x \geq 0 \right] }$ is an ``indicator function'' which takes value $1$ when
+%   $x \geq 0$ and $0$ if $x<0$. 
+% \end{remark}
+
+% \begin{definition}[Expected value -- continuous random variables]
+%   \label{def:expected-value-continuous-random-variables}
+%   The \demph{expected value} of a continuous random variable $X$ is 
+%   \begin{equation*}
+%     \E\left[X \right] := \int_{-\infty}^{\infty}xf(x)dx 
+%   \end{equation*}
+%   where $f(x)$ is the pdf of $X$. (Provided that the integral above converges absolutely).
+% \end{definition}
+
+% We also have an analogue of the law of the unconscious statistician
+% (\cref{thm:LOTUS-discrete-case})
+
+% \begin{theorem}[LOTUS - continuous case]
+%   \label{thm:lotus-continuous-case}
+%   Let $X$ be a continous random variable with pdf $f$. Then for any function
+%   $h:\R \to \R$,
+%   \begin{equation*}
+%     \E\left[h(X) \right]= \int_{-\infty}^{\infty}h(x)f(x)dx,
+%   \end{equation*}
+%   provided that the integral exists and is finite.
+% \end{theorem}
+
+
+% Suppose $\mu= \E\left[X \right]$. Applying \cref{thm:lotus-continuous-case} to
+% the function $h(x)= (x- \mu)^{2}$ gives the following formula for the variance
+% of a continuous random variable:
+% \begin{equation*}
+%   \Var(X) := \E\left[(X-\mu)^{2} \right]=\int_{-\infty}^{\infty}(x-\mu)^{2}f(x)dx.
+% \end{equation*}
+
+% And again, we have the shortcut formula
+% \begin{equation*}
+%   \Var(X) = \E\left[X^{2} \right]- \left( \E\left[X \right] \right)^{2} .
+% \end{equation*}
+% \end{document}
+% \newpage
+
 \newpage
-\section{2026-03-23  | Week 10 | Lecture 22}
+
+\section{2026-10-14 | Week 08 | Lecture 22}
+
 \subsection{Joint distributions - discrete case}
 \label{sec:joint-distributions-discrete-case}
 \textit{Please read chapter 5.1}
 
-We are interested in understanding the properties of \demph{random vectors}, which are vectors whose
-entries are random variables. We'll start with the case where the random
-variables are discrete.
+We are interested in understanding the properties of \demph{random vectors},
+which are vectors whose entries are random variables. We'll start with the
+case where the random variables are discrete.
 
 
 \begin{definition}[Joint pmf]
