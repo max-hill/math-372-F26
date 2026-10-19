@@ -37,6 +37,7 @@ title: lecture notes
  2026-10-12  |  - | normal random variables (chp 4.3)
  2026-10-14  |  - | joint distributions - discrete case (chp 5.1
  2026-10-16  |  - | joint distributions - continuous case (chp 5.1)
+ 2026-10-19  |  - | review multiple integration (e.g., chapter 13 of [this textbook](docs/calc-textbook.pdf), chp 5.2
  
 # other links
 
