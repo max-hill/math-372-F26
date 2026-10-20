@@ -12,7 +12,7 @@ permalink: /exam-information/
 
 ## midterm 2
 
-- tentative date: friday, October 23 (in class)
+- monday, November 9 (in class)
 
 ## final exam
     
