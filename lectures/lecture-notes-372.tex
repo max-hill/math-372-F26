@@ -3969,7 +3969,7 @@ of them doesn't give you any information about the other.
    
 \end{example}
 \newpage
-\section{2026-10-16 | Week 08 | Lecture 22}
+\section{2026-10-16 | Week 08 | Lecture 23}
 \begin{center}
   \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
     \textit{\textbf{Topic of this lecture:} joint distributions - continuous case}
@@ -4007,7 +4007,7 @@ discrete random variables presented in \cref{sec:joint-distributions-discrete-ca
 Then worksheet for rest of class.
 
 \newpage
-\section{2026-03-25 | Week 09 | Lecture 23}
+\section{2026-10-19 | Week 09 | Lecture 24}
 
 \begin{center}
   \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
@@ -4024,11 +4024,34 @@ Then worksheet for rest of class.
 \end{itemize}
 
 
-\begin{example}[Composition of volcanish ash]
+\begin{example}
   Let $X,Y$ be the random variables with joint pdf
   \begin{equation*}
     f(x,y) = \left\{ \begin{array}{l@{\quad:\quad}l} 2 & x>0,y>0, x+y<1\\ 0& \text{otherwise.}\end{array}\right.
   \end{equation*}
+  The support of this function is the set
+  \begin{equation*}
+    D = \left\{(x,y)\in \R^{2}: x>0, y>0, x+y<1\right\} 
+  \end{equation*}
+  which is the region in $\R^{2}$ shown below:
+  \begin{center}
+    \begin{tikzpicture}[scale=2]
+      % axes
+      \draw[->] (-0.05,0) -- (1.15,0) node[right] {$x$}; \draw[->] (0,-0.05)
+      -- (0,1.15) node[above] {$y$};
+
+      % shaded region
+      \fill[gray!25] (0,0) -- (1,0) -- (0,1) -- cycle;
+
+      % boundary lines
+      \draw[thick] (0,0) -- (1,0); \draw[thick] (0,0) -- (0,1); \draw[thick]
+      (1,0) -- (0,1);
+
+      % labels
+      \node[below left] at (0,0) {$0$}; \node[below] at (1,0) {$1$};
+      \node[left] at (0,1) {$1$}; \node at (0.33,0.33) {$D$};
+    \end{tikzpicture}
+  \end{center}
   \begin{enumerate}[(a)]
     \item What is $\P[X>1/2]$?
 
@@ -4057,9 +4080,19 @@ Then worksheet for rest of class.
 
   \end{enumerate}
 \end{example}
-\end{document}
+
+\newpage
+\section{2026-10-21 | Week 09 | Lecture 25}
+
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{Topic of this lecture:} Multivariate LOTUS Theorem and Covariance}
+
+    \textit{\textbf{Reading assignment:} 5.1, 5.2}
+  \end{tcolorbox}
+\end{center}
+
 \subsection{LOTUS Theorem - multivariate case}
-\textit{Chapter 5.2 in the textbook.}
 
 \begin{theorem}[LOTUS - multivariate case]
   \label{thm:LOTUS-multivariate-case}
@@ -4068,8 +4101,8 @@ Then worksheet for rest of class.
   $h:\R^{2} \to \R$,
   \begin{equation*}
     \E\left[h(X,Y) \right] =\left\{ \begin{array}{l@{\quad:\quad}l}
-        \displaystyle\sum_{\text{all }x,y} h(x,y)p(x,y) & \text{if $X,Y$ are discrete}\\
-        \displaystyle \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}h(x,y)f(x,y)dxdy   & \text{if $X,Y$ are continuous}
+        \displaystyle\sum_{\text{all }x,y} h(x,y)p(x,y) & \text{$X,Y$ are discrete}\\
+        \displaystyle \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}h(x,y)f(x,y)dxdy   & \text{$X,Y$ are continuous}
       \end{array}\right.
   \end{equation*}
 \end{theorem}
@@ -4093,21 +4126,25 @@ An important aplication of \cref{thm:LOTUS-multivariate-case}:
     &= \left( \sum_{\text{all }x} xp_{X}(x) \right) \left( \sum_{\text{all }y}yp_{Y}(y)  \right)\\   
     &= \E\left[X \right] \E\left[Y \right] &&\text{by \cref{thm:LOTUS-discrete-case}}
   \end{align*}
-  The continuous case is similar.
+  The continuous case is similar, but with integrals.
 \end{proof}
 
-One important function for \cref{thm:LOTUS-multivariate-case}  is when $h(X,Y) =
-(X-\mu_{X})(Y-\mu_{Y})$, where $\mu_{X}= \E\left[X \right]$ and $\mu_{Y} = \E\left[Y \right]$. That gives
-us a formula for what is called the \demph{covariance}:
+\subsection{Covariance}
+
+The \demph{covariance} of two random variables $X,Y$ is
 \begin{equation*}
-  \text{Cov}(X,Y) = \E\left[(X-\mu_{X})(Y-\mu_{Y}) \right]
+  \text{Cov}(X,Y) = \E\left[(X-\mu_{X})(Y-\mu_{Y}) \right],
 \end{equation*}
-By foiling this out, we get
-\begin{equation*}
+where $\mu_{X} = \E[X]$ and $\mu_{Y}=\E[Y]$.
+
+This can be computed with \cref{thm:LOTUS-multivariate-case}, but by foiling
+it out, we get the shortcut formula
+\begin{equation}\label{eq:covariance-shortcut-formula}
   \text{Cov}(X,Y) = \E\left[XY \right] - \mu_{X}\mu_{Y}
-\end{equation*}
-\fl{Interpetation:} covariance is a rough measure of the relationship between
-the two random variables.
+\end{equation}
+\fl{Interpetation:} covariance measures the strength of the relationship
+between $X$ and $Y$.
+
 By \cref{thm:independent-expectations-factorize}, if $X,Y$ are independent, then
 \begin{equation*}
   \text{Cov}(X,Y) = \E\left[XY \right] - \mu_{X}\mu_{Y} = \E\left[X \right] \E\left[Y \right] -\mu_{X}\mu_{Y} = 0.
@@ -4117,15 +4154,11 @@ By \cref{thm:independent-expectations-factorize}, if $X,Y$ are independent, then
 
 
 \begin{example}[Covariance calculation]
-  Let $X,Y$ be random variables with joint distribution
+  Let
   \begin{equation*}
-    f(x,y) = 24xy
+    D:= \left\{(x,y)\in \R^{2}: x \geq 0, y \geq 0, x+y \leq 1\right\},
   \end{equation*}
-  whose domain is
-  \begin{equation*}
-    D:= \left\{(x,y)\in \R^{2}: x \geq 0, y \geq 0, x+y \leq 1\right\}
-  \end{equation*}
-  which is shown below:
+  as shown:
   \begin{center}
     \begin{tikzpicture}[scale=2]
       % axes
@@ -4144,19 +4177,70 @@ By \cref{thm:independent-expectations-factorize}, if $X,Y$ are independent, then
       \node[left] at (0,1) {$1$}; \node at (0.33,0.33) {$D$};
     \end{tikzpicture}
   \end{center}
-  \Fl{What is the covariance} To compute $\E\left[XY \right]$, let's take
-  $h(x,y)=xy$. Recalling that $f(x,y) = 24xy$ for $(x,y)\in D$, we have
-  \begin{align*}
-    \E\left[XY \right] 
-    &= \int_{D} h(x,y) f(x,y)dxdy \\
-    &= \int_{D} (xy)24xy dxdy\\
-    &= 24\int_{D} x^{2}y^{2}dxdy\\
-    &= 24 \int_{0}^{1} \int_{0}^{1-y}  x^{2}y^{2}dxdy\\
-    &= 24 \int_{0}^{1}y^{2} \left[\int_{0}^{1-y}x^{2} dx \right] dy\\
-    &= 8 \int_{0}^{1}y^{2}(1-y)^{3}dy\\ 
-    &= \ldots\\
-    &= -8.
-  \end{align*}
+  Let $X,Y$ be random variables with joint distribution
+  \begin{equation*}
+    f(x,y) = \left\{ \begin{array}{l@{\quad:\quad}l} 24xy & (x,y)\in D\\0 &(x,y)\notin D \end{array}\right.
+  \end{equation*}
+  \begin{enumerate}[(a)]
+    \item \textbf{What are the marginal densities?}
+
+    Let $x\in [0,1]$, then
+    \begin{align*}
+      f_{X}(x) 
+      &= \int_{-\infty}^{\infty}f(x,y)dy \\
+      &= \int_{0}^{1-x}24xy dy\\ 
+      &= \left[ 12xy^{2} \right]^{1-x}_{0}\\ 
+      &= 12x(1-x)^{2}.
+    \end{align*}
+    If $x\notin [0,1]$, then (you should check) $f_{X}(x)=0$. Hence,
+    \begin{equation*}
+      f_{X}(x) 
+      = \left\{ 
+        \begin{array}{l@{\quad:\quad}l} 12x(1-x)^{2} & 0 \leq x \leq 1\\ 0& \text{otherwise.}\end{array}\right.
+    \end{equation*}
+    A similar argument shows that 
+    \begin{equation*}
+      f_{Y}(y) 
+      = \left\{ 
+        \begin{array}{l@{\quad:\quad}l} 12y(1-y)^{2} & 0 \leq y \leq 1\\ 0& \text{otherwise.}\end{array}\right.
+    \end{equation*}
+    
+    \item \textbf{What are $\E[X]$ and $\E[Y]$?}
+
+    \begin{equation*}
+      \E[X] = \int_{-\infty}^{\infty}xf_{X}(x)dx = \int_{0}^{1}12x^{2}(1-x)^{2}dx = 0.4.
+    \end{equation*}
+    By the same calculation with $x$ replaced by $y$, we also have
+    \begin{equation*}
+      \E[Y] = 0.4.
+    \end{equation*}
+    
+    \item \textbf{What is $\E[XY]$?}
+
+    Apply \cref{thm:LOTUS-multivariate-case} with $h(x,y)=xy$:
+    \begin{align*}
+      \E\left[XY \right] 
+      &= \int_{D} h(x,y) f(x,y)dxdy \\
+      &= \int_{D} (xy)24xy dxdy\\
+      &= 24\int_{D} x^{2}y^{2}dxdy\\
+      &= 24 \int_{0}^{1} \int_{0}^{1-y}  x^{2}y^{2}dxdy\\
+      &= 24 \int_{0}^{1}y^{2} \left[\int_{0}^{1-y}x^{2} dx \right] dy\\
+      &= 8 \int_{0}^{1}y^{2}(1-y)^{3}dy\\ 
+      &= \ldots\\
+      &= -8.
+    \end{align*}
+    
+    \item \textbf{What is $\operatorname{Cov}(X,Y)$?}
+
+    Using the shortcut formula \cref{eq:covariance-shortcut-formula},
+    \begin{align*}
+      \operatorname{Cov}(X,Y) 
+      &= \E[XY] - \E[X]\E[Y] \\
+      &= (-8) - (0.4)^{2} \\
+      &= -8.16.
+    \end{align*}
+\end{enumerate}
+
 \end{example}
 
 \newpage
