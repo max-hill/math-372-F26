@@ -35,9 +35,11 @@ title: lecture notes
  2026-10-07  |  [worksheet](hw/homework-07/homework-07.pdf) | continuous rv
  2026-10-09  |  - | continued worksheet, photon reflection (chp 4.1, 4.2)
  2026-10-12  |  - | normal random variables (chp 4.3)
- 2026-10-14  |  - | joint distributions - discrete case (chp 5.1
+ 2026-10-14  |  - | joint distributions - discrete case (chp 5.1)
  2026-10-16  |  - | joint distributions - continuous case (chp 5.1)
- 2026-10-19  |  - | review multiple integration (e.g., chapter 13 of [this textbook](docs/calc-textbook.pdf)), chp 5.2
+ 2026-10-19  |  - | review multiple integration (e.g., chapter 13 of [this textbook](docs/calc-textbook.pdf)), (chp 5.2)
+ 2026-10-23  |  - | multivariate LOTUS theorem, covariance (chp 5.2)
+ 2026-10-26  |  - | what is statistics? (chp 5.3, 5.4)
  
 # other links
 
