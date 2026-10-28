@@ -4436,78 +4436,115 @@ The following example illustrates some of the terminology we've introduced.
   then $\overline{Y}=2.24$, and hence our \textbf{estimate} for $\lambda$ would be
   $\frac{1}{2.24}\approx 0.45$.
 \end{example}
-\end{document}
 
 \newpage
+\section{2026-10-28 | Week 10 | Lecture 28}
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{Topic of this lecture:} Distribution of a Sample mean,
+      Central Limit Theorem}
 
+    \textit{\textbf{Reading assignment:} 5.4}
+  \end{tcolorbox}
+\end{center}
 
-\begin{theorem}
-  Let $X_{1},\ldots,X_{n}$ be a random sample from a distribution with mean $\mu$ and standard
-  deviation $\sigma>0$. Then
+Recall that if  $X_{1},\ldots,X_{n}$ is a random sample, then the
+\demph{sample mean} is 
+\begin{equation*}
+  \overline{X}=\frac{X_{1}+\ldots+X_{n}}{n}.
+\end{equation*}
+
+Note that $\overline{X}$ is a random variable.
+
+\begin{definition}
+  The mean and standard deviation of $\overline{X}$ are,
+  respectively,
   \begin{equation*}
-    \demph{\mu_{\overline{X}}}:=\E\left[\overline{X} \right]= \mu, \qquad \demph{\sigma^{2}_{\overline{X}}}:= \Var(\overline{X})= \frac{\sigma^{2}}{n}, \qquad \demph{\sigma_{\overline{X}}}=\frac{\sigma}{\sqrt{n}}.
+    \demph{\mu_{\overline{X}}}:=\E\left[\overline{X} \right],
+    \qquad \demph{\sigma_{\overline{X}}}:=\sqrt{\Var(\overline{X})}.
+  \end{equation*}
+\end{definition}
+\begin{theorem}
+  Let $X_{1},\ldots,X_{n}$ be a random sample from a distribution with mean
+  $\mu$ and standard deviation $\sigma>0$. Then
+  \begin{equation*}
+    {\mu_{\overline{X}}}= \mu,
+    %\qquad {\sigma^{2}_{\overline{X}}}= \frac{\sigma^{2}}{n},
+    \qquad {\sigma_{\overline{X}}}=\frac{\sigma}{\sqrt{n}}.
   \end{equation*}
 \end{theorem}
 \begin{proof}
-  First we compute $\E\left[\overline{X} \right]$:
+  First we compute $\mu_{\overline{X}}$
   \begin{align*}
-    \E\left[\overline{X} \right] 
+    \mu_{\overline{X}}
+    &= \E\left[\overline{X} \right] \\
     &= \E\left[\frac{X_{1}+\ldots+X_{n}}{n} \right] &&\text{by definition of $\overline{X}$}\\
     &= \frac{1}{n}\left( \E\left[X_{1} \right]+\ldots+ \E\left[X_{n} \right] \right)  &&\text{by linearity of expectation}\\
     &= \frac{1}{n}\left( n\mu \right) &&\text{since $\E\left[X_{i} \right]=\mu$ for all $i$}\\
     &= \mu.
   \end{align*}
-  Next we compute $\Var(\overline{X})$:
+  Next we compute $\sigma^{2}_{\overline{X}}$:
   \begin{align*}
-    \Var(\overline{X})
+    \sigma^{2}_{\overline{X}}
+    &= \Var(\overline{X})\\
     &= \Var \left( \frac{X_{1}+\ldots+X_{n}}{n} \right) &&\text{by defintion of $\overline{X}$}\\
     &= \frac{1}{n^{2}}\Var \left( X_{1}+\ldots+X_{n} \right) &&\text{by \cref{eq:variance-squre-scaling}}\\
     &= \frac{1}{n^{2}}\left( \Var(X_{1})+\ldots+\Var(X_{n}) \right) &&\text{by additivity (see \cref{eq:additivity-of-variance})}\\
     &= \frac{1}{n^{2}} \left( n\sigma^{2} \right) &&\text{since $\Var(X_{i})=\sigma^{2}$ for all $i$}\\
     &= \frac{\sigma^{2}}{n}.
   \end{align*}
+  Taking square roots gives the formula for $\sigma_{\overline{X}}$.
 \end{proof}
 
-\begin{theorem}
-  Let $X_{1},\ldots,X_{n}$ be a random sample from a normal distribution with
-  mean $\mu$ and standard deviation $\sigma$. Then for any $n$,
-  $\overline{X}\sim \mathcal{N}(\mu,\sigma^{2}/n)$.
-\end{theorem}
+% \begin{theorem}
+%   Let $X_{1},\ldots,X_{n}$ be a random sample from a normal distribution with
+%   mean $\mu$ and standard deviation $\sigma$. Then for any $n$,
+%   $\overline{X}\sim \mathcal{N}(\mu,\sigma^{2}/n)$.
+% \end{theorem}
 
+% \newpage
 
-
-\section{2026-04-06 | Week 12 | Lecture 25}
-
-\textit{Based on chapter 5.4}
 
 \subsection{The central limit theorem}
+
+
+\Fl{Main idea of the central limit theorem:} If  $X_{1},\ldots,X_{n}$ is a
+random sample from (almost) any distribution, then $\overline{X}$ will be
+approximately normal when $n$ is large.
 
 \begin{theorem}[Central limit theorem]
   \label{thm:central-limit-theorem}
   Let $X_{1},X_{2},\ldots,X_{n}$ be a random sample from a distribution with
-  mean $\mu$ and variance $\sigma^{2}>0$. If $n$ is sufficiently large, then
-  $\overline{X}$ has approximately a normal distribution with mean
-  $\mu_{\overline{X}}=\mu$ and variance
-  $\sigma^{2}_{\overline{X}}= \frac{\sigma^{2}}{n}$. The larger $n$, the
-  better the approximation.
-
-  In symbols,
-  \begin{equation}\label{eq:20}
-    \overline{X} \approx \underbrace{\mu + \frac{\sigma}{\sqrt{n}}Z}_{\mathcal{N}(\mu, \frac{\sigma^{2}}{n})}
-  \end{equation}
-  where $Z\sim \mathcal{N}(0,1)$. 
-
-  Usually $n \geq 30$ is big enough for the approximation to be valid.
+  common mean $\mu$ and variance $\sigma^{2}>0$.
+  Define
+  \begin{equation*}
+    U_{n} := \frac{\overline{X}-\mu}{\sigma/\sqrt{n}}.
+  \end{equation*}
+  Then as $n \to \infty$, we have $U_{n} \to Z,$ where
+  $Z\sim \mathcal{N}(0,1)$. In particular, this means that
+  \begin{equation*}
+    \P[a \leq U_{n}\leq b] \approx \P[a \leq Z \leq b]
+  \end{equation*}
+  for any $-\infty \leq a \leq b \leq \infty$.
 \end{theorem}
 
-\begin{corollary}
-  The distribution of the standardardized sample mean is approximately a
-  standard normal; that is,
-  \begin{equation}\label{eq:4}
-    \frac{\overline{X}-\mu}{\sigma/\sqrt{n}} \approx Z,
+\begin{remark}
+  When $n$ is large, we have $U_{n}\approx Z$. Rearranging terms gives
+  \begin{equation}\label{eq:20}
+    \overline{X} \approx \mu + \frac{\sigma}{\sqrt{n}}Z.
   \end{equation}
-  where $Z\sim \mathcal{N}(0,1)$.
-\end{corollary}
+  The right-hand side is a normal random variable with mean $\mu$ and standard
+  devaiation $\sigma/\sqrt{n}$. Thus, in words, the central limit theorem says
+  that
+  \begin{center}
+    \textit{$\overline{X}$ is asymptotically normally distributed with mean
+      $\mu_{\overline{X}}=\mu$ and standard deviation $\sigma_{\overline{X}}=\frac{\sigma}{\sqrt{n}}$.}
+  \end{center}
+\end{remark}
+
+\begin{remark}
+  Usually $n \geq 30$ is big enough for the approximation to be valid.
+\end{remark}
 
 \begin{example}[Witch's brew - similar to example 5.27 in textbook]
   A witch decides to make 50 batches of potions. Unfortunately, her hut is not
@@ -4522,15 +4559,15 @@ The following example illustrates some of the terminology we've introduced.
   
   \Fl{Question:} What is the probability that $3.5 \leq \overline{X}\leq 3.8$?
 
-  \fl{Solution:} Here, $n=50>30$ so we can apply the central limit theorem. By
+  \Fl{Solution:} Here, $n=50>30$ so we can apply the central limit theorem. By
   the central limit theorem, $\overline{X}$ has distribution approximately
   \begin{align*}
     \overline{X} 
-    &\approx \mu + \frac{\sigma}{\sqrt{n}}Z\\
+    &\approx \mu + \frac{\sigma}{\sqrt{n}}Z \\
     &= 4 + \frac{3}{2 \sqrt{50}}Z,
   \end{align*}
-  where $Z\sim \mathcal{N}(0,1)$ is a standard normal random variable.
-  Therefore
+  where $Z\sim \mathcal{N}(0,1)$. Therefore we can substitute $\overline{X}$
+  by the right-hand side above:
   \begin{align*}
     \P\left[3.5 \leq \overline{X}\leq 3.8\right]
     &\approx \P\left[3.5 \leq 4 + \frac{3}{2 \sqrt{50}}Z \leq 3.8\right]\\
@@ -4552,8 +4589,8 @@ The following example illustrates some of the terminology we've introduced.
   \begin{equation*}
     X_{i} 
     = \left\{ 
-      \begin{array}{l@{\quad:\quad}l} 0 & i^{th}\text{ coin flip is tails}\\
-        1& i^{th}\text{ coin flip is heads} \end{array}\right.
+      \begin{array}{l@{\quad:\quad}l} 1 & i^{th}\text{ coin flip is heads}\\
+        0& i^{th}\text{ coin flip is tails} \end{array}\right.
   \end{equation*}
   We want to compute $\P\left[X_{1}+\ldots+X_{n}\geq 55\right]$, or
   equivalently,
@@ -4562,44 +4599,80 @@ The following example illustrates some of the terminology we've introduced.
   \end{equation*}
   We will use \cref{eq:4}. First observe that
   \begin{equation*}
-    \mu= \E\left[X_{i} \right] = \frac{1}{2}
+    \mu= \E\left[X_{i} \right] = \frac{1}{2},
+    \qquad
+    \sigma = \sqrt{\Var(X_{i})} = \frac{1}{2}, \qquad \sqrt{n} = \sqrt{100} =10
   \end{equation*}
-  and that
+  (you should check these equations). Therefore by the Central Limit Theorem,
   \begin{equation*}
-    \sigma = \sqrt{\Var(X_{i})} = \frac{1}{2}
+    \overline{X} \approx \mu+ \frac{\sigma}{\sqrt{n}}Z = \frac{1}{2} + \frac{1}{20}Z.
   \end{equation*}
-  (you should check these equations).
-
-  Therefore
+  Hencxe
   \begin{align*}
     \P\left[\overline{X}\geq .55\right]
-    &=\P\left[\frac{\overline{X}-\mu}{\sigma/\sqrt{n}}\geq \frac{.55-\mu}{\sigma/\sqrt{n}}\right]\\
-    &\approx \P\left[Z \geq \frac{.55-\mu}{\sigma/\sqrt{n}} \right] &&\text{by CLT (\cref{eq:4}) }.
+    &\approx \P \left[ \frac{1}{2}+\frac{1}{20}Z \geq .55\right]\\ 
+    &= \P \left[ Z \geq 1\right]\\ 
+    &\approx .16. 
   \end{align*}
-  The above is the key step. Plugging in $n=100$, $\mu=\frac{1}{2}$ and
-  $\sigma=\frac{1}{2}$ gives
-  \begin{equation*}
-    \P\left[\overline{X}\geq .55\right] = \P\left[Z \geq 1\right] \approx .16,
-  \end{equation*}
   where we get $.16$ by consulting the following figure:
   \begin{center}
-    \includegraphics[scale=.3]{images/standard-normal-small}
+    \includegraphics[scale=.2]{images/standard-normal-small}
   \end{center}
 \end{example}
 
-\begin{remark}
-  When reviewing the key step in \cref{ex:clt-coin-flipping}, it is helpful to
-  recall the standardization transformation defined in
-  \cref{rmk:standardization}. The central limit theorem says that,
-  approximately, $\overline{X}\sim \mathcal{N}(\mu, \sigma^{2}/n)$. Hence, by
-  \cref{rmk:standardization},
-  \begin{equation*}
-    \frac{\overline{X}-\mu}{\sigma/\sqrt{n}}\approx Z
-  \end{equation*}
-  where $Z\sim \mathcal{N}(0,1)$. This is what justifies the key step in
-  \cref{ex:clt-coin-flipping}.
-\end{remark}
 
+\begin{example}
+  The average production time for an artillery shell at a factory is $1.5$
+  minutes, with a variance of $\sigma^{2}=1$. Find the probability that the
+  factory will produce at least 100 shells in the next two hours.
+
+  \Fl{Solution:} We don't need to assume the production times of the shells
+  are normally distributed, but we'll assume they are independent. Let
+  \begin{equation*}
+    X_{i} = \text{(time required to produce the $i^{\rm th}$ shell)}.
+  \end{equation*}
+  Here,
+  \begin{equation*}
+    \mu = \E[X_{i}] = 1.5, \qquad \sigma^{2} = \Var(X_{i}) = 1.
+  \end{equation*}
+  Observe that
+  \begin{equation*}
+    [\text{at least 100 shells are produced in two hours}] 
+    = [X_{1}+\ldots+X_{100}\leq 120]
+    = [\overline{X}\leq 1.2].
+  \end{equation*}
+  Here, $n=100$. By the Central Limit Theorem,
+  \begin{align*}
+    \overline{X} 
+    &\approx \mu+\frac{\sigma}{\sqrt{n}}Z\\
+    &= 1.5 + \frac{1}{10}Z.
+  \end{align*}
+  Therefore
+  \begin{align*}
+    \P \left[ \overline{X}\leq 1.2\right]
+    &\approx \P \left[ 1.5+ \frac{1}{10}Z \leq 1.2\right]\\ 
+    &= \P[Z \leq -3]\\
+    &\approx 0.0013.
+  \end{align*}
+  Therefore it is very unlikely that the factory will produce more than 100
+  shells in the next two hours.
+  
+  
+  
+\end{example}
+% \begin{remark}
+%   When reviewing the key step in \cref{ex:clt-coin-flipping}, it is helpful to
+%   recall the standardization transformation defined in
+%   \cref{rmk:standardization}. The central limit theorem says that,
+%   approximately, $\overline{X}\sim \mathcal{N}(\mu, \sigma^{2}/n)$. Hence, by
+%   \cref{rmk:standardization},
+%   \begin{equation*}
+%     \frac{\overline{X}-\mu}{\sigma/\sqrt{n}}\approx Z
+%   \end{equation*}
+%   where $Z\sim \mathcal{N}(0,1)$. This is what justifies the key step in
+%   \cref{ex:clt-coin-flipping}.
+% \end{remark}
+\newpage
 \subsection{Point estimation}
 \textit{Section 6.1}
 
@@ -4625,6 +4698,7 @@ how to calculate the value of an estimate based on the measurements contained
 in a sample.
 
 \newpage
+\end{document}
 \section{2026-04-08 | Week 12 | Lecture 26}
 
 \subsection{Point estimation}
