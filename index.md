@@ -40,6 +40,8 @@ title: lecture notes
  2026-10-19  |  - | review multiple integration (e.g., chapter 13 of [this textbook](docs/calc-textbook.pdf)), (chp 5.2)
  2026-10-23  |  - | multivariate LOTUS theorem, covariance (chp 5.2)
  2026-10-26  |  - | what is statistics? (chp 5.3, 5.4)
+ 2026-10-28  |  - | Sample means, Central limit theorem (chp 5.4)
+ 2026-10-30  |  - | Central limit theorem, intro to point estimation (chp 5.4, 6.1)
  
 # other links
 

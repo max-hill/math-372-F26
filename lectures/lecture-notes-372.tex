@@ -4438,7 +4438,7 @@ The following example illustrates some of the terminology we've introduced.
 \end{example}
 
 \newpage
-\section{2026-10-28 | Week 10 | Lecture 28}
+\section{2026-10-28 | Week 10 | Lecture 27}
 \begin{center}
   \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
     \textit{\textbf{Topic of this lecture:} Distribution of a Sample mean,
@@ -4465,6 +4465,7 @@ Note that $\overline{X}$ is a random variable.
   \end{equation*}
 \end{definition}
 \begin{theorem}
+  \label{thm:sample-mean-mean-and-sd}
   Let $X_{1},\ldots,X_{n}$ be a random sample from a distribution with mean
   $\mu$ and standard deviation $\sigma>0$. Then
   \begin{equation*}
@@ -4546,41 +4547,6 @@ approximately normal when $n$ is large.
   Usually $n \geq 30$ is big enough for the approximation to be valid.
 \end{remark}
 
-\begin{example}[Witch's brew - similar to example 5.27 in textbook]
-  A witch decides to make 50 batches of potions. Unfortunately, her hut is not
-  very clean and bugs keep crawling into the brew. Suppose that the amount of
-  bugs contaminating the $i$th batch is a random variable $X_{i}$ with mean
-  $\mu=4g$ and standard deviation $\sigma=1.5g$. Assume the witch prepares her
-  50 batches independently. Let
-  \begin{equation*}
-    \overline{X}= \frac{X_{1}+\ldots+X_{50}}{50}
-  \end{equation*}
-  be the average amount of impurity.
-  
-  \Fl{Question:} What is the probability that $3.5 \leq \overline{X}\leq 3.8$?
-
-  \Fl{Solution:} Here, $n=50>30$ so we can apply the central limit theorem. By
-  the central limit theorem, $\overline{X}$ has distribution approximately
-  \begin{align*}
-    \overline{X} 
-    &\approx \mu + \frac{\sigma}{\sqrt{n}}Z \\
-    &= 4 + \frac{3}{2 \sqrt{50}}Z,
-  \end{align*}
-  where $Z\sim \mathcal{N}(0,1)$. Therefore we can substitute $\overline{X}$
-  by the right-hand side above:
-  \begin{align*}
-    \P\left[3.5 \leq \overline{X}\leq 3.8\right]
-    &\approx \P\left[3.5 \leq 4 + \frac{3}{2 \sqrt{50}}Z \leq 3.8\right]\\
-    &= \P\left[-\frac{1}{2} \leq \frac{3}{2 \sqrt{50}}Z \leq  -\frac{1}{5}\right]\\
-    &= \P\left[-\frac{\sqrt{50}}{3}\leq Z \leq - \frac{2 \sqrt{50}}{15}\right]\\
-    &= \P\left[-2.36 \leq Z \leq -.94\right]\\
-    &= \int_{-2.36}^{-.94}\frac{1}{\sqrt{2\pi}}e^{-y^{2}/2}dy\\ 
-    &\approx .16
-  \end{align*}
-
-
-\end{example}
-
 \begin{example}[CLT Coin Flipping]
   \label{ex:clt-coin-flipping}
   Flip a fair coin $100$ times. What is the probability that you get at least $55$ heads?
@@ -4656,9 +4622,6 @@ approximately normal when $n$ is large.
   \end{align*}
   Therefore it is very unlikely that the factory will produce more than 100
   shells in the next two hours.
-  
-  
-  
 \end{example}
 % \begin{remark}
 %   When reviewing the key step in \cref{ex:clt-coin-flipping}, it is helpful to
@@ -4673,65 +4636,137 @@ approximately normal when $n$ is large.
 %   \cref{ex:clt-coin-flipping}.
 % \end{remark}
 \newpage
-\subsection{Point estimation}
-\textit{Section 6.1}
+
+\section{2026-10-30 | Week 10 | Lecture 28}
+
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{Topic of this lecture:} Central Limit Theorem, Intro to
+      Point Estimation}
+
+    \textit{\textbf{Reading assignment:} textbook section 5.4, 6.1}
+  \end{tcolorbox}
+\end{center}
+\subsection{Central Limit Theorem Example}
+
+\begin{example}[Witch's brew - similar to example 5.27 in textbook]
+  A witch decides to make 50 batches of potions. Unfortunately, her hut is not
+  very clean and bugs keep crawling into the brew. Suppose that the amount of
+  bugs contaminating the $i$th batch is a random variable $X_{i}$ with mean
+  $\mu=4g$ and standard deviation $\sigma=1.5g$. Assume the witch prepares her
+  50 batches independently. Let
+  \begin{equation*}
+    \overline{X}= \frac{X_{1}+\ldots+X_{50}}{50}
+  \end{equation*}
+  be the average amount of impurity.
+  
+  \Fl{Question:} What is the probability that $3.5 \leq \overline{X}\leq 3.8$?
+
+  \Fl{Solution:} Here, $n=50>30$ so we can apply the central limit theorem. By
+  the central limit theorem, $\overline{X}$ has distribution approximately
+  \begin{align*}
+    \overline{X} 
+    &\approx \mu + \frac{\sigma}{\sqrt{n}}Z \\
+    &= 4 + \frac{3}{2 \sqrt{50}}Z,
+  \end{align*}
+  where $Z\sim \mathcal{N}(0,1)$. Therefore we can substitute $\overline{X}$
+  by the right-hand side above:
+  \begin{align*}
+    \P\left[3.5 \leq \overline{X}\leq 3.8\right]
+    &\approx \P\left[3.5 \leq 4 + \frac{3}{2 \sqrt{50}}Z \leq 3.8\right]\\
+    &= \P\left[-\frac{1}{2} \leq \frac{3}{2 \sqrt{50}}Z \leq  -\frac{1}{5}\right]\\
+    &= \P\left[-\frac{\sqrt{50}}{3}\leq Z \leq - \frac{2 \sqrt{50}}{15}\right]\\
+    &= \P\left[-2.36 \leq Z \leq -.94\right]\\
+    &= \int_{-2.36}^{-.94}\frac{1}{\sqrt{2\pi}}e^{-y^{2}/2}dy\\ 
+    &\approx .16
+  \end{align*}
+\end{example}
+
+\subsection{Introduction to point estimation}
+
+
 
 Recall a \textbf{population} is a large body of data that is the target of our
 interest, and a \textbf{statistic} is any quantity whose value can be computed from a
 sample.
 
-Often, we have some quantity of interest, called a \demph{target parameter},
-and we want a single ``best guess'' of some quantity of interest. When this is
+Often, we have some quantity of interest, called a \demph{target parameter} $\theta$,
+and we want a single ``best guess'' $\hat{\theta}$ of some quantity of interest. When this is
 the case, the we call a statistic an estimator:
 
-\begin{definition}[Estimator]
+\begin{definition}[Point estimator]
   \label{def:estimator}
-  An \demph{estimator} is a statistic, that is a function
-  $T(X_{1},\ldots,X_{n})$ of a sample, that is used to approximate a target
-  parameter.
-  An \demph{estimate} is the realized value of an
+  An \demph{point estimator} is a statistic, that is a function
+  $\widehat{\theta}=T(X_{1},\ldots,X_{n})$ of a sample, that is used to approximate a target
+  parameter $\theta$. 
+  The \demph{estimate} is the realized value of an
   estimator (e.g., a number) that is obtained when the sample is actually
-  taken.
+  taken, and is also (confusingly) also denoted $\hat{\theta}$. 
 \end{definition}
-In words, an estimator is a rule, often expressed as a formula, that tells us
-how to calculate the value of an estimate based on the measurements contained
-in a sample.
+
+\begin{definition}[Bias]
+  \label{def:bias-and-standard-error}
+  Let $\widehat{\theta}$ be a point estimator of a target parameter $\theta$.
+  The \demph{bias} of $\widehat{\theta}$ is the number
+  \begin{equation*}
+    \text{Bias}(\widehat{\theta})=\E[\widehat{\theta}]-\theta.
+  \end{equation*}
+  If $\text{Bias}(\widehat{\theta})=0$, we say that $\widehat{\theta}$ is
+  \demph{unbiased}, otherwise we say it is \demph{biased}.
+\end{definition}
+
+\begin{definition}[Standard error]
+  The \demph{standard error} of an estimator $\widehat{\theta}$, denoted
+  $\sigma_{\widehat{\theta}}$, is its standard deviation:
+  \begin{equation*}
+    \sigma_{\widehat{\theta}} = \sqrt{\Var(\widehat{\theta})}
+  \end{equation*}
+\end{definition}
+
+\begin{example}
+  \label{ex:mean-std-error-for-sample-mean}
+  In \cref{thm:sample-mean-mean-and-sd} of the previous lecture, we saw that if
+  $X_{1},\ldots,X_{n}$ is a random sample with common mean $\mu=\E[X_{i}]$ and
+  standard deviation $\sigma=\sqrt{\Var(X_{i})}$, then the estimator
+  $\widehat{\theta}=\overline{X}$ has mean
+  \begin{equation*}
+    \mu_{\overline{X}} := \E[\overline{X}] = \mu
+  \end{equation*}
+  and standard error
+  \begin{equation}\label{eq:4}
+    \sigma_{\overline{X}} := \sqrt{\Var(\overline{X})} = \frac{\sigma}{\sqrt{n}}.
+  \end{equation}
+\end{example}
+
+
+\fl{Question: why is $\sigma_{\overline{X}}=\frac{\sigma}{n}$?}
+
+\fl{Answer:} Observe that
+\begin{align*}
+  \sigma^{2}_{\overline{X}} 
+  &= \Var(\overline{X})\\
+  &= \Var \left( \frac{1}{n}(X_{1}+\ldots+X_{n}) \right)\\ 
+  &= \frac{1}{n^{2}} \left( \Var(X_{1})+\ldots+\Var(X_{n}) \right)&&\text{by independence.}\\ 
+\end{align*}
+Since $\sigma^{2}=\Var(X_{i})$ for every $i=1,\ldots,n$, the above equation
+gives
+\begin{equation*}
+  \sigma^{2}_{\overline{X}}= \frac{1}{n^{2}}(n\sigma^{2})=\frac{\sigma^{2}}{n}.
+\end{equation*}
+Taking square roots gives
+\begin{equation*}
+  \sigma_{\overline{X}} = \frac{\sigma}{\sqrt{n}},
+\end{equation*}
+as required.
+\end{document}
 
 \newpage
-\end{document}
-\section{2026-04-08 | Week 12 | Lecture 26}
-
-\subsection{Point estimation}
-\textit{Chapter 6.1}
-
-
-
-Recall a \textbf{population} is a large body of data that is the target of our
-interest, and a \textbf{statistic} is any quantity whose value can be computed from a
-sample.
-
-Often, we have some quantity of interest, called a \demph{target parameter},
-and we want a single ``best guess'' of some quantity of interest. When this is
-the case, the we call a statistic an estimator:
-
-\begin{definition}[Estimator]
-  \label{def:estimator}
-  An \demph{estimator} is a statistic, that is a function
-  $T(X_{1},\ldots,X_{n})$ of a sample, that is used to approximate a target
-  parameter.
-  An \demph{estimate} is the realized value of an
-  estimator (e.g., a number) that is obtained when the sample is actually
-  taken.
-\end{definition}
-In words, an estimator is a rule, often expressed as a formula, that tells us
-how to calculate the value of an estimate based on the measurements contained
-in a sample.
 
 \begin{example}[Broccoli Poll]
   \label{ex:broccoli-poll}
   Suppose the fraction of people in Hawaii who like broccoli is $p$. This is
   an unknown \textbf{target parameter}. We don't know what $p$ is, but we
-  would like to estimate it.In principle, we could ask everyone in the state,
+  would like to estimate it.  In principle, we could ask everyone in the state,
   but that would be impractical. Instead, we take a random sample: we choose
   randomly $n$ individuals and ask each of them whether they like broccoli or
   not. Let
@@ -4749,77 +4784,79 @@ in a sample.
     X_{i}  =\left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{i-th sampled person
           likes broccoli}\\ 0 &\text{they don't} \end{array}\right.
   \end{equation*}
-  Our \textbf{point estimate} is $\widehat{p}=0.2$ and the \textbf{point
-    estimator} is the function $\widehat{p} = \frac{X_{1}+\ldots+X_{n}}{n}$,
-  which is a \textbf{sample mean}.
+  Our \textbf{point estimator} is the function
+  $\widehat{p} = \frac{X_{1}+\ldots+X_{n}}{n}$, which is a \textbf{sample
+    mean}. Our \textbf{point estimate} is $\widehat{p}=0.2$.
 
   Taking a step back, we can think of our estimate as
   \begin{equation*}
-    \widehat{p} = p + \text{error of estimation}
+    \widehat{p} = p + \text{(error of estimation)}
   \end{equation*}
   It is perhaps clear that if we increase the sample size $n$, then the
   estimation error should decrease, so that
   \begin{equation*}
     \widehat{p} \to p \text{ as } n \to  \infty.
   \end{equation*}
-\end{example}
-\begin{definition}[Bias and standard error]
-  \label{def:bias-and-standard-error}
-  Let $\widehat{\theta}$ be a point estimator of a target parameter $\theta$.
-  The \demph{bias} of $\widehat{\theta}$ is the number
-  $\text{Bias}(\widehat{\theta})=\E[\widehat{\theta}]-\theta$. If
-  $\text{Bias}(\widehat{\theta})=0$, we say that $\widehat{\theta}$ is
-  \demph{unbiased}, otherwise we say it is \demph{biased}.
 
-  The \demph{standard error} of $\widehat{\theta}$, denoted
-  $\sigma_{\widehat{\theta}}$, is its standard deviation:
+  By \cref{ex:mean-std-error-for-sample-mean}, since $\widehat{p}$ is a sample
+  mean, we have
   \begin{equation*}
-    \sigma_{\widehat{\theta}} = \sqrt{\Var(\widehat{\theta})}
+    \E[\widehat{p}] = p,
   \end{equation*}
-\end{definition}
-
-\begin{example}[Broccoli poll continued]
-  \label{ex:broccoli-poll-continued}
-  In the broccoli example, the estimator we used was the \demph{sample mean:}
+  which shows that $\widehat{p}$ is unbiased.
+  \cref{ex:mean-std-error-for-sample-mean} also shows that the  standard error of $\widehat{p}$ is
+  % \begin{claim}
+  %   $\widehat{p}$ is unbiased.
+  % \end{claim}
+  % \begin{claimproof}
+  %   \begin{align*}
+  %     \E\left[\widehat{p} \right] 
+  %     &= \E\left[\frac{X_{1}+\ldots+X_{n}}{n} \right] \\
+  %     &= \frac{1}{n}\left( \E\left[X_{1} \right]+\ldots+ \E\left[X_{n} \right] \right) \\
+  %     &= \frac{1}{n}(np) \\
+  %     &= p.
+  %   \end{align*}
+  % \end{claimproof}
   \begin{equation*}
-    \widehat{p} = \frac{X_{1}+\ldots+X_{n}}{n}.
+    \sigma_{\widehat{p}}= \frac{\sigma}{\sqrt{n}}.
   \end{equation*}
-  \begin{claim}
-    $\widehat{p}$ is unbiased.
-  \end{claim}
-  \begin{claimproof}
-    \begin{align*}
-      \E\left[\widehat{p} \right] 
-      &= \E\left[\frac{X_{1}+\ldots+X_{n}}{n} \right] \\
-      &= \frac{1}{n}\left( \E\left[X_{1} \right]+\ldots+ \E\left[X_{n} \right] \right) \\
-      &= \frac{1}{n}(np) \\
-      &= p.
-    \end{align*}
-  \end{claimproof}
-  \begin{claim}
-    $\sigma_{\widehat{p}}= \sqrt{\frac{p(1-p)}{n}}$.
-  \end{claim}
-  \begin{claimproof}
-    First observe that for every $i\in \left\{1,\ldots,n\right\}$, we have
-    \begin{equation*}
-      \Var(X_{i}) = \E\left[X_{i}^{2} \right]- \left( \E\left[X_{i} \right] \right)^{2}= p-p^{2}=  p(1-p).
-    \end{equation*}
-    Using \cref{thm:variance-properties},
-    \begin{align*}
-      \Var(\widehat{p}) 
-      &= \Var\left(\frac{X_{1}+\ldots+X_{n}}{n}  \right)\\
-      &= \frac{1}{n^{2}}\left( \Var(X_{1}+\ldots+X_{n}) \right)\\
-      &= \frac{1}{n^{2}}\left( \Var(X_{1})+\ldots+\Var(X_{n}) \right)
-      &&\text{by independence}\\ 
-      &=\frac{1}{n^{2}}\left( np(1-p) \right)\\ 
-      &=\frac{p(1-p)}{n}
-    \end{align*}
-    Taking square roots implies the statement of the claim.
-  \end{claimproof}
+  Here,
+  \begin{equation*}
+    \sigma^{2} = \Var(X_{i}) = \E\left[X_{i}^{2} \right]- \left( \E\left[X_{i} \right] \right)^{2}= p-p^{2}=  p(1-p).
+  \end{equation*}
+  Taking square roots and plugging into the equation above,
+  \begin{equation*}
+    \sigma_{\widehat{p}} = \sqrt{\frac{p(1-p)}{n}}.
+  \end{equation*}
+  % \begin{claim} The standard error of $\widehat{p}$ is
+  %   $\sigma_{\widehat{p}}= \sqrt{\frac{p(1-p)}{n}}$.
+  % \end{claim}
+  % \begin{claimproof}
+  %   First observe that for every $i\in \left\{1,\ldots,n\right\}$, we have
+  %   \begin{equation*}
+  %     \Var(X_{i}) = \E\left[X_{i}^{2} \right]- \left( \E\left[X_{i} \right] \right)^{2}= p-p^{2}=  p(1-p).
+  %   \end{equation*}
+  %   Using \cref{thm:variance-properties},
+  %   \begin{align*}
+  %     \Var(\widehat{p}) 
+  %     &= \Var\left(\frac{X_{1}+\ldots+X_{n}}{n}  \right)\\
+  %     &= \frac{1}{n^{2}}\left( \Var(X_{1}+\ldots+X_{n}) \right)\\
+  %     &= \frac{1}{n^{2}}\left( \Var(X_{1})+\ldots+\Var(X_{n}) \right)
+  %     &&\text{by independence}\\ 
+  %     &=\frac{1}{n^{2}}\left( np(1-p) \right)\\ 
+  %     &=\frac{p(1-p)}{n}
+  %   \end{align*}
+  %   Taking square roots implies the statement of the claim.
+  % \end{claimproof}
 
 
   Finally, since $\widehat{p}$ is a sample mean, the central limit theorem
   implies that its distribution is approximately normal:
+  \begin{align*}
+    \widehat{p} 
+    &\approx p + \frac{\sigma}{\sqrt{n}}Z \\
+    &= p + \sigma_{\widehat{p}}Z
+\end{align*}
 
   \begin{center}
     \begin{tikzpicture}[scale=.6]
@@ -4848,10 +4885,75 @@ in a sample.
   \end{center}
   As $n$ grows, the value of $\sigma_{\widehat{p}}=\sqrt{\frac{p(1-p)}{n}}$
   gets smaller, so the above curve (which is centered around the true
-  parameter value $p$) gets narrower. 
+  parameter value $p$) gets narrower. This suggests a convergence property
+  that we discuss next. 
 \end{example}
 
 
+\subsection{The Law of Large Numbers}
+The Central Limit Theorem tells us that if $X_{1},\ldots,X_{n}$ is a random
+sample with common mean $\mu$ and standard deviation $\sigma>0$, then
+\begin{equation*}
+  \overline{X} \approx \mu + \frac{\sigma}{\sqrt{n}}Z.
+\end{equation*}
+So we expect at $n\to \infty$, $\overline{X}\to \mu$.
+
+
+We will need the following theorem, which says that if the average male height
+is 5 feet tall, then no more than 10\% of men can be more than 50 feet tall.
+
+\begin{theorem}[Markov's inequality]
+  \label{thm:markovs-inequality}
+  Let $X$ be a nonnegative random variable and let $a>0$. Then
+  \begin{equation}\label{eq:2}
+    \P\left[X \geq a\right] \leq \frac{\E\left[X \right]}{a}
+  \end{equation}
+\end{theorem}
+\begin{proof}
+  Let $A= \left[ X \geq a\right]$. Then $X \cdot \mathbf{1}_{A}\leq X$, so
+  \begin{align*}
+    \E\left[X \right] 
+    &\geq \E\left[X \cdot \mathbf{1}_{A} \right]\\
+    &\geq \E\left[a \mathbf{1}_{A}\right]\\
+    &\geq a \E\left[\mathbf{1}_{A} \right]\\
+    &=a \P\left[A \right]\\
+    &=a \P\left[X \geq a\right].
+  \end{align*}
+  Dividing by $a$ implies \cref{eq:2}.
+\end{proof}
+
+\begin{theorem}[Weak Law of Large Numbers]
+  \label{thm:weak-law-large-numbers}
+  Let $(X_{n})_{n=1}^{\infty}$ be a sequence of independent random variables.
+  Assume that for all $n$, $\mu= \E\left[X_{n} \right]$ and
+  $\Var(X_{n}) \leq B$ for some fixed bound $B<\infty$. Then for all $\epsilon>0$,
+  \begin{equation*}
+    \P\left[ \left| \overline{X}-\mu \right| >\epsilon\right] \to 0 \text{
+      as } n \to \infty.
+  \end{equation*}
+\end{theorem}
+In words, this says that when $n$ is large, $\overline{X}$ is very unlikely to
+be far from $\mu$. 
+
+\begin{proof}
+  Let $S_{n} = X_{1}+\ldots+X_{n}$. By independence,
+  \begin{equation}\label{eq:3}
+    \Var(S_{n}) = \Var(X_{1})+\ldots+\Var(X_{n}) \leq nB.
+  \end{equation}
+  Next, let $\epsilon>0$ be arbitrary.
+  \begin{align*}
+    \P\left[\left| \overline{X}-\mu \right| >\epsilon\right]
+    &= \P\left[\left| S_{n}-n\mu \right|> n\epsilon \right]\\
+    &= \P\left[ \left( S_{n}-n\mu \right)^{2} > (n\epsilon)^{2}  \right]\\
+    &\leq  \frac{\E\left[\left( S_{n}-n\mu \right)^{2}
+      \right]}{n^{2}\epsilon^{2}} &&\text{by \cref{thm:markovs-inequality}}\\
+    &= \frac{\Var(S_{n})}{n^{2}\epsilon^{2}} &&\text{by definition of variance }\\
+    &\leq \frac{B}{\epsilon^{2}n} &&\text{by \cref{eq:3}}.
+  \end{align*}
+  The right hand side tends to zero as $n \to \infty$, proving the theorem.
+\end{proof}
+\end{document}
+\newpage
 
 \begin{example}[Estimating the sides of a dice]
   \label{ex:estimating-sides-dice}
