@@ -16,7 +16,6 @@
 \usepackage{hyperref}
 
 
-
 \usepackage{empheq} % for boxed equations
 \usepackage[most]{tcolorbox}
 \newtcbox{\mymath}[1][]{%
@@ -4464,7 +4463,7 @@ Note that $\overline{X}$ is a random variable.
     \qquad \demph{\sigma_{\overline{X}}}:=\sqrt{\Var(\overline{X})}.
   \end{equation*}
 \end{definition}
-\begin{theorem}
+\begin{theorem}[Key sample mean properties]
   \label{thm:sample-mean-mean-and-sd}
   Let $X_{1},\ldots,X_{n}$ be a random sample from a distribution with mean
   $\mu$ and standard deviation $\sigma>0$. Then
@@ -4758,136 +4757,94 @@ Taking square roots gives
   \sigma_{\overline{X}} = \frac{\sigma}{\sqrt{n}},
 \end{equation*}
 as required.
-\end{document}
 
 \newpage
+\section{2026-11-02 | Week 11 | Lecture 29}
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{Topic of this lecture:} examples of point estimators, Law
+      of Large numbers}
 
-\begin{example}[Broccoli Poll]
-  \label{ex:broccoli-poll}
-  Suppose the fraction of people in Hawaii who like broccoli is $p$. This is
-  an unknown \textbf{target parameter}. We don't know what $p$ is, but we
-  would like to estimate it.  In principle, we could ask everyone in the state,
-  but that would be impractical. Instead, we take a random sample: we choose
-  randomly $n$ individuals and ask each of them whether they like broccoli or
-  not. Let
-  \begin{equation*}
-    \widehat{p} := \text{ fraction of our sample who like broccoli}
-  \end{equation*}
-  Suppose we sample $n=100$ individuals and $20$ of them like broccoli. Then
-  \begin{equation*}
-    \widehat{p} = \frac{20}{100}=.2
-  \end{equation*}
+    \textit{\textbf{Reading assignment:} chapter 6.1}
+  \end{tcolorbox}
+\end{center}
 
-  The \textbf{sample} in this example consists of $n$ random variables
-  $X_{1},\ldots,X_{n}$, where
-  \begin{equation*}
-    X_{i}  =\left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{i-th sampled person
-          likes broccoli}\\ 0 &\text{they don't} \end{array}\right.
-  \end{equation*}
-  Our \textbf{point estimator} is the function
-  $\widehat{p} = \frac{X_{1}+\ldots+X_{n}}{n}$, which is a \textbf{sample
-    mean}. Our \textbf{point estimate} is $\widehat{p}=0.2$.
+\subsection{Examples of Point Estimators}
+\begin{example}[Estimating the sides of a dice]
+  \label{ex:estimating-sides-dice}
+  Suppose I roll a dice behind a screen, shouting out the number rolled each
+  time. Your job is to estimate the number of sides of the dice, which we will
+  call $\theta$.
 
-  Taking a step back, we can think of our estimate as
-  \begin{equation*}
-    \widehat{p} = p + \text{(error of estimation)}
-  \end{equation*}
-  It is perhaps clear that if we increase the sample size $n$, then the
-  estimation error should decrease, so that
-  \begin{equation*}
-    \widehat{p} \to p \text{ as } n \to  \infty.
-  \end{equation*}
+  Given $n$ rolls, the sample consists of the $n$ random variables
+  $X_{1},\ldots,X_{n}$, where $X_{i}$ is the $i^{\rm th}$ dice roll. We'll
+  give two examples of estimators:
 
-  By \cref{ex:mean-std-error-for-sample-mean}, since $\widehat{p}$ is a sample
-  mean, we have
-  \begin{equation*}
-    \E[\widehat{p}] = p,
-  \end{equation*}
-  which shows that $\widehat{p}$ is unbiased.
-  \cref{ex:mean-std-error-for-sample-mean} also shows that the  standard error of $\widehat{p}$ is
-  % \begin{claim}
-  %   $\widehat{p}$ is unbiased.
-  % \end{claim}
-  % \begin{claimproof}
-  %   \begin{align*}
-  %     \E\left[\widehat{p} \right] 
-  %     &= \E\left[\frac{X_{1}+\ldots+X_{n}}{n} \right] \\
-  %     &= \frac{1}{n}\left( \E\left[X_{1} \right]+\ldots+ \E\left[X_{n} \right] \right) \\
-  %     &= \frac{1}{n}(np) \\
-  %     &= p.
-  %   \end{align*}
-  % \end{claimproof}
-  \begin{equation*}
-    \sigma_{\widehat{p}}= \frac{\sigma}{\sqrt{n}}.
-  \end{equation*}
-  Here,
-  \begin{equation*}
-    \sigma^{2} = \Var(X_{i}) = \E\left[X_{i}^{2} \right]- \left( \E\left[X_{i} \right] \right)^{2}= p-p^{2}=  p(1-p).
-  \end{equation*}
-  Taking square roots and plugging into the equation above,
-  \begin{equation*}
-    \sigma_{\widehat{p}} = \sqrt{\frac{p(1-p)}{n}}.
-  \end{equation*}
-  % \begin{claim} The standard error of $\widehat{p}$ is
-  %   $\sigma_{\widehat{p}}= \sqrt{\frac{p(1-p)}{n}}$.
-  % \end{claim}
-  % \begin{claimproof}
-  %   First observe that for every $i\in \left\{1,\ldots,n\right\}$, we have
-  %   \begin{equation*}
-  %     \Var(X_{i}) = \E\left[X_{i}^{2} \right]- \left( \E\left[X_{i} \right] \right)^{2}= p-p^{2}=  p(1-p).
-  %   \end{equation*}
-  %   Using \cref{thm:variance-properties},
-  %   \begin{align*}
-  %     \Var(\widehat{p}) 
-  %     &= \Var\left(\frac{X_{1}+\ldots+X_{n}}{n}  \right)\\
-  %     &= \frac{1}{n^{2}}\left( \Var(X_{1}+\ldots+X_{n}) \right)\\
-  %     &= \frac{1}{n^{2}}\left( \Var(X_{1})+\ldots+\Var(X_{n}) \right)
-  %     &&\text{by independence}\\ 
-  %     &=\frac{1}{n^{2}}\left( np(1-p) \right)\\ 
-  %     &=\frac{p(1-p)}{n}
-  %   \end{align*}
-  %   Taking square roots implies the statement of the claim.
-  % \end{claimproof}
+  \begin{itemize}
+    \item Our first example is called the \textbf{running maximum}, and it is
+    defined as
+    \begin{equation*}
+      \widehat{\theta} = \max(X_{1},\ldots,X_{n}).
+    \end{equation*}
+    For example, if I roll the dice four times and obtain $3,11,7,$ and $4$,
+    then your estimate would be that the dice has 11 sides.
 
+    This sounds silly, but with enough data this estimator will give you the
+    correct answer. This is because, if I roll the dice
+    enough times, then I will eventually roll the highest number; hence,
+    \begin{equation*}
+      \lim_{n \to \infty} \widehat{\theta}(X_{1},\ldots,X_{n}) = \theta.
+    \end{equation*}
+    One drawback is that this estimator is biased because
+    $\E[\widehat{\theta} ]<\theta$. This is because the estimator will
+    ``usually'' be less than the true number of sides, and will never be
+    more---so on average, $\widehat{\theta}$ will be smaller than $\theta$.
+    
+    \item Our second example is the \textbf{method of moments estimator}. In
+    this setting, it's defined as
+    \begin{equation*}
+      \widehat{\theta} = 2 \left( \frac{X_{1}+\ldots+X_{n}}{n} \right)-1. 
+    \end{equation*}
 
-  Finally, since $\widehat{p}$ is a sample mean, the central limit theorem
-  implies that its distribution is approximately normal:
-  \begin{align*}
-    \widehat{p} 
-    &\approx p + \frac{\sigma}{\sqrt{n}}Z \\
-    &= p + \sigma_{\widehat{p}}Z
-\end{align*}
-
-  \begin{center}
-    \begin{tikzpicture}[scale=.6]
-      \begin{axis}[
-        domain=0.44:0.68,
-        samples=300,
-        no markers,
-        axis lines=left,
-        xlabel={The sampling distribution of $\widehat{p}$},
-        ylabel={},
-        ymin=0,
-        enlargelimits=false,
-        width=12cm,
-        height=6cm,
-        xtick={0.5,.53,0.56,.59,0.62},
-        xticklabels={$p-2\sigma_{\widehat{p}}$, $p-2\sigma_{\widehat{p}}$
-          ,$p$, $p+\sigma_{\widehat{p}}$, $p+2\sigma_{\widehat{p}}$},
-        ytick=\empty,
-        clip=false
-        ]
-        % Normal pdf: mean=0.56, sd=0.03
-        \addplot[thick]
-        {1/(0.03*sqrt(2*pi))*exp(-((x-0.56)^2)/(2*(0.03)^2))};
-       \end{axis}
-    \end{tikzpicture}
-  \end{center}
-  As $n$ grows, the value of $\sigma_{\widehat{p}}=\sqrt{\frac{p(1-p)}{n}}$
-  gets smaller, so the above curve (which is centered around the true
-  parameter value $p$) gets narrower. This suggests a convergence property
-  that we discuss next. 
+    Let's demystify this formula. Suppose $X$ a random variable representing
+    one roll of the dice. We know that since the dice has $\theta$ sides, $X$
+    has expected value
+    \begin{equation*}
+      \E\left[X \right] = \frac{1}{\theta}\left( 1+2+\ldots+\theta \right)  = \frac{\theta+1}{2}.
+    \end{equation*}
+    Rearranging, we get
+    \begin{equation}\label{eq:7}
+      \theta = 2 \E\left[X \right] -1.
+    \end{equation}
+    By the law of large numbers,
+    $\E\left[X \right] \approx \frac{X_{1}+\ldots+X_{n}}{n}.$ Combining this
+    with \cref{eq:7} implies
+    \begin{equation*}
+      \theta 
+      \approx 2 \left( \frac{X_{1}+\ldots+X_{n}}{n} \right)-1.
+    \end{equation*}
+    The right hand side is what we've chosen to be our $\widehat{\theta}$. Hopefully this calculation makes it seem like a reasonable choice.
+    
+    This estimator is unbiased. To see why, observe that
+    \begin{align*}
+      \E[\widehat{\theta} ] 
+      &= \E\left[ 2 \left( \frac{X_{1}+\ldots+X_{n}}{n} \right)-1  \right] \\
+      &= 2\E\left[   \frac{X_{1}+\ldots+X_{n}}{n}   \right] -1\\
+      &= 2 \E\left[X \right]-1 \\
+      &= \theta &&\text{by \cref{eq:7}.}
+    \end{align*}
+    
+    In our example, with dice rolls $3,11,7$, and $4$, our estimator
+    $\widehat{\theta}$ returns the estimate
+    \begin{equation*}
+      2 \left( \frac{3+11+7+4}{4} \right) -1 = 2 \left( \frac{25}{4} \right) -1 = 11.5.
+    \end{equation*}
+    So your estimate would be that the dice has 11.5 sides.
+  \end{itemize}
 \end{example}
+
+Given two unbiased estimators, then \textit{ceteris paribus}, we would
+typically prefer the estimator which has lower variance.
 
 
 \subsection{The Law of Large Numbers}
@@ -4896,7 +4853,12 @@ sample with common mean $\mu$ and standard deviation $\sigma>0$, then
 \begin{equation*}
   \overline{X} \approx \mu + \frac{\sigma}{\sqrt{n}}Z.
 \end{equation*}
-So we expect at $n\to \infty$, $\overline{X}\to \mu$.
+So we expect at $n\to \infty$, $\overline{X}\to \mu$. The fact that
+\begin{equation*}
+  \overline{X} = \frac{X_{1}+\ldots+X_{n}}{n} \to \mu \quad \text{ as }n \to \infty
+\end{equation*}
+is called the \demph{Law of Large Numbers}. A precise statement of this result
+is shown below (we didn't get to it during lecture).
 
 
 We will need the following theorem, which says that if the average male height
@@ -4904,22 +4866,29 @@ is 5 feet tall, then no more than 10\% of men can be more than 50 feet tall.
 
 \begin{theorem}[Markov's inequality]
   \label{thm:markovs-inequality}
-  Let $X$ be a nonnegative random variable and let $a>0$. Then
+  Let $X$ be a nonnegative random variable and let $c>0$. Then
   \begin{equation}\label{eq:2}
-    \P\left[X \geq a\right] \leq \frac{\E\left[X \right]}{a}
+    \P\left[X \geq c\right] \leq \frac{\E\left[X \right]}{c}
   \end{equation}
 \end{theorem}
 \begin{proof}
-  Let $A= \left[ X \geq a\right]$. Then $X \cdot \mathbf{1}_{A}\leq X$, so
+  Let $A= \left[ X \geq c\right]$ and let
+  \begin{equation*}
+    \boldsymbol{1}_{A} = \left\{ \begin{array}{l@{\quad:\quad}l} 1 & X \geq c\\ 0& X<c.\end{array}\right.
+  \end{equation*}
+  Then
+  \begin{equation*}
+    X \geq  X \cdot \boldsymbol{1}_{A} \geq c\cdot \boldsymbol{1}_{A}.
+  \end{equation*}
+  Therefore
   \begin{align*}
     \E\left[X \right] 
-    &\geq \E\left[X \cdot \mathbf{1}_{A} \right]\\
-    &\geq \E\left[a \mathbf{1}_{A}\right]\\
-    &\geq a \E\left[\mathbf{1}_{A} \right]\\
-    &=a \P\left[A \right]\\
-    &=a \P\left[X \geq a\right].
+    &\geq \E\left[c \cdot \mathbf{1}_{A}\right]\\
+    &\geq c \E\left[\mathbf{1}_{A} \right]\\
+    &=c\P\left[A \right]\\
+    &=c \P\left[X \geq a\right].
   \end{align*}
-  Dividing by $a$ implies \cref{eq:2}.
+  Dividing by $c$ implies \cref{eq:2}.
 \end{proof}
 
 \begin{theorem}[Weak Law of Large Numbers]
@@ -4953,87 +4922,6 @@ be far from $\mu$.
   The right hand side tends to zero as $n \to \infty$, proving the theorem.
 \end{proof}
 \end{document}
-\newpage
-
-\begin{example}[Estimating the sides of a dice]
-  \label{ex:estimating-sides-dice}
-  Suppose I roll a dice behind a screen, shouting out the number rolled each
-  time. Your job is to estimate the number of sides of the dice, which we will
-  call $\theta$.
-
-  Given $n$ rolls, the sample consists of the $n$ random variables
-  \begin{equation*}
-    X_{1},\ldots,X_{n}
-  \end{equation*}
-  where $X_{i}$ is the $i^{\rm th}$ dice roll. We'll give two examples of
-  estimators:
-
-  \begin{itemize}
-    \item Our first example is called the \textit{running maximum}, and it is
-    defined as
-    \begin{equation*}
-      \widehat{\theta} = \max(X_{1},\ldots,X_{n}).
-    \end{equation*}
-    For example, if I roll the dice four times and obtain $3,11,7,$ and $4$,
-    then your estimate would be that the dice has 11 sides.
-
-    This sounds silly, but with enough data this estimator will give you the
-    correct answer with high probability. This is because, if I roll the dice
-    enough times, then I will eventually roll the highest number; hence,
-    \begin{equation*}
-      \lim_{n \to \infty} \widehat{\theta}(X_{1},\ldots,X_{n}) = \theta.
-    \end{equation*}
-    One drawback is that this estimator is biased because
-    $\E[\widehat{\theta} ]<\theta$. This is because the estimator will
-    ``usually'' be less than the true number of sides, and will never be
-    more---so on average, $\widehat{\theta}$ will be smaller than $\theta$.
-    
-    \item Our second example is what is called the \textit{method of moments
-      estimator}. In this setting, it's defined as
-    \begin{equation*}
-      \widehat{\theta} = 2 \left( \frac{X_{1}+\ldots+X_{n}}{n} \right)-1. 
-    \end{equation*}
-
-    Let's demystify this formula. Suppose $X$ a random variable representing
-    one roll of the dice. We know that since the dice has $\theta$ sides, $X$
-    has expected value
-    \begin{equation*}
-      \E\left[X \right] = \frac{1}{\theta}\left( 1+2+\ldots+\theta \right)  = \frac{\theta+1}{2}.
-    \end{equation*}
-    Rearranging, we get
-    \begin{equation}\label{eq:7}
-      \theta = 2 \E\left[X \right] -1.
-    \end{equation}
-    We also know that by the law of large numbers,
-    $\E\left[X \right] \approx \frac{X_{1}+\ldots+X_{n}}{n}.$ Combining this
-    with \cref{eq:7} implies
-    \begin{equation*}
-      \theta 
-      \approx 2 \left( \frac{X_{1}+\ldots+X_{n}}{n} \right)-1.
-    \end{equation*}
-    The right hand side is what we've chosen to be our $\widehat{\theta}$, and
-    hopefuly this calculation makes it seem like a reasonable choice.
-    
-    This estimator is unbiased. To see why, observe that
-    \begin{align*}
-      \E[\widehat{\theta} ] 
-      &= \E\left[ 2 \left( \frac{X_{1}+\ldots+X_{n}}{n} \right)-1  \right] \\
-      &= 2\E\left[   \frac{X_{1}+\ldots+X_{n}}{n}   \right] -1\\
-      &= 2 \E\left[X \right]-1 \\
-      &= \theta &&\text{by \cref{eq:7}.}
-    \end{align*}
-    
-    In our example, with dice rolls $3,11,7$, and $4$, our estimator
-    $\widehat{\theta}$ returns the estimate
-    \begin{equation*}
-      2 \left( \frac{3+11+7+4}{4} \right) -1 = 2 \left( \frac{25}{4} \right) -1 = 11.5.
-    \end{equation*}
-    So your estimate would be that the dice has 11.5 sides.
-  \end{itemize}
-\end{example}
-
-Given two unbiased estimators, then \textit{ceteris paribus}, we would
-typically prefer the estimator which has lower variance.
 \newpage
 
 \section{2026-04-13 | Week 13 | Lecture 27}
@@ -5106,6 +4994,100 @@ typically prefer the estimator which has lower variance.
 \end{definition}
 In words, the interval contains the true parameter with probability at least
 $.95$.
+
+
+
+
+
+
+
+
+\begin{example}[Broccoli Poll]
+  \label{ex:broccoli-poll}
+  Suppose the fraction of people in Hawaii who like broccoli is $p$. This is
+  an unknown \textbf{target parameter}. We don't know what $p$ is, but we
+  would like to estimate it.  In principle, we could ask everyone in the state,
+  but that would be impractical. Instead, we take a random sample: we choose
+  randomly $n$ individuals and ask each of them whether they like broccoli or
+  not. Let
+  \begin{equation*}
+    X_{i}  :=\left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{i-th sampled person
+          likes broccoli}\\ 0 &\text{they don't} \end{array}\right., \qquad i=\in \left\{1,\ldots,n\right\}. 
+  \end{equation*}
+  Our \textbf{sample} is $X_{1},\ldots,X_{n}$.
+  Consider the \textbf{point estimator}
+  \begin{align*}
+    \widehat{p} 
+    &:= \text{ fraction of our sample who like broccoli}\\
+    &= \frac{X_{1}+\ldots+X_{n}}{n}\\
+    &= \overline{X}.
+  \end{align*}
+  Let
+  \begin{equation*}
+    \sigma^{2} := \Var(X_{i}) = p(1-p).
+  \end{equation*}
+  Then by \cref{thm:sample-mean-mean-and-sd},
+  \begin{equation*}
+    \mu_{\widehat{p}} := \E[\widehat{p}] = p, \qquad \sigma_{\widehat{p}}:= \Var(\widehat{p}) = \frac{\sigma}{\sqrt{n}} = \sqrt{\frac{p(1-p)}{n}}.
+  \end{equation*}
+  Recall that $\mu_{\widehat{p}}$ and $\sigma_{\widehat{p}}$ are called the
+  \textbf{mean} and \textbf{standard error} of the estimator $\widehat{p}$.
+  Since the mean equals the true parameter $p$, the estimator $\widehat{p}$ is \textbf{unbiased}.
+
+  We can think of our estimate as
+  \begin{equation*}
+    \widehat{p} = p + \text{(error of estimation)},
+  \end{equation*}
+  with the error of estimation becoming smaller as $n$ increases. Indeed,
+  since $\widehat{p}$ is a sample mean, the central limit theorem implies that
+  its distribution is approximately normal:
+  \begin{align*}
+    \widehat{p} 
+    &\approx p + \frac{\sigma}{\sqrt{n}}Z \\
+    &= p + \sigma_{\widehat{p}}Z.
+  \end{align*}
+  Thus, the distribution of $\widehat{p}$ looks approximately like this:
+  
+
+  \begin{center}
+    \begin{tikzpicture}[scale=.6]
+      \begin{axis}[
+        domain=0.44:0.68,
+        samples=300,
+        no markers,
+        axis lines=left,
+        xlabel={The sampling distribution of $\widehat{p}$},
+        ylabel={},
+        ymin=0,
+        enlargelimits=false,
+        width=12cm,
+        height=6cm,
+        xtick={0.5,.53,0.56,.59,0.62},
+        xticklabels={$p-2\sigma_{\widehat{p}}$, $p-2\sigma_{\widehat{p}}$
+          ,$p$, $p+\sigma_{\widehat{p}}$, $p+2\sigma_{\widehat{p}}$},
+        ytick=\empty,
+        clip=false
+        ]
+        % Normal pdf: mean=0.56, sd=0.03
+        \addplot[thick]
+        {1/(0.03*sqrt(2*pi))*exp(-((x-0.56)^2)/(2*(0.03)^2))};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+  As $n$ grows, the value of $\sigma_{\widehat{p}}=\sqrt{\frac{p(1-p)}{n}}$
+  gets smaller, so the above curve (which is centered around the true
+  parameter value $p$) gets narrower.
+
+  Suppose we sample $n=100$ individuals and $20$ of them like broccoli. Then
+  \begin{equation*}
+    \widehat{p} = \frac{20}{100}=0.2
+  \end{equation*}
+  This is our \textbf{estimate} of $p$. Moreover, we have
+  \begin{equation*}
+    \sigma_{\widehat{p}} \approx \sqrt{\frac{(0.2)(1-0.2)}{100}} = \frac{.16}{10} = .016
+  \end{equation*}
+\end{example}
+
 \begin{example}
   Can we come up with a 95\% confidence interval for our broccoli poll? We
   already have $\widehat{p}=.2$. But we don't yet know how big $\epsilon$ needs

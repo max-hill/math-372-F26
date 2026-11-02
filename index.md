@@ -42,6 +42,7 @@ title: lecture notes
  2026-10-26  |  - | what is statistics? (chp 5.3, 5.4)
  2026-10-28  |  - | Sample means, Central limit theorem (chp 5.4)
  2026-10-30  |  - | Central limit theorem, intro to point estimation (chp 5.4, 6.1)
+ 2026-11-02  |  - | Examples of point estimators, law of large numbers (chp 6.1)
  
 # other links
 
