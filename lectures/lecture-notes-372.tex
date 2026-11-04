@@ -4921,10 +4921,9 @@ be far from $\mu$.
   \end{align*}
   The right hand side tends to zero as $n \to \infty$, proving the theorem.
 \end{proof}
-\end{document}
 \newpage
 
-\section{2026-04-13 | Week 13 | Lecture 27}
+\section{2026-11-04 | Week 11 | Lecture 30}
 
 % With about 95\% probability, a normal random variable will lie within 2
 % standard devations of its mean:
@@ -4981,7 +4980,13 @@ be far from $\mu$.
 %   \right| \leq .08\right]=.95$. Since $\widehat{p}=.2$, w
 
 \subsection{Confidence intervals}
-\textit{Section 7.1}
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{Topic of this lecture:} Confidence Intervals}
+
+    \textit{\textbf{Reading assignment:} Chapter 7.1}
+  \end{tcolorbox}
+\end{center}
 
 
 \begin{definition}[Confidence Interval]
@@ -4989,11 +4994,13 @@ be far from $\mu$.
   \demph{95\% confidence interval} for the unknown parameter $p$ if
   $\epsilon>0$ is chosen large enough that
   \begin{equation}\label{eq:19}
-    \P\left[\left| \widehat{p}-p \right| <\epsilon\right] \geq .95
+    \P\left[\left| \widehat{p}-p \right| \leq \epsilon\right] \geq .95
   \end{equation}
+  The value $\epsilon$ is the \demph{radius} of the confidence interval.
 \end{definition}
 In words, the interval contains the true parameter with probability at least
-$.95$.
+$.95$. If we repeated 100 random samples, then we expect the true paramter $p$
+to lie in the confidence interval about 95 times.
 
 
 
@@ -5011,14 +5018,14 @@ $.95$.
   randomly $n$ individuals and ask each of them whether they like broccoli or
   not. Let
   \begin{equation*}
-    X_{i}  :=\left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{i-th sampled person
-          likes broccoli}\\ 0 &\text{they don't} \end{array}\right., \qquad i=\in \left\{1,\ldots,n\right\}. 
+    X_{i}  :=\left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{$i^{\rm th}$ sampled person
+          likes broccoli}\\ 0 &\text{they don't} \end{array}\right., \qquad i\in \left\{1,\ldots,n\right\}. 
   \end{equation*}
   Our \textbf{sample} is $X_{1},\ldots,X_{n}$.
   Consider the \textbf{point estimator}
   \begin{align*}
     \widehat{p} 
-    &:= \text{ fraction of our sample who like broccoli}\\
+    &:= \text{fraction of our sample who like broccoli)}\\
     &= \frac{X_{1}+\ldots+X_{n}}{n}\\
     &= \overline{X}.
   \end{align*}
@@ -5086,30 +5093,18 @@ $.95$.
   \begin{equation*}
     \sigma_{\widehat{p}} \approx \sqrt{\frac{(0.2)(1-0.2)}{100}} = \frac{.16}{10} = .016
   \end{equation*}
-\end{example}
 
-\begin{example}
-  Can we come up with a 95\% confidence interval for our broccoli poll? We
-  already have $\widehat{p}=.2$. But we don't yet know how big $\epsilon$ needs
-  to be. (Of course we want to pick the smallest $\epsilon$ possible, as that
-  would give us a more informative confidence interval). To figure out how big 
+
+  \Fl{Finding a confidence interval.} Can we come up with a 95\% confidence
+  interval for our broccoli poll? We already have $\widehat{p}=.2$. But we
+  don't yet know how big $\epsilon$ needs to be. To figure out how big
   $\epsilon$ must be, we'll have to use the central limit theorem again.
 
-  Formally, let
-  \begin{equation*}
-    \widehat{p}=\frac{X_{1}+\ldots+X_{n}}{n}
-  \end{equation*}
-  where
-  \begin{equation*}
-    X_{i}  =\left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{i-th sampled person
-          likes broccoli}\\ 0 &\text{they don't} \end{array}\right.
-  \end{equation*}
   By the central limit theorem,
   \begin{equation}\label{eq:25}
     \widehat{p} \approx p + \frac{\sigma}{\sqrt{n}}Z
   \end{equation}
-  where $Z\sim \mathcal{N}(0,1)$ and $\sigma =\sqrt{\Var(X_{i})}=\sqrt{p(1-p)}$. We also
-  don't know what $\sigma$ is, since it depends on the unknown parameter
+  We don't know what $\sigma$ is, since it depends on the unknown parameter
   $p$, but we can approximate it:
   \begin{equation}\label{eq:26}
     \sigma = \sqrt{\Var(X_{i})} = \sqrt{p(1-p)} \approx \sqrt{\widehat{p}(1-\widehat{p})=(.2)(.8)}=\sqrt{.16} = .4
@@ -5118,7 +5113,7 @@ $.95$.
   By \cref{eq:25},
   \begin{align*}
     \left| \widehat{p}-p \right| 
-    &= \frac{\sigma}{\sqrt{n}}|Z|\\
+    &\approx \frac{\sigma}{\sqrt{n}}|Z|\\
     &= \frac{.4}{10} |Z|\\
     &= .04 |Z|
   \end{align*}
@@ -5146,6 +5141,93 @@ $.95$.
   people would we have to sample to reduce the margin of error to $0.05$? What
   about to $0.01$?
 \end{example}
+
+\end{document}
+\newpage
+One of the most common questions that researchers face when designing
+experiments is ``how many samples do I need?''. This is the topic of
+\textit{sample complexity}, which is a rich and beautiful subject in
+statistics, but can be hard to wrap your head around at first. Here's an
+example.
+\begin{example}[This is like Example 8.9 in the textbook]
+  A pollster is hired to estimate the proportion $p$ of people who support
+  candidate Jones in the upcoming election. The pollster wants to have $90\%$
+  confidence that their poll is no greater than $4$ percentage points away
+  from the true value of $p$. How many people must they poll?
+
+  \Fl{Solution:} We'll take as our estimator the sample mean $\widehat{p}$:
+  \begin{equation*}
+    \widehat{p}=\frac{\xi_{1}+\ldots+\xi_{n}}{n},
+    \quad \text{where} \quad 
+    \xi_{i} = \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{person $i$
+          supports candidate Jones }\\0 &\text{otherwise} \end{array}\right.,
+  \end{equation*}
+  and $n>1$ is to be determined later. By the Law of Large Numbers,
+  $\widehat{p} \to p$ as $n$ grows, which implies
+  \begin{equation*}
+    \P\left[|\widehat{p}-p| \leq .04\right] \to 1 \quad \text{ as $n \to \infty$}.
+  \end{equation*}
+  Hence we need to find $n$ sufficiently large that
+  \begin{equation*}
+    \P\left[|\widehat{p}-p| \leq .04\right] \geq 0.90.
+  \end{equation*}
+  In other words, our goal is to find a value for $n$ such that the interval
+  \begin{equation}\label{eq:17}
+    [\widehat{p}-.04,\ \widehat{p}+.04]
+  \end{equation}
+  is a $90\%$ confidence interval for $p$.
+
+  We'll assume that the poll is sufficiently large that $\widehat{p}$ is
+  approximately normally distributed (a good rule of thumb for ``sufficiently
+  large'' is that $\min \left\{np,n(1-p)\right\}\geq 10$; usually $n=30$ is
+  sufficient for the approximation to be good enough. Here we'll definitely be
+  polling at least $30$ people, which is enough to conclude that $\widehat{p}$
+  is approximately normal). Make two observations:
+  \begin{itemize}
+    \item First, observe that
+    \begin{equation*}
+      \P\left[-1.6 \leq Z \leq 1.6\right]\approx 0.90.
+    \end{equation*}    
+    Therefore, since $\widehat{p}$ is approximately normal,
+    \cref{prop:large-n-confidence-intervals} implies that the interval
+    \begin{equation*}
+      \left[ \widehat{p}-1.6\sigma_{\widehat{p}},\  \widehat{p}+1.6\sigma_{\widehat{p}} \right] 
+    \end{equation*}
+    is a $90\%$ confidence interval for $p$.
+    \item Second, observe that using $\Var(\xi_{i})=p(1-p)$, we can show that
+    \begin{align*}
+      \sigma_{\widehat{p}} 
+      &= \sqrt{\Var(\widehat{p})}
+        = \sqrt{\Var \left( \frac{\xi_{1}+\ldots+\xi_{n}}{n} \right) } 
+        = \sqrt{\frac{p(1-p)}{n}}.
+    \end{align*}
+  \end{itemize}
+  Therefore the interval
+  \begin{equation*}
+    \left[ \widehat{p}-1.6 \sqrt{\frac{p(1-p)}{n}},\  \widehat{p}+1.6 \sqrt{\frac{p(1-p)}{n}} \right] 
+  \end{equation*}
+  is a $90\%$ confidence interval for $p$. In order for this to take the
+  desired form $[\widehat{p}-.04,\ \widehat{p}+.04]$ or narrower, we need to
+  find the value of $n$ such that
+  \begin{equation*}
+    1.6 \sqrt{\frac{p(1-p)}{n}} \leq .04.
+  \end{equation*}
+  Rearranging terms gives
+  \begin{equation}\label{eq:16}
+    n \geq  1600p(1-p).
+  \end{equation}
+  Oops! We don't know $p$. But there's a fix. Observe that
+  $1600p(1-p) \leq 1600\cdot \frac{1}{4}=400$ for any $p\in (0,1)$. Therefore,
+  for any value of $p$, a sample size of at least $n=400$ voters is sufficient
+  (since $n \geq 400$ implies \cref{eq:16} holds). Therefore the pollster
+  needs to poll at least 400 people in order to have $90\%$ confidence that
+  their estimate $\widehat{p}$ is within 4 percentage points of the true
+  proportion of people who support candidate Jones.
+
+  (Using the more accurate value of $1.645$ rather than $1.6$ gives the
+  requirement of $n \geq 423$.)
+\end{example}
+
 
 
 
