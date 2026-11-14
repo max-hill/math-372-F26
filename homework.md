@@ -17,4 +17,5 @@ permalink: /homework/
 2026-10-21  | [homework-08](hw/homework-08/homework-08.pdf) | in-class worksheet (turn in on Lamaku)
 2026-10-26  | [homework-09](hw/homework-09/homework-09.pdf) | turn in on Lamaku
 2026-11-04  | [homework-10](hw/homework-10/homework-10.pdf) | turn in on Lamaku
+2026-11-20  | [homework-11](hw/homework-11/homework-11.pdf) | turn in on Lamaku
 

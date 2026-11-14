@@ -44,6 +44,8 @@ title: lecture notes
  2026-10-30  |  - | Central limit theorem, intro to point estimation (chp 5.4, 6.1)
  2026-11-02  |  - | Examples of point estimators, law of large numbers (chp 6.1)
  2026-11-04  |  - | Confidence intervals (chp 7.1)
+ 2026-11-06  |  - | Confidence intervals (chp 7.1)
+ 2026-11-13  |  - | Coupon collector problem, intro to hypothesis testing (chp 8.1)
  
 # other links
 
