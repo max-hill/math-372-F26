@@ -5500,7 +5500,8 @@ This is the basic story. Let's do an example:
 
 
 
-\begin{example}
+\begin{example}[Coin flipping hypothesis test, $n=10$]
+  \label{ex:coin-flipping-hypothesis-test--10-flips}
   Suppose you have a coin but you don't know if it is a fair coin or not. You
   think maybe the coin is biased in favor of flipping heads. As an experiment,
   you flip the coin 10 times and you get 8 heads. Is this convincing evidence
@@ -5544,194 +5545,148 @@ This is the basic story. Let's do an example:
   subjective.
 \end{example}
 
-\end{document}
 
-
-\begin{example}
-  Now, suppose that we flip the coin 100 times and we get 80 of them to be
-  heads. Is this convincing evidence that the coin isn't fair?
-
-  To answer this question, we'll compute the $p$-value. Let
-  $X_{1},\ldots,X_{100}$ be our IID random sample, where
-  \begin{equation*}
-    X_{i} = \left\{ \begin{array}{l@{\quad:\quad}l}
-        1 & \text{if $i$th coin is heads}\\
-        0& \text{otherwise} \end{array}\right.
-  \end{equation*}
-  Then the number of heads is the random variable
-  \begin{equation*}
-    S_{n} = X_{1}+\ldots+X_{n}.
-  \end{equation*}
-  Observe that $\mu= \E\left[X_{i} \right]= \frac{1}{2}$ and $ $ Assuming the
-  coin is a fair coin, we have
-  \begin{equation*}
-    \mu = \E\left[X_{i} \right] = \frac{1}{2}
-  \end{equation*}
-  and
-  \begin{equation*}
-    \sigma^{2} = \E\left[X_{i}^{2} \right] - \frac{1}{4} = \frac{1}{2}-\frac{1}{4} = \frac{1}{4}
-  \end{equation*}
-  so that
-  \begin{equation*}
-    \sigma= \frac{1}{2}.
-  \end{equation*}
-  By the central limit theorem, we know that
-  \begin{align*}
-    \frac{S_{n}}{n} \approx \mu + \frac{\sigma}{\sqrt{n}}Z, 
-  \end{align*}
-  where $Z$ is a standard normal random variable. For this specific problem,
-  we have:
-  \begin{equation*}
-    \frac{S_{100}}{100} \approx \frac{1}{2}+\frac{1}{20}Z.
-  \end{equation*}
-  We can now compute the $p$-value:
-  \begin{align*}
-    \text{p-value }
-    &= \P\left[\text{at least 80 heads out of 100 tosses}\mid \text{coin is fair} \right]\\
-    &= \P\left[S_{100}\geq 80 \mid \text{coin is fair}\right]\\
-    &= \P\left[\frac{S_{100}}{100}\geq .8 \mid \text{coin is fair}\right]\\
-    &\approx \P\left[\frac{1}{2}+\frac{Z}{20} \geq .8\right] &&\text{Key
-                                                                step. Follows by CLT.}\\
-    &= \P\left[\frac{Z}{20} \geq .3\right]\\
-    &= \P\left[Z \geq 6 \right]\\
-    &\approx .000000001
-  \end{align*}
-  In other words, if the coin were a fair coin, observing heads at least 80 out of 100
-  times would be extraordinarily unlikely. Therefore we reject $H_{0}$. 
-\end{example}
 
 \newpage
-\section{2026-04-17 | Week 13 | Lecture 29}
+\section{Week 13 | Lecture 33 | 2026-11-15}
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{Topic of this lecture:} hypothesis testing, rejection
+      region, decision errors}
+
+    \textit{\textbf{Reading assignment:} 8.1}
+  \end{tcolorbox}
+\end{center}
 
 
-
-
-\subsubsection{What is a hypothesis test?}
+\subsection{What is a hypothesis test?}
 \begin{definition}[Hypothesis Testing]
   \label{def:hypothesis-testing}
-  Given a sample from $X_{1},\ldots,X_{n}$ from a distribution depending on
-  parameter $\theta$. We are interested in comparing two competingk
+  Consider a sample from $X_{1},\ldots,X_{n}$ from a distribution depending on
+  parameter $\theta$. We are interested in comparing two competing
   hypotheses: a null hypothesis $H_{0}$ and an alternative hypothesis $H_{a}$.
   A \demph{hypothesis test} is a procedure or decision rule utilizing a
   statistic $T$ which specifies for which values of $T$ the hypothesis $H_{0}$
   is rejected, and for which values $H_{0}$ is accepted. The statistic $T$ is
   called the \demph{test statistic}.
 
+  We determine whether to reject $H_{0}$ by computing a \demph{$p$-value},
+  which is the probability of observing results as ore more extreme than what
+  we observed, assuming $H_{0}$ were true. If the $p$-value is very small, we
+  reject $H_{0}$. Our threshold for ``very small'' is called the
+  \demph{significance level}.
+\end{definition}
+
+The next example shows an application of the Central Limit Theorem to
+computing a $p$-value.
+
+\begin{example}[Coin flipping hypothesis test, $n=100$]
+  \label{ex:coin-flipping-hypothesis-test--100-flips}
+  Suppose that we flip the coin 100 times and we get 80 of them to be
+  heads. Is this convincing evidence that the coin is biased in favor of
+  heads? Use a significance level of $0.01$.
+
+  Let $\theta$ be the probability of heads. We want to compare null and
+  alternative hypotheses
+  \begin{equation*}
+    H_{0}: \theta=\frac{1}{2} \quad \text{versus} \quad
+    H_{a}: \theta>\frac{1}{2}.
+  \end{equation*}
+  W need to compute the $p$-value. Let $X_{1},\ldots,X_{100}$ be our IID
+  random sample, where
+  \begin{equation*}
+    X_{i} = \left\{ \begin{array}{l@{\quad:\quad}l}
+        1 & \text{if $i$th coin is heads}\\
+        0& \text{otherwise} \end{array}\right.
+  \end{equation*}
+  Assuming the coin is a fair coin, we have
+  \begin{equation*}
+    \mu = \E\left[X_{i} \right] = \frac{1}{2}, \qquad  \sigma^{2} = \Var(X_{i}) =  \frac{1}{4}, \qquad \sigma= \frac{1}{2}.
+  \end{equation*}
+  By the central limit theorem, 
+  \begin{align*}
+    \overline{X} \approx \mu + \frac{\sigma}{\sqrt{n}}Z, 
+  \end{align*}
+  where $Z$ is a standard normal random variable. Thus,
+  \begin{equation*}
+    \overline{X} \approx \frac{1}{2}+\frac{1}{20}Z.
+  \end{equation*}
+  We can now compute the $p$-value:
+  \begin{align*}
+    \text{p-value }
+    &= \P\left[\text{at least 80 heads out of 100 tosses}\mid \text{coin is fair} \right]\\
+    &= \P\left[X_{1}+\ldots+X_{100}\geq 80 \mid \text{coin is fair}\right]\\
+    &= \P\left[\overline{X}\geq .8 \mid \text{coin is fair}\right]\\
+    &\approx \P\left[\frac{1}{2}+\frac{Z}{20} \geq .8\right] &&\text{Key
+                                                                step. Follows by CLT.}\\
+    &= \P\left[\frac{Z}{20} \geq .3\right]\\
+    &= \P\left[Z \geq 6 \right]\\
+    &\approx .000000001
+  \end{align*}
+  In other words, if the coin were a fair coin, observing heads at least 80
+  out of 100 times would be extraordinarily unlikely. In particular, since our
+  $p$-value is smaller than our significance level, we reject $H_{0}$.
+\end{example}
+
+\newpage
+\subsection{Rejection region}
+
+
+\begin{definition}[Rejection region]
+  \label{def:rejection-region}
   Associated with a hypothesis test is a \demph{rejection region} (RR), the set
-  which specifies the values of the test statistic for which the null hypothesis
+  which specifies the values of the test statistic $T$ for which the null hypothesis
   to be rejected in favor of the alternative hypothesis. That is, if
   $T\in\mathrm{RR}$, then we reject $H_{0}$. If $T\notin \mathrm{\mathrm{RR}}$,
   we accept $H_{0}$.
 \end{definition}
 
-
-\begin{example}
+\begin{example}[One-sided test]
   Suppose you have a coin but you don't know if it is a fair coin or not. You
   think maybe the coin is biased in favor of flipping heads. As an experiment,
   you flip the coin 10 times and you get 8 heads. Is this convincing evidence
-  that the coin is biased?
+  that the coin is biased in favor of heads?
 
-  In this case, the data is an IID sample
+  The null and alternative hypotheses are
   \begin{equation*}
-    X_{1},\ldots,X_{10}
+    H_{0}: p = \frac{1}{2} \quad \text{versus} \quad H_{a}: p> \frac{1}{2}.
   \end{equation*}
-  where
-  \begin{equation*}
-    X_{i}= \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{with probability }\theta\\ 0&\text{with probability }1-\theta \end{array}\right.
-  \end{equation*}
-  The null hypothesis is
-  \begin{equation*}
-    H_{0}: \theta=\frac{1}{2}
-  \end{equation*}
-  The alternative hypothesis is that heads is more likely than tails:
-  \begin{equation*}
-    H_{1}: \theta>\frac{1}{2}
-  \end{equation*}
+  This is an example of a \textbf{one-sided test}.
 
-  The p-value is
-  \begin{align*}
-    p 
-    &= \P\left[\text{at least 8 heads when } \theta=\frac{1}{2} \right]\\
-    &= {10 \choose 8}\theta^{8}(1-\theta)^{2}+{10 \choose
-      9}\theta^{9}(1-\theta)^{1}+{10 \choose 10}\theta^{10}(1-\theta)^{0}
-      \text{ with } \theta=\frac{1}{2}\\
-    &= {10\choose 8} \left( \frac{1}{2} \right)^{10} +{10\choose 9} \left( \frac{1}{2} \right)^{10} +{10\choose 10} \left( \frac{1}{2} \right)^{10}\\ 
-    &= \frac{7}{128}\\
-    &\approx 0.0546.
-  \end{align*}
-  In words, if the coin were fair, we would expect it to flip 8 or more heads
-  (out of ten) about 5.46\% of the time.
-
+  Here, the test statistic is
+  \begin{equation*}
+    T=\text{(number of heads)}.
+  \end{equation*}
+  In \cref{ex:coin-flipping-hypothesis-test--10-flips}, we showed that if the
+  coin were fair, we would expect to observe 8 or more heads (out of ten)
+  about $5.46\%$ of the time. A reasonable rejection region might be
+  \begin{equation*}
+    \text{RR} = \left\{8,9,10\right\}.
+  \end{equation*}
+  That is, we reject $H_{0}$ if we roll $8,9,$ or $10$ heads.
   
-  In the previous example, the test statistic was
-  $T=\text{(number of heads)}$. A reasonable rejection region might be
-  $\left[ T \geq 8\right]$ or $\left[ T \geq 9\right]$.
+  Such a test is not perfect: assuming that $H_{0}$ is true, we will
+  nonetheless reject $H_{0}$ about $5.46\%$ of the time. The significance
+  level is $.0546$.
 \end{example}
 
-
-
-\subsubsection{Type I and Type II errors}
-There are two types of decision errors in the hypothesis testing framework.
-
-\begin{definition}[Decision errors]
-  \label{def:decision-errors}
-  A \demph{type I error} is made if $H_{0}$ is rejected when $H_{0}$ is true.
-  The probability of a type I error is denoted by $\alpha$:
-  \begin{equation*}
-    \alpha = \Pr \left[ \text{Type I error} \right] = \Pr\left[
-      \text{rejecting $H_{0}$ when $H_{0}$ is true}\right]
-    %%% T\in \text{RR} \mid H_{0} \text{ is true}\right].
-  \end{equation*}
-  The value of $\alpha$ is called the \demph{significance level} (or just
-  \demph{level}) of the test.
-
-  Similarly, a
-  \demph{type II error} is made if $H_{0}$ is accepted when $H_{a}$ is true.
-  We denote the probability of this happening by $\beta$:
-  \begin{equation*}
-    \beta = \Pr \left[ \text{Type II error} \right] = \Pr \left[
-      \text{accepting $H_{0}$ when $H_{a}$ is true} \right] 
-    % \P\left[ T\notin \text{RR} \mid H_{a} \text{ is true}\right].
-  \end{equation*}
-  The value $1-\beta$ is called the \demph{power} of the test.
-\end{definition}
-
-These types of errors, and their probabilities, can be summarized in the
-following table:
-
-\begin{center}
-  \begin{tabular}{lcc}
-    & Reject $H_0$ & Accept $H_0$ \\ \cline{2-3}
-    \multicolumn{1}{l|}{$H_0$ true}
-    & \multicolumn{1}{l|}{\makecell[c]{Type I error \\ $\text{level}=\alpha$}}
-    & \multicolumn{1}{l|}{\makecell[c]{Correctly accept $H_{0}$ \\ $1-\alpha$}} \\ \cline{2-3}
-    \multicolumn{1}{l|}{$H_a$ true}
-    & \multicolumn{1}{l|}{\makecell[c]{Correctly reject $H_{0}$ \\ $\text{power}=1-\beta$}}
-    & \multicolumn{1}{l|}{\makecell[c]{Type II error \\ $\beta$}} \\ \cline{2-3}
-  \end{tabular}
-\end{center}
-
-
-\newpage
-\section{2026-04-20 | Week 14 | Lecture 30}
-
-\subsection{Decision errors}
-
-\begin{example}[Coin flipping hypothesis test]
-  \label{ex:coin-flipping-hypothesis-test}
+\begin{example}[Two-sided test]
+  \label{ex:two-sided-test}
   Flip a coin 10 times. Let $p$ be the probability of heads. Consider the
   hypothesis testing problem
   \begin{equation*}
     H_{0}: p = \frac{1}{2} \quad \text{versus} \quad H_{a}: p\neq \frac{1}{2}.
   \end{equation*}
-  Let our test statistic be
+  This is an example of a \textbf{two-sided test} (since the alternative
+  hypothesis uses $\neq$ rather than an inequality).
+
+  Again, our test statistic be
   \begin{equation*}
-    T = \text{(\# of heads)}
+    T = \text{(number of heads)}.
   \end{equation*}
-  So $T$ takes a value between 0 and 10. If $H_{0}$ were true, then (one can
-  check that) there would be about 97.9\% chance of getting between 2 and 8
-  heads. So it might be reasonable to define our rejection region to be the
-  set
+  If $H_{0}$ were true, then (one can check that) there would be about 97.9\%
+  chance of getting between 2 and 8 heads. So it might be reasonable to define
+  our rejection region to be the set
   \begin{equation*}
     \text{RR} = \left\{0,1,9,10\right\}
   \end{equation*}
@@ -5744,8 +5699,35 @@ following table:
 \end{example}
 
 
-\subsubsection{Type I and Type II errors}
+
+
+\subsection{Decision errors}
 There are two types of decision errors in the hypothesis testing framework.
+
+\begin{definition}[Decision errors]
+  \label{def:decision-errors}
+  A \demph{type I error} is made if $H_{0}$ is rejected when $H_{0}$ is true. A
+  \demph{type II error} is made if $H_{0}$ is accepted when $H_{a}$ is true.
+
+  We denote the probability of type I and II errors by $\alpha$ and $\beta$:
+  \begin{equation*}
+    \alpha = \Pr \left[ \text{Type I error} \right] = \Pr\left[
+      \text{rejecting $H_{0}$ when $H_{0}$ is true}\right]
+    %%% T\in \text{RR} \mid H_{0} \text{ is true}\right].
+  \end{equation*}
+  \begin{equation*}
+    \beta = \Pr \left[ \text{Type II error} \right] = \Pr \left[
+      \text{accepting $H_{0}$ when $H_{a}$ is true} \right] 
+    % \P\left[ T\notin \text{RR} \mid H_{a} \text{ is true}\right].
+  \end{equation*}
+  The value of $\alpha$ is called the \demph{significance level} (or just
+  \demph{level}) of the test. The value $1-\beta$ is called the \demph{power}
+  of the test.
+\end{definition}
+
+These types of errors, and their probabilities, can be summarized in the
+following table:
+
 
 \begin{center}
   \begin{tabular}{lcc}
@@ -5759,6 +5741,23 @@ There are two types of decision errors in the hypothesis testing framework.
   \end{tabular}
 \end{center}
 
+\begin{remark}
+  It is a common mistake to assume that $\alpha+\beta=1$. In general,
+  $\alpha+\beta\neq 1$.
+\end{remark}
+
+% \begin{center}
+%   \begin{tabular}{lcc}
+%     & Reject $H_0$ & Accept $H_0$ \\ \cline{2-3}
+%     \multicolumn{1}{l|}{$H_0$ true}
+%     & \multicolumn{1}{l|}{\makecell[c]{Type I error \\ $\text{level}=\alpha$}}
+%     & \multicolumn{1}{l|}{\makecell[c]{Correctly accept $H_{0}$ \\ $1-\alpha$}} \\ \cline{2-3}
+%     \multicolumn{1}{l|}{$H_a$ true}
+%     & \multicolumn{1}{l|}{\makecell[c]{Correctly reject $H_{0}$ \\ $\text{power}=1-\beta$}}
+%     & \multicolumn{1}{l|}{\makecell[c]{Type II error \\ $\beta$}} \\ \cline{2-3}
+%   \end{tabular}
+% \end{center}
+
 
 % \begin{table}[H]
 %   \centering
@@ -5770,8 +5769,8 @@ There are two types of decision errors in the hypothesis testing framework.
 % \end{table}
 
 
-\begin{example}[\cref{ex:coin-flipping-hypothesis-test} continued]
-  In \cref{ex:coin-flipping-hypothesis-test}, the level of the test is
+\begin{example}[\cref{ex:two-sided-test} continued]
+  In \cref{ex:two-sided-test}, the level of the test is
   $\alpha=2.1\%$. Note that $\beta$ is a function of $p$. For example if
   $p=0.4$, then
   \begin{align*}
@@ -5789,11 +5788,19 @@ There are two types of decision errors in the hypothesis testing framework.
   so the power of the test would be $.736$. We generally don't know what the
   true power of the test is, since that would require knowing the value of the
   parameter (in which case we wouldn't be doing a hypothesis test...).
-
-  It is a common mistake to assume that $\alpha+\beta=1$. In general,
-  $\alpha+\beta\neq 1$. 
 \end{example}
 
+\end{document}
+
+
+\newpage
+\begin{center}
+  \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
+    \textit{\textbf{Topic of this lecture:} hypothesis testing}
+
+    \textit{\textbf{Reading assignment:} 8,1}
+  \end{tcolorbox}
+\end{center}
 
 These terms are clarified by an example.
 
