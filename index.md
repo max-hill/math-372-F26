@@ -47,6 +47,7 @@ title: lecture notes
  2026-11-06  |  - | Confidence intervals (chp 7.1)
  2026-11-13  |  - | Coupon collector problem, intro to hypothesis testing (chp 8.1)
  2026-11-16  |  - | What is a hypothesis test, rejection region, decision errors (chp 8.1)
+ 2026-11-18  |  - | decision errors (chp 8.1), tests of independence, chi-squared statistic (chp 14.1-14.3
  
 # other links
 

@@ -5790,24 +5790,27 @@ following table:
   parameter (in which case we wouldn't be doing a hypothesis test...).
 \end{example}
 
-\end{document}
 
 
 \newpage
+\section{2026-11-18 | Week 13 | Lecture 34}
+
 \begin{center}
   \begin{tcolorbox}[width=0.9\textwidth, colback=white, colframe=black]
-    \textit{\textbf{Topic of this lecture:} hypothesis testing}
+    \textit{\textbf{Topic of this lecture:} power vs level, chi-squared
+      distribution, tests independence}
 
-    \textit{\textbf{Reading assignment:} 8,1}
+    \textit{\textbf{Reading assignment:} 14.1, 14.2, 14.3}
   \end{tcolorbox}
 \end{center}
 
-These terms are clarified by an example.
+\subsection{Decision errors (continued)}
+
 
 \begin{remark}[Decision Errors]
   \label{rmk:decision-errors}
   A Ukrainian drone operator spots an unmarked vehicle traveling down a road.
-  She needs to make a decision about whether to strike the truck. The
+  He needs to make a decision about whether to strike the truck. The
   hypothesis test is the following:
   \begin{align*}
     H_{0}:& \text{ the target is not a Russian military vehicle}\\
@@ -5818,38 +5821,43 @@ These terms are clarified by an example.
 
   In this context, a Type-I error occurs when the operator gives the order to
   destroy the vehicle, but it turns out the vehicle is not Russian military. A
-  Type-II error, on the other hand, has occurred if she doesn't order the
+  Type-II error, on the other hand, has occurred if he doesn't order the
   strike, but the vehicle really was a Russian military vehicle.
   \begin{itemize}
-    \item A Type-I error means she killed a civilian or a friendly unit (an
+    \item A Type-I error means he killed a civilian or a friendly unit (an
     error of commission).
-    \item A Type-II error means she missed an opportunity to kill an enemy (an
+    \item A Type-II error means he missed an opportunity to kill an enemy (an
     error of ommission).
   \end{itemize}
   Here, the terms ``power'' and ``level'' have the following meaning:
   \begin{itemize}
-    \item The \textbf{power} of the test is the probability that she
-    orders a strike when a Russian military vehicle goes by. (She wants this
+    \item The \textbf{power} of the test is the probability that he
+    orders a strike when a Russian military vehicle goes by. (He wants this
     to be high).
-    \item The \textbf{level} of the test is the probability that she orders a
-    strike when a civilian goes by. (She wants this to be low).
+    \item The \textbf{level} of the test is the probability that he orders a
+    strike when a civilian goes by. (He wants this to be low).
   \end{itemize}
   Ideally, the operator would like to eliminate both types of errors
-  (accidentally killing civilians vs failing to kill enemy). That is, she
+  (accidentally killing civilians vs failing to kill enemy). That is, he
   would like
   \begin{equation*}
     \alpha=\Pr\left[\text{Type I error} \right]= 0 \quad \text{and} \quad
     \beta=\Pr\left[\text{Type II error} \right]=0.
   \end{equation*}
   Unfortunately, it is impossible to simultaneously eliminate both types of
-  error without perfect information. On one hand, the drone operatore could
-  minimize the probability of a type I error by simply never ordering a strike,
-  in which case $\alpha= \Pr\left[ \text{Type I error} \right] = 0$. But this
-  is unsatisfactory, since in that case,
-  $\beta= \Pr\left[\text{Type II error} \right]=1$. On the other hand, she
-  could maximize the power by simply always ordering a strike; in that case,
-  $\beta=0$ but $\alpha=1$. This tradeoff is present in every hypothesis test.
-  
+  error without perfect information.
+
+  \begin{itemize}
+    \item The drone operator could minimize the probability of a type I error
+    by simply \textit{never ordering a strike}, in which case
+    $\alpha= \Pr\left[ \text{Type I error} \right] = 0$. But this is
+    unsatisfactory, since in that case,
+    $\beta= \Pr\left[\text{Type II error} \right]=1$.
+    \item On the other hand, he could maximize the power by simply \textit{always
+      ordering a strike}; in that case, $\beta=0$ but $\alpha=1$.
+  \end{itemize}
+  This tradeoff is present in every hypothesis test.
+
   The approach that the hypothesis testing framework takes to address this
   tradeoff is to (1) set a maximal level $\alpha$ that one is willing to
   accept, and then (2) find the most powerful test subject to that constraint.
@@ -5858,8 +5866,6 @@ These terms are clarified by an example.
   situation: a truck speeding towards the operator's position is very
   different from a truck traveling away from the front.
 \end{remark}
-
-
 
 % Therefore
 % \begin{align*}
@@ -5901,10 +5907,6 @@ These terms are clarified by an example.
 % \end{equation*}
 
 
-\newpage
-
-
-\section{2026-04-22 | Week 14 | Lecture 31}
 \subsection{Tests of independence}
 \textit{Based on chapters 14.2-14.4}
 
@@ -5918,11 +5920,176 @@ class (B).
 \Fl{Question:} How can we test this (using the hypothesis testing framework)?
 
 \Fl{Answer:} We can utilize what are called ``tests of independence'', which
-we'll present in this lecture. For such tests, we require two main ingredients.
+we'll present in this lecture.
+
+\subsubsection{Example of a test of independence}
+% \begin{definition}
+%   A \demph{contingency table} is a matrix of with rows labeled as group 1,
+%   group 2, and so forth, and columns labeled as outcome 1, outcome 2, etc. The
+%   entries of the matrix are \textit{counts}: the $(i,j)$-th entry is the
+%   number of times that group $i$ experience outcome $j$.
+% \end{definition}
+
+\begin{example}[Test of independence]
+  \label{ex:test-independence}
+  For example, suppose we have a population of $n=54$ students, which we divide
+  up according two to factors
+  \begin{enumerate}[(i)]
+    \item whether they attended class regularly or not
+    \item whether they pass the class exam or not
+  \end{enumerate}
+  Our \demph{table of observed values} is 
+  \begin{equation}\label{eq:table-of-observed-values}
+    \begin{tabular}{l|cc}
+      & \textbf{Pass} & \textbf{Fail} \\
+      \hline
+      \textbf{Attended} & 25          & 6            \\
+      \textbf{Skipped}  & 8           & 15           
+    \end{tabular} 
+  \end{equation}
+  We usually augment the table with ``marginal totals'', like so:
+  \begin{center}
+    \begin{tabular}{l|cc|c}
+      & \textbf{Pass} & \textbf{Fail} & \textbf{Total} \\
+      \hline
+      \textbf{Attended} & 25 & 6  & 31 \\
+      \textbf{Skipped}  & 8  & 15 & 23 \\
+      \hline
+      \textbf{Total}    & 33 & 21 & 54
+    \end{tabular}
+  \end{center}
+
+
+  The null and alternative hypotheses are
+  \begin{equation*}
+    H_{0}: \text{ attendence and passing are independent}
+  \end{equation*}
+  \begin{equation*}
+    H_{a}: \text{ there is a relationship between attendence and passing.}
+  \end{equation*}
+
+  Let
+  \begin{align*}
+    p &= \P \left[ \text{a random student attends regularly} \right]\\
+    q &= \P \left[ \text{a random student passes the final} \right]
+  \end{align*}
+
+
+  \Fl{Question:} What would expect observe if the null hypothesis were true?
+
+
+  Since attendence and passing are independent under $H_{0}$, the expected
+  counts under $H_{0}$ are
+  \begin{center}
+    \begin{tabular}{l|cc}
+      & \textbf{Pass} & \textbf{Fail} \\
+      \hline
+      \textbf{Attended} & $npq$          & $np(1-q)$            \\
+      \textbf{Skipped}  & $n(1-p)q$           & $n(1-p)(1-q)$            
+    \end{tabular}
+  \end{center}
+  For example, by independendence the probability that a student both passes and attends is
+  $pq$. Since there are $n$ students, the expected number of students who pass
+  and attend is $npq$.
+
+  Now, we don't actually know what $p$ and $q$ are but we can estimate them
+  using the marginal row and column sums from the contingency table:
+  \begin{equation*}
+    p \approx \frac{31}{54} \quad \text{and} \quad q\approx \frac{33}{54}.
+  \end{equation*}
+  Plugging these values and $n=54$ into our table gives
+
+  \begin{equation}\label{eq:table-of-estimated-expected-values}
+    \begin{tabular}{l|cc}
+      & \textbf{Pass} & \textbf{Fail} \\
+      \hline
+      \textbf{Attended} & $18.9$          & $12.1$            \\
+      \textbf{Skipped}  & $14.1$           & $8.9$            
+    \end{tabular}
+  \end{equation}
+  \textbf{Interpretation:} These are the values we would expect if $H_{0}$
+  were true. The key idea of the test is:
+  \begin{center}
+    \textbf{If the observed values deviate a lot from what we'd expect under
+    $H_{0}$, we should reject $H_{0}$.}
+  \end{center}
+
+  How do we measure how large the deviation is? One way is to use what is the
+  \textbf{chi-squared statistic}, which we introduce next.
+\end{example}
+
+  \begin{definition}[Chi-squared statistic]
+    
+    Suppose we repeatedly conduct an experiment with $k$ possible outcomes. The
+    \demph{chi-squared statistic} is defined as
+    \begin{equation}\label{eq:29}
+      \chi^{2}:= \sum_{i=1}^{k} \frac{\left(N_{i}-E_{i}\right)^{2}}{E_{i}},
+    \end{equation}
+    where $E_{i} = (\text{expected \# of times outcome $i$ occurs})$, and
+    $N_{i}= (\text{\# of times outcome $i$ is observed})$.
+  \end{definition}
+
+  \begin{remark}
+    The right-hand side of \cref{eq:29} has the form
+    \begin{equation*}
+      \sum_{i=1}^{k} \frac{\left( \text{observed}- \text{expected} \right)^{2} }{ \text{expected}} 
+    \end{equation*}
+    Thus, $\chi^{2}$ is nonnegative. We may regard it as a measure of
+    ``distance'' between the observed data, and what we'd expect to observe
+    under the null hypothesis. When the two are similar, $\chi^{2}$ will be
+    small; when they are very different, $\chi^{2}$ will be big.
+  \end{remark}
+  
+  \begin{proposition}
+    \label{prop:chi-squared-theorem}
+    Under general conditions, for a test of independence with a $2\times 2$
+    table, the pdf of the chi-squared statistic $\chi^{2}$ is approximately
+    \begin{equation*}
+      f(x) = \frac{1}{\sqrt{2\pi}}x^{-\frac{1}{2}}e^{-\frac{x}{2}}, \quad x \geq 0.
+    \end{equation*}
+  \end{proposition}
+
+
+
+\begin{example}[\cref{ex:test-independence} continued]
+  
+  Using the values recorded in Tables \ref{eq:table-of-observed-values} and
+  \ref{eq:table-of-estimated-expected-values}, we can compute the chi-squared
+  statistic:
+  \begin{align*}
+    \chi^{2} 
+    &= \sum_{\text{all table entries}} \frac{\left( \text{observed
+      value} - \text{expected value} \right)^{2} }{ \text{expected value}} \\
+    &= \frac{\left( 25-18.9 \right)^{2} }{18.9}+ \frac{(6-12.1)^{2}}{12.1}+ \frac{\left( 8-14.1 \right)^{2} }{14.1}+ \frac{\left( 15-8.9 \right)^{2} }{8.9}\\
+    &= 11.9
+  \end{align*}
+
+  Thereore, using \cref{prop:chi-squared-theorem}, the p-value is
+  \begin{align*}
+    p \text{-value}
+    &= \P\left[\chi^{2}\geq 11.9\right]\\
+    &= \int_{11.9}^{\infty} \frac{1}{\sqrt{2\pi}} x^{-\frac{1}{2}}e^{-x/2}dx\\
+    &=0.0006
+  \end{align*}
+  In other words, if attending and passing were independent, we would see
+  results this extreme only 0.06\% of the time. This is very small, so we reject
+  the null hypothesis. Our conclusion is that attendance and passing the final
+  exam are \textbf{not independent}, i.e., that there is a relationship between
+  them.
+
+  At this point we are tempted to conclude that regularly attending class
+  increases your chance of passing the final exam. This seems obvious and is
+  certainly consistent with the data. But it's not a conclusion that follows
+  from the test that we did. The test only told us that these two things things
+  probably have some relationship; it doesn't give us information about the
+  nature of that relationship.
+\end{example}
+
+
+
+\end{document}
 
 \subsubsection{Ingedient 1: The chi-squared distribution}
-
-
 \begin{definition}[Chi-Squared Distribution]
   \label{def:chi-squared-distribution}
   Let $k$ be a positive integer. A nonnegative random variable $X$ is said to
@@ -5935,8 +6102,6 @@ we'll present in this lecture. For such tests, we require two main ingredients.
   \end{equation*}.
 \end{definition}
 
-Here, $\Gamma(x)= \int_{0}^{\infty}t^{x-1}e^{-t}dx$. Note $\Gamma(k)=(k-1)!$
-if $k$ is a positive integer.
 
 From left-to-right, here's what $f(x)$ looks like for $d=2$, $d=4$, and
 $d=12$:
@@ -5957,41 +6122,15 @@ The chi-squared distribution plays a central role in statistical inference. It
 is completely determined by its degrees of freedom.
 
 
-\subsubsection{Ingedient 2: The chi-squared statistic}
+By \cref{rem:chi-squared-theorem}, we know that $\chi^{2}$ has a chi-squared
+distribution. When computing a chi-squared test statistic from a contingency
+table for a test of independence, the degrees of freedom is given by the
+equation
+\begin{equation*}
+  \text{df}=(\text{number of rows} -1)\times (\text{number of columns} -1)
+\end{equation*}
+which in our case, for a $2\times 2$ table, is just 1.
 
-
-
-\begin{definition}[Chi-squared statistic]
-  
-  Suppose we repeatedly conduct an experiment with $k$ possible outcomes. The
-  \demph{chi-squared statistic} is defined as
-  \begin{equation}\label{eq:29}
-    \chi^{2}:= \sum_{i=1}^{k} \frac{\left(N_{i}-E_{i}\right)^{2}}{E_{i}},
-  \end{equation}
-  where $E_{i} = (\text{expected \# of times outcome $i$ occurs})$, and
-  $N_{i}= (\text{\# of times outcome $i$ is observed})$.
-\end{definition}
-
-\begin{remark}
-  The right-hand side of \cref{eq:29} has the form
-  \begin{equation*}
-    \sum_{i=1}^{k} \frac{\left( \text{observed}- \text{expected} \right)^{2} }{ \text{expected}} 
-  \end{equation*}
-\end{remark}
-
-
-
-\begin{remark}
-  \label{rem:chi-squared-theorem}
-  Under general conditions, the chi-squared statistic $\chi^{2}$ has approximately a
-  chi-squared distribution with degrees of freedom determined by the setting.
-  % the 
-  % \begin{equation*}
-  %   \chi^{2} := \sum_{i=1}^{k} \frac{\left(X_{i}-np_{i}\right)^{2}}{np_{i}}.
-  % \end{equation*}
-  % Then $\chi^{2}$ has approximately chi-squared distribution with $k-1$ degrees of
-  % freedom (as long as  $np_{i}\geq 5$ for all $i=1,\ldots,m$).
-\end{remark}
 
 % \begin{theorem}
 %   \label{rem:chi-squared-theorem}
@@ -6019,225 +6158,8 @@ is completely determined by its degrees of freedom.
 %   The details of the proof rely on linear algebra.
 % \end{proof}
 
-\subsubsection{Example of a test of independence}
-\begin{definition}
-  A \demph{contingency table} is a matrix of with rows labeled as group 1,
-  group 2, and so forth, and columns labeled as outcome 1, outcome 2, etc. The
-  entries of the matrix are \textit{counts}: the $(i,j)$-th entry is the
-  number of times that group $i$ experience outcome $j$.
-\end{definition}
-
-\begin{example}[Test of independence]
-  For example, suppose we have a population of $n=54$ students, which we divide
-  up according two to factors
-  \begin{enumerate}[(i)]
-    \item whether they attended class regularly or not
-    \item whether they pass the class exam or not
-  \end{enumerate}
-  Then our contingency table is
-
-  \begin{equation}\label{eq:table-of-observed-values}
-    \begin{tabular}{l|cc}
-      & \textbf{Pass} & \textbf{Fail} \\
-      \hline
-      \textbf{Attended} & 25          & 6            \\
-      \textbf{Skipped}  & 8           & 15           
-    \end{tabular} 
-  \end{equation}
-  This is the \demph{table of observed values}. We usually augment the table
-  with ``marginal totals'', like so:
-
-
-  \begin{center}
-    \begin{tabular}{l|cc|c}
-      & \textbf{Pass} & \textbf{Fail} & \textbf{Total} \\
-      \hline
-      \textbf{Attended} & 25 & 6  & 31 \\
-      \textbf{Skipped}  & 8  & 15 & 23 \\
-      \hline
-      \textbf{Total}    & 33 & 21 & 54
-    \end{tabular}
-  \end{center}
-
-
-  The null hypothesis is
-  \begin{equation*}
-    H_{0}= \text{ attendence and passing are independent}
-  \end{equation*}
-  and the alternative hypothesis is
-  \begin{equation*}
-    H_{a} = \text{ there is a relationship between attendence and passing.}
-  \end{equation*}
-
-
-  Let $p$ denote the probability that a student regularly attends class, and let
-  $q$ denote the probability that a student passes the final exam.
-
-  \fl{Important:} We do not know the true value of $p$ and $q$. But we can
-  estimate them using the marginal row and column sums from the table:
-  \begin{equation*}
-    p \approx \frac{31}{54} \quad \text{and} \quad q\approx \frac{33}{54}
-  \end{equation*}
-
-
-  \Fl{Question:} What are the expected values of the table, assuming the null
-  hypothesis is true?
-
-  If attendence and passing are indpendent, then
-  \begin{equation*}
-    \E\left[\# \text{ of students who attend regularly AND pass} \right] = npq = (54)\left( \frac{31}{54} \right) \left( \frac{33}{54} \right)= 18.9
-  \end{equation*}
-
-  This is what we expect if the null hypothesis is true. Compare this with the
-  actual observed value, which was $25$. The idea of the test, which we will
-  finish in the next lecture, is the following:
-  \begin{center}
-    \textbf{If the observed values deviate a lot from what we'd expect under
-    $H_{0}$, we should reject $H_{0}$.}
-  \end{center}
-  Quantifying this will require computing a chi-squared statistic, which we'll
-  do in the next lecture.
-\end{example}
-
 
 \newpage
-\section{2025-04-21 | Week 14 | Lecture 32}
-\textit{Chapter 14.1 through 14.3}
-
-We will finish the example of a test of independence from last time.
-
-\begin{example}[Test of independence]
-  For example, suppose we have a population of $n=54$ students, which we divide
-  up according two to factors
-  \begin{enumerate}[(i)]
-    \item whether they attended class regularly or not
-    \item whether they pass the class exam or not
-  \end{enumerate}
-  Then our contingency table is
-
-  \begin{equation}\label{eq:table-of-observed-values}
-    \begin{tabular}{l|cc}
-      & \textbf{Pass} & \textbf{Fail} \\
-      \hline
-      \textbf{Attended} & 25          & 6            \\
-      \textbf{Skipped}  & 8           & 15           
-    \end{tabular} 
-  \end{equation}
-  This is the \demph{table of observed values}. We usually augment the table
-  with ``marginal totals'', like so:
-
-  \begin{center}
-    \begin{tabular}{l|cc|c}
-      & \textbf{Pass} & \textbf{Fail} & \textbf{Total} \\
-      \hline
-      \textbf{Attended} & 25 & 6  & 31 \\
-      \textbf{Skipped}  & 8  & 15 & 23 \\
-      \hline
-      \textbf{Total}    & 33 & 21 & 54
-    \end{tabular}
-  \end{center}
-
-
-  The null hypothesis is
-  \begin{equation*}
-    H_{0}= \text{ attendence and passing are independent}
-  \end{equation*}
-  and the alternative hypothesis is
-  \begin{equation*}
-    H_{a} = \text{ there is a relationship between attendence and passing.}
-  \end{equation*}
-
-
-  Let $p$ denote the probability that a student regularly attends class, and let
-  $q$ denote the probability that a student passes the final exam.
-
-  \fl{Important:} We do not know the true value of $p$ and $q$. But we can
-  estimate them using the marginal row and column sums from the table:
-  \begin{equation*}
-    p \approx \frac{31}{54} \quad \text{and} \quad q\approx \frac{33}{54}
-  \end{equation*}
-
-
-  \Fl{Question:} What are the expected values of the table, assuming the null
-  hypothesis is true?
-
-
-  Under the null hypothesis, we can multiply probabilities, e.g., so that the
-  probability that a student both regularly attends class AND passes the exam is
-  about $pq$. Therefore, since there are $n$ students,
-  \begin{align*}
-    &\E\left[\text{\# of students who attend regularly AND pass the exam}\right] \\
-    &= n \P\left[\text{a randomly-selected student attends regularly AND pass the exam} \right]\\
-    &= n \P\left[\text{attends regularly}\right] \P\left[\text{passes the exam} \right]\\
-    &= npq
-  \end{align*}
-
-  Similar calculations gives us the following table of expected counts:
-  \begin{center}
-    \begin{tabular}{l|cc}
-      & \textbf{Pass} & \textbf{Fail} \\
-      \hline
-      \textbf{Attended} & $npq$          & $np(1-q)$            \\
-      \textbf{Skipped}  & $n(1-p)q$           & $n(1-p)(1-q)$            
-    \end{tabular}
-  \end{center}
-  and plugging in the values $n=54$ and our approximations
-  $p\approx \frac{31}{54}$ and $q\approx \frac{33}{54}$ gives
-
-  \begin{equation}\label{eq:table-of-estimated-expected-values}
-    \begin{tabular}{l|cc}
-      & \textbf{Pass} & \textbf{Fail} \\
-      \hline
-      \textbf{Attended} & $18.9$          & $12.1$            \\
-      \textbf{Skipped}  & $14.1$           & $8.9$            
-    \end{tabular}
-  \end{equation}
-  \textbf{Interpretation:} These are the values we would expect if $H_{0}$
-  were true. If the observed values deviate too much from these values, that's
-  evidence against the null hypothesis.
-  
-  Using the values recorded in Tables \ref{eq:table-of-observed-values} and
-  \ref{eq:table-of-estimated-expected-values}, we can compute the chi-squared
-  statistic:
-  \begin{align*}
-    \chi^{2} 
-    &= \sum_{\text{all table entries}} \frac{\left( \text{observed
-      value} - \text{expected value} \right)^{2} }{ \text{expected value}} \\
-    &= \frac{\left( 25-18.9 \right)^{2} }{18.9}+ \frac{(6-12.1)^{2}}{12.1}+ \frac{\left( 8-14.1 \right)^{2} }{14.1}+ \frac{\left( 15-8.9 \right)^{2} }{8.9}\\
-    &= 11.9
-  \end{align*}
-
-  By \cref{rem:chi-squared-theorem}, we know that $\chi^{2}$ has a chi-squared
-  distribution. When computing a chi-squared test statistic from a contingency
-  table for a test of independence, the degrees of freedom is given by the
-  equation
-  \begin{equation*}
-    \text{df}=(\text{number of rows} -1)\times (\text{number of columns} -1)
-  \end{equation*}
-  which in our case, for a $2\times 2$ table, is just 1.
-
-  Thereore, using \cref{def:chi-squared-distribution}, the p-value is
-  \begin{align*}
-    p \text{-value}
-    &= \P\left[\chi^{2}\geq 11.9\right]\\
-    &= \int_{11.9}^{\infty} \frac{1}{\sqrt{2\pi}} x^{-\frac{1}{2}}e^{-x/2}dx\\
-    &=0.0006
-  \end{align*}
-  In other words, if attending and passing were independent, we would see
-  results this extreme only 0.06\% of the time. This is very small, so we reject
-  the null hypothesis. Our conclusion is that attendance and passing the final
-  exam are \textbf{not independent}, i.e., that there is a relationship between
-  them.
-
-  At this point we are tempted to conclude that regularly attending class
-  increases your chance of passing the final exam. This seems obvious and is
-  certainly consistent with the data. But it's not a conclusion that follows
-  from the test that we did. The test only told us that these two things things
-  probably have some relationship; it doesn't give us information about the
-  nature of that relationship.
-\end{example}
-
-
 \subsection{Interpreting tests of independence}
 
 Suppose we want to know if two things $A$ and $B$ are related to each other.
@@ -6311,6 +6233,9 @@ either ``no'' or ``maybe''. They don't give us much more information than
 that.
 
 \newpage
+\section{Decision errors}
+These terms are clarified by an example.
+
 \section{2025-05-01 | Week 15 | Lecture 33}
 
 \subsection{Simple linear regression (i.e., finding a best-fit line)}
