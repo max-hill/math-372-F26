@@ -5932,7 +5932,7 @@ we'll present in this lecture.
 
 \begin{example}[Test of independence]
   \label{ex:test-independence}
-  For example, suppose we have a population of $n=54$ students, which we divide
+  For example, suppose we have a sample of $n=54$ students, which we divide
   up according two to factors
   \begin{enumerate}[(i)]
     \item whether they attended class regularly or not
@@ -6085,21 +6085,119 @@ we'll present in this lecture.
   nature of that relationship.
 \end{example}
 
+\newpage
+\section{2026-11-20 | Week 13 | Lecture 35}
 
 
-\end{document}
+\subsection{Tests of indepdencence}
+In the previous lecture, we considered a sample of $n=54$ students, which we divide
+up according two to factors
+\begin{enumerate}[(i)]
+  \item whether they attended class regularly or not
+  \item whether they pass the class or not
+\end{enumerate}
+We performed a test of independence, where our null hypothesis was
+\begin{equation*}
+  H_{0}: \text{attendance and passing are independent}
+\end{equation*}
+and our alternative hypothesis was
+\begin{equation*}
+  H_{a}: \text{attendance and passing are not independent.}
+\end{equation*}
 
-\subsubsection{Ingedient 1: The chi-squared distribution}
-\begin{definition}[Chi-Squared Distribution]
-  \label{def:chi-squared-distribution}
-  Let $k$ be a positive integer. A nonnegative random variable $X$ is said to
-  have \demph{chi-squared distribution} with $d$ \demph{degrees of freedom} if
-  it has pdf
+Our data consisted of a \demph{table of observed values}, also called a
+\demph{contingency table}:
+\begin{equation}\label{eq:table-of-observed-values}
+  \begin{tabular}{l|cc}
+    & \textbf{Pass} & \textbf{Fail} \\
+    \hline
+    \textbf{Attended} & 25          & 6            \\
+    \textbf{Skipped}  & 8           & 15           
+  \end{tabular} 
+\end{equation}
+
+We computed the expected counts, assuming the null hypothesis were true:
+\begin{equation}\label{eq:table-of-estimated-expected-values}
+  \begin{tabular}{l|cc}
+    & \textbf{Pass} & \textbf{Fail} \\
+    \hline
+    \textbf{Attended} & $18.9$          & $12.1$            \\
+    \textbf{Skipped}  & $14.1$           & $8.9$            
+  \end{tabular}
+\end{equation}
+The main idea was that if the expected counts under the null hypothesis differ
+significantly from what was actually observed, then we should reject the null
+hypothesis.
+
+To quantify the notion of ``differ significantly'', we introduced a new
+statistic, called the \demph{chi-squared statistic:}
+
+\begin{definition}[Chi-squared statistic]
+  Suppose we repeatedly conduct an experiment with $k$ possible outcomes. The
+  \demph{chi-squared statistic} is defined as
+  \begin{equation}\label{eq:29}
+    \chi^{2}:= \sum_{i=1}^{k} \frac{\left(N_{i}-E_{i}\right)^{2}}{E_{i}},
+  \end{equation}
+  where $E_{i} = (\text{expected \# of times outcome $i$ occurs})$, and
+  $N_{i}= (\text{\# of times outcome $i$ is observed})$.
+\end{definition}
+
+\begin{remark}
+  The right-hand side of \cref{eq:29} has the form
   \begin{equation*}
+    \sum_{i=1}^{k} \frac{\left( \text{observed}- \text{expected} \right)^{2} }{ \text{expected}} 
+  \end{equation*}
+  Thus, $\chi^{2}$ is nonnegative. We may regard it as a measure of
+  ``distance'' between the observed data, and what we'd expect to observe
+  under the null hypothesis. When the two are similar, $\chi^{2}$ will be
+  small; when they are very different, $\chi^{2}$ will be big.
+\end{remark}
+
+For our student example, we got
+\begin{align*}
+  \chi^{2} 
+  &= \frac{\left( 25-18.9 \right)^{2} }{18.9}+ \frac{(6-12.1)^{2}}{12.1}+ \frac{\left( 8-14.1 \right)^{2} }{14.1}+ \frac{\left( 15-8.9 \right)^{2} }{8.9} \\
+  &= 11.9.
+\end{align*}
+
+In order to judge whether this is an unusually large value, we need to know
+the distribution of $\chi^{2}$.
+
+
+\begin{theorem}
+  Suppose we are conducting a test of independence and our data consists of a
+  contingency table with $r$ rows and $c$ columns. Then for a sufficiently
+  large sample size, the pdf of $\chi^{2}$ is approximately
+  \begin{equation}\label{eq:chi-squared-pdf}
     f(x) 
     = \left\{ 
       \begin{array}{l@{\quad:\quad}l} \frac{1}{2^{d/2}\Gamma(d/2)}x^{\frac{d}{2}-1}e^{-x/2} & x \geq 0\\ 0& x<0\end{array}\right.
-  \end{equation*}.
+  \end{equation}
+  where $d=(r-1)(c-1)$.
+\end{theorem}
+
+\begin{remark}
+  Here, $\Gamma$ is the gamma function, which satisfies
+  \begin{equation*}
+    \Gamma(1/2) = \sqrt{\pi},
+    \qquad
+    \Gamma(k)= (k-1)! \text{ if $k$ is a positive integer.}
+  \end{equation*}
+\end{remark}
+
+In the student example, we had a $2\times 2$ table, so $r=2$ and $c=2$.
+Therefore $d=1$. So in that case, the pdf of $\chi^{2}$ is approximately
+\begin{equation*}
+  f(x) = \frac{1}{\sqrt{2\pi}}x^{-1/2} e^{-x/2}, \qquad x \geq 0.
+\end{equation*}
+
+
+\begin{definition}[Chi-Squared Distribution]
+  \label{def:chi-squared-distribution}
+  Suppose $X$ is a random variable whose pdf is given by
+  \cref{eq:chi-squared-pdf}, where $d$ is a positive integer. Then $X$ is said to 
+  have \demph{chi-squared distribution} with $d$ \demph{degrees of freedom}.
+  We typically denote such a random variable by $\demph{\chi^{2}_{d}}$.
 \end{definition}
 
 
@@ -6112,9 +6210,9 @@ $d=12$:
 \end{center}
 
 \begin{proposition}
-  A $\chi^{2}$ random variable $X$ with $d$ degrees of freedom has
+  If $X$ has a chi-squared distribution with $d$ degrees of freedom, then
   \begin{equation*}
-    \E\left[X \right] = \alpha\beta = d \quad \text{and} \quad \Var(X) = \alpha\beta^{2} = 2d
+    \E\left[X \right] = d \quad \text{and} \quad \Var(X) = 2d.
   \end{equation*}
 \end{proposition}
 
@@ -6122,74 +6220,49 @@ The chi-squared distribution plays a central role in statistical inference. It
 is completely determined by its degrees of freedom.
 
 
-By \cref{rem:chi-squared-theorem}, we know that $\chi^{2}$ has a chi-squared
-distribution. When computing a chi-squared test statistic from a contingency
-table for a test of independence, the degrees of freedom is given by the
-equation
-\begin{equation*}
-  \text{df}=(\text{number of rows} -1)\times (\text{number of columns} -1)
-\end{equation*}
-which in our case, for a $2\times 2$ table, is just 1.
 
-
-% \begin{theorem}
-%   \label{rem:chi-squared-theorem}
-%   If $X=(X_{1},\ldots,X_{k})$ is a multinomial random variable with
-%   parameters $p_{1},\ldots,p_{k}$, then 
-%   \begin{equation*}
-%     \chi^{2} = \sum_{i=1}^{k} \frac{\left(X_{i}-np_{i}\right)^{2}}{np_{i}}.
-%   \end{equation*}
-%   If $np_{i}\geq 5$ for all $i=1,\ldots,k$. Then $\chi^{2}$ has approximately
-%   chi-squared distribution with $k-1$ degrees of freedom.
-% \end{theorem}
-
-
-
-% \begin{proof}[Proof sketch of \cref{rem:chi-squared-theorem}]
-%   Key ingredients:
-%   \begin{itemize}
-%     \item By the central limit theorem, $\frac{X_{i}-np_{i}}{\sqrt{np_{i}}}$
-%     is approximately normal.
-%     \item So the chi-squared statistic is approximately a sum of squares of
-%     independent standard normal random variables.
-%     \item Which gives a chi-squared distribution by
-%     \cref{thm:chi-squared-sum-squared-normals}.
-%   \end{itemize}
-%   The details of the proof rely on linear algebra.
-% \end{proof}
-
-
-\newpage
 \subsection{Interpreting tests of independence}
 
 Suppose we want to know if two things $A$ and $B$ are related to each other.
 We will discuss only the case where $A$ and $B$ are discrete, categorical
 events. For example
 \begin{equation*}
-  A  = \left[ \text{a person vapes} \right] 
+  V  = \left[ \text{a person vapes} \right] 
 \end{equation*}
 \begin{equation*}
-  B = \left[ \text{person gets coronary artery disease (CAD)} \right] 
+  CAD = \left[ \text{person gets coronary artery disease} \right] 
 \end{equation*}
-There are many possible relationships:
+
+If we perform a test of indedependence and get a small $p$-value, that means
+we reject the null hypothesis
+\begin{equation*}
+  H_{0}: \text{vaping and coronary artery disease are independent}
+\end{equation*}
+and conclude that there is a relationship. It may be tempting to conclude that
+the relationship must be vaping \textit{causes} coronary artery disease, but
+the test does not tell us that.
+
+Indeed, the are many possible relationships which could all give small
+$p$-values in a test of independence. Here are a few:
 
 
 \begin{itemize}
-  \item \textbf{Causality:} Vaping causes arterial disease.
+  \item \textbf{Causality:} There could exist a biological mechanism by which
+  vaping diretly causes CAD:
   \begin{center}
     \begin{tikzpicture}[->, node distance=2cm, thick]
-      \node[circle, draw] (A) {\(A\)}; \node[circle, draw, right of=A] (B)
-      {\(B\)}; \draw (A) -- (B);
+      \node[circle, draw] (A) {\(V\)}; \node[circle, draw, right of=A] (B)
+      {\(CAD\)}; \draw (A) -- (B);
     \end{tikzpicture}
   \end{center}
-  \item \textbf{Common Response:} Perhaps the effect of vaping on your
-  arteries is perfectly benign (no causal relationship), but CAD and vaping
-  are still positively associated due to the effect of some third variable $C$
-  that causes both to occur simultaneously:
+  \item \textbf{Common Response:} A positive relationship between vaping and
+  CAD could be observed even if vaping is perfectly benign (no causal
+  relationship). This could happen due to the effect of some third variable
+  $C$ that causes both to occur simultaneously:
   \begin{center}
     \begin{tikzpicture}[->, node distance=1cm and 1cm, thick]
       \node[circle, draw] (C) {\(C\)}; \node[circle, draw, below left=of C]
-      (A) {\(A\)}; \node[circle, draw, below right=of C] (B) {\(B\)}; \draw
+      (A) {\(V\)}; \node[circle, draw, below right=of C] (B) {\(CAD\)}; \draw
       (C) -- (A); \draw (C) -- (B);
     \end{tikzpicture}
   \end{center}
@@ -6201,17 +6274,18 @@ There are many possible relationships:
   quitting vaping woudn't decrease your chance of CAD.
 
   \item \textbf{Confounding:} (A third variable jointly influences or causes
-  both $A$ and $B$). For example, suppose it were observed that vapers has
-  have \textbf{lower} rates of coronary artery disease than the general
-  population --- that doesn't mean vaping necessarily have a protective
-  effect. For example, maybe the vapers are on average younger than the
+  both $A$ and $B$). Suppose it were observed that vapers has have
+  \textbf{lower} rates of coronary artery disease than the general
+  population---that doesn't mean vaping necessarily have a protective effect.
+
+  One way this could happen is if vapers are on average younger than the
   population (CAD usually develops in older people). In that case, we might
-  observe a spurious relationship between $A$ and $B$ due to the effects of
-  some other third variable, $C= \left[ \text{youth} \right]$:
+  observe a spurious relationship between $V$ and $CAD$ due to the effect of
+  $Y= \left[ \text{youth} \right]$:
   \begin{center}
     \begin{tikzpicture}[->, node distance=1cm and 1cm, thick]
-      \node[circle, draw] (C) {\(C\)}; \node[circle, draw, below left=of C]
-      (A) {\(A\)}; \node[circle, draw, below right=of C] (B) {\(B\)}; \draw
+      \node[circle, draw] (C) {\(Y\)}; \node[circle, draw, below left=of C]
+      (A) {\(V\)}; \node[circle, draw, below right=of C] (B) {\(CAD\)}; \draw
       (C) -- (A); \draw (C) -- (B); \draw[dashed, red] (A) --
       (B); % spurious association
     \end{tikzpicture}
@@ -6219,22 +6293,110 @@ There are many possible relationships:
   It could nonetheless be the case that vaping increases your risk of CAD
   through some biological mechanism (the red dotted line), and due to the
   effect of age, vapers might \textit{still} have lower incidence of CAD than
-  the general population.
+  the general population (!)
 
   In order to rule this out, we'd need to \textit{control} for the effect of
   age, perhaps by conducting a study on people from the same age group.
 \end{itemize}
 
-What we \textit{can} say, however, is that if $A$ and $B$ do not have any
-relationship (causal or otherwise), then they are probabilistically
-independent. This is what tests of independence do. They ask the question
-\textbf{``Are $A$ and $B$ independent?''} The answer to such tests is always
-either ``no'' or ``maybe''. They don't give us much more information than
-that.
+All the above relationships described between $V$ and $CAD$ could plausibly
+give a small $p$-value in a test of independence. So getting a small $p$-value
+doesn't tell us the nature of the relationship.
 
+
+What we \textit{can} say, however, is that if $V$ and $CAD$ do not have any
+relationship (causal or otherwise), then they are probabilistically
+independent. This is what tests of independence check for. They ask the
+question \textbf{``Are $A$ and $B$ probabilistically independent?''} They
+don't give us much more information than that.
+
+\end{document}
 \newpage
-\section{Decision errors}
-These terms are clarified by an example.
+
+
+
+\subsection{Multinomial distribution}
+Recall that to construct a \textit{binomial distribution}, you flip coins
+$n$ times, and count the number of heads. The coin flip only has two outimes.
+What if, instead of flipping coin, we rolled a dice with $k$ sides, and
+counted the number of times we get $1,2,\ldots,k$? In that case, we get an
+example of what is called \demph{multinomial distribution}. To be precise:
+
+\begin{definition}[Multinomial Distribution]
+  \label{def:multinomial}
+  Consider an experiment with $k$ possible outcomes, labeled $1$ through $k$.
+  These outcomes have probabilities $p_{1},\ldots,p_{k}$, respectively. (So
+  $p_{1}+\cdots+p_{k}=1$). We repeat this experiment $n$ times independently, and define
+  \begin{equation*}
+    X_{i}= (\# \text{ of times outcome $i$ occurs in the $n$ trials})
+  \end{equation*}
+  for each $i=1,\ldots,k$. Then the random vector
+  \begin{equation*}
+    X =
+    \begin{bmatrix}
+      X_{1}\\X_{2}\\\vdots \\ X_{k}
+    \end{bmatrix}
+  \end{equation*}
+  is said to have a \demph{multinomial distribution} with parameters
+  $(p_{1},\ldots,p_{k})$ and number of trials $n$.
+\end{definition}
+
+
+\begin{theorem}
+  \label{thm:chi-squared-theorem--multinomial}
+  Suppose $X=(X_{1},\ldots,X_{k})$ is a multinomial distribution with $n$
+  trials and fixed probabilities $p_{1},\ldots,p_{k}$. Define
+  \begin{equation*}
+    \chi^{2} = \sum_{i=1}^{k} \frac{\left(X_{i}-np_{i}\right)^{2}}{np_{i}}.
+  \end{equation*}
+  When $n$ is large, $\chi^{2}$ has approximately
+  a chi-squared distribution with $d=k-1$ degrees of freedom. 
+\end{theorem}
+
+\begin{remark}
+  The approximation in \cref{thm:chi-squared-theorem--multinomial} is good when
+  $np_{i}\geq 5$ for all $i=1,\ldots,k$.
+\end{remark}
+
+
+\begin{example}[Is a dice fair?]
+  We roll a six-sided dice independently $60$ times. The observed counts
+  for faces $1$ through $6$ are
+  \begin{equation*}
+    20,8,8,8,8,8.
+  \end{equation*}
+  At a significance level of $\alpha=.05$, do we have evidence that the die is
+  unfair?
+
+  Let $p_i$ be the probability of rolling face $i$. Our null hypothesis
+  is
+  \begin{equation*}
+    H_0: p_1=\cdots=p_6=1/6.
+  \end{equation*}
+  The alternative hypothesis is:
+  \begin{equation*}
+    H_{a}: \text{at least one face has probability different from $1/6$.}
+  \end{equation*}
+
+  Under $H_0$, the expected count for each face is $60(1/6)=10$.
+  The observed chi-squared statistic is therefore
+  \begin{equation*}
+    \chi^2
+    = \frac{(20-10)^2}{10} + 5\frac{(8-10)^2}{10}
+    = 12.
+  \end{equation*}
+  Large values of $\chi^2$ indicate that the observed counts are far from the
+  expected counts. By \cref{thm:chi-squared-theorem--multinomial}, $\chi^{2}$ has
+  approximately a chi-squared distribution with $5$ degrees of freedom.
+  Therefore
+  \begin{equation*}
+    \text{$p$-value} = \P(\chi^2_5 \geq 12) = \int_{12}^{\infty}
+    \frac{1}{2^{5/2}\Gamma(5/2)}x^{3/2} e^{-x/2} \, dx
+    \approx 0.035.
+  \end{equation*}
+  Since $0.035<0.05$, we reject $H_0$. These rolls provide evidence
+  that the die is unfair.
+\end{example}
 
 \section{2025-05-01 | Week 15 | Lecture 33}
 
