@@ -1,0 +1,546 @@
+\documentclass[10pt]{article}
+% Math Packages
+\usepackage{amsmath, mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{breqn}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
+\usepackage{forest}
+\usepackage{tikz-qtree}
+\graphicspath{ {./images/} }
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\usepackage[shortlabels]{enumitem}
+\usetikzlibrary{arrows,matrix,positioning}
+\usepackage{multicol}
+
+% for the pipe symbol
+\usepackage[T1]{fontenc}
+
+% Citing theorems by name. (source: https://tex.stackexchange.com/questions/109843/cleveref-and-named-theorems)
+\makeatletter
+\newcommand{\ncref}[1]{\cref{#1}\mynameref{#1}{\csname r@#1\endcsname}}
+
+\def\mynameref#1#2{%
+  \begingroup
+  \edef\@mytxt{#2}%
+  \edef\@mytst{\expandafter\@thirdoffive\@mytxt}%
+  \ifx\@mytst\empty\else
+  \space(\nameref{#1})\fi
+  \endgroup
+}
+\makeatother
+
+% Colorful Notes
+\usepackage{color} \definecolor{Red}{rgb}{1,0,0} \definecolor{Blue}{rgb}{0,0,1}
+\definecolor{Purple}{rgb}{.5,0,.5} \def\red{\color{Red}} \def\blue{\color{Blue}}
+\def\gray{\color{gray}} \def\purple{\color{Purple}}
+\newcommand{\rnote}[1]{{\red [#1]}} % \rnote{foo} gives '[foo]' in red
+\newcommand{\pnote}[1]{{\purple [#1]}} % \pnote{foo} gives '[foo]' in purple
+\newcommand{\bnote}[1]{{\blue #1}} % \bnote{foo} gives 'foo' in blue
+\newcommand{\gnote}[1]{{\gray #1}} % \gnote{foo} gives 'foo' in gray
+\newcommand{\Max}[1]{{\purple [#1]}} % \bnote{foo} then 'foo' is blue
+
+
+% Claim numbering (the counter restarts after each proof environment)
+\newcounter{claimcount}
+\setcounter{claimcount}{0}
+\newenvironment{claim}{\refstepcounter{claimcount}\par\addvspace{\medskipamount}\noindent\textbf{Claim \arabic{claimcount}:}}{}
+\usepackage{etoolbox}
+\AtBeginEnvironment{proof}{\setcounter{claimcount}{0}}
+\newenvironment{claimproof}{\par\addvspace{\medskipamount}\noindent\textit{Proof of Claim  \arabic{claimcount}.}}{\hfill\ensuremath{\qedsymbol} \tiny{Claim}
+
+  \medskip}
+% Add claim support to cleverref
+\crefname{claimcount}{Claim}{Claims}
+
+
+% Math Environments
+\newtheorem{theorem}{Theorem}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+
+% Matrices and Column Vectors. 
+\usepackage{stackengine}
+\setstackgap{L}{1.0\normalbaselineskip}
+\usepackage{tabstackengine}
+\setstackEOL{;}% row separator
+\setstackTAB{,}% column separator
+\setstacktabbedgap{1ex}% inter-column gap
+\setstackgap{L}{1.5\normalbaselineskip}% inter-row baselineskip
+\let\nmatrix\bracketMatrixstack  %Usage: \nmatrix{1,2,3\4,5,6}
+\newcommand\cv[1]{\setstackEOL{,}\bracketMatrixstack{#1}} %usage: \cv{1,2,3}
+
+% Custom Math Coqmmands
+\newcommand{\vt}{\vskip 5mm} % vertical space
+\newcommand{\fl}{\noindent\textbf} % first line
+\newcommand{\Fl}{\vt\noindent\textbf} % first line with space above
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert} % norm
+\newcommand{\pnorm}[1]{\left\lVert#1\right\rVert_p} % p-norm
+\newcommand{\qnorm}[1]{\left\lVert#1\right\rVert_q} % q-norm
+\newcommand{\1}[1]{\textbf{1}_{\left[#1\right]}} % indicator function 
+\def\limn{\lim_{n\to\infty}} % shortcut for lim as n-> infinity
+\def\sumn{\sum_{n=1}^{\infty}} % shortcut for sum from n=1 to infinity
+\def\sumkn{\sum_{k=1}^{n}} % shortcut for sum from k=1 to n
+\def\sumin{\sum_{i=1}^{n}} % shortcut for sum from i=1 to n
+\def\SAs{\sigma\text{-algebras}} % shortcut for $\sigma$-algebras
+\def\SA{\sigma\text{-algebra}} % shortcut for $\sigma$-algebra
+\def\Ft{\mathcal{F}_t} % time-indexed sigma-algebra (t)
+\def\Fs{\mathcal{F}_s} % time-indexed sigma-algebra (s)
+\def\F{\mathcal{F}} % sigma-algebra
+\def\G{\mathcal{G}} % sigma-algebra
+\def\R{\mathbb{R}} % Real numbers
+\def\N{\mathbb{N}} % Natural numbers
+\def\Z{\mathbb{Z}} % Integers
+\def\E{\mathbb{E}} % Expectation
+\def\P{\mathbb{P}} % Probability
+\def\Q{\mathbb{Q}} % Q probability
+\def\dist{\text{dist}} %Text 'dist' for things like 'dist(x,y)'
+\newcommand{\indep}{\perp \!\!\! \perp}  %independence symbol
+\def\Var{\mathrm{Var}} % Variance
+\def\tr{\mathrm{tr}} % trace
+
+% Brackets and Parentheses
+\def\[{\left [}
+    \def\]{\right ]}
+% \def\({\left (}
+%   \def\){\right )}
+
+
+
+\usepackage{color}
+\definecolor{Red}{rgb}{1,0,0}
+\definecolor{Blue}{rgb}{0,0,1}
+\definecolor{Purple}{rgb}{.5,0,.5}
+\def\red{\color{Red}}
+\def\blue{\color{Blue}}
+\def\gray{\color{gray}}
+\def\purple{\color{Purple}}
+\definecolor{RoyalBlue}{cmyk}{1, 0.50, 0, 0}
+\newcommand{\dempfcolor}[1]{{\color{RoyalBlue}#1}} 
+\newcommand{\demph}[1]{\dempfcolor{{\sl #1}}}
+
+% comment exactly one of the following line to show / hide the solutions
+% \newcommand{\solution}[1]{{\purple #1}} % uncomment to show the solutions
+\newcommand{\solution}[1]{} % uncomment to hide the solutions
+
+
+
+\title{Lecture Notes for Math 372: \\Elementary Probability and Statistics}
+\date{Last updated: \today}
+% \author{mh}
+
+\begin{document}
+\begin{center}
+  \section*{Math 372: Homework 12}
+  \textit{Due Monday, December 1}
+\end{center}
+
+\textit{Instructions: Do not write your solutions on this sheet---you don't have enough space to show
+your work. So use separate sheets of paper.}
+
+
+\begin{problem}[Exercise 8.1.13]
+  The calibration of a scale is to be checked by weighing a 10kg brick 25
+  times. Suppose that the results of different weighings are independent of
+  one another and that the weight on each trial is normally distributed with
+  $\sigma=.2$ kg. Let $\mu$ denote the true average weight reading on the
+  scale.
+  \begin{enumerate}[(a)]
+    \item What hypotheses should be tested?
+    \item With the sample mean itself as the test statistic, what is the
+    $p$-value when $\overline{x}=9.85$, and what would you conclude at
+    significance level $0.01$?
+    \item For a test with $\alpha=.01$, what is the probability that
+    recalibration is judged unnecessary when in fact $\mu=10.1$? When
+    $\mu=9.8$?
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[Exercise 8.2.19]
+  The melting point of each of 16 samples of vegetable oil was determined,
+  resulting in $\overline{x}=94.32$. Assume that the distribution of the
+  melting point is normal with $\sigma=1.20$
+  \begin{enumerate}[(a)]
+    \item Test $H_{0}:\mu=95$ versus $H_{a}:\mu\neq 95$ using a two-tailed
+    level $.01$ test.
+    \item If a level $0.01$ test is used, what is $\beta(94)$, the probability
+    of a type-II error when $\mu=94$?
+    \item What value of $n$ is necessary to ensure that $\beta(94)=.1$ when $\alpha=.01$?
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[Logistic]
+  The density function
+  \begin{equation*}
+    f(x) = \frac{e^{3-x}}{(1+e^{3-x})^{2}}
+  \end{equation*}
+  is an example of a \demph{logistic} distribution.
+  \begin{enumerate}[(a)]
+    \item Verify that $f$ is a pdf
+    \item Find $\P\left[3 \leq X \leq 4\right]$
+    \item Graph $f$. What does the mean appear to be? What about the median?
+  \end{enumerate}
+\end{problem}
+
+
+
+\begin{problem}
+  A balanced coin is flipped 400 times. Determine the number $x$ such that
+  with probability approximately 0.80, the number of heads is between $200-x$
+  and $200+x$.
+\end{problem}
+
+
+\begin{problem}
+  A spinner from a board game randomly indicates a real number between 0 and
+  10. The spinner is fair in the sense that it indicates a number in a given
+  interval of with the same probability as it indicates a number in any other
+  interval of the same length.
+  \begin{enumerate}[(a)]
+    \item Explain why the function
+    \begin{equation*}
+      f(x) = \left\{ \begin{array}{l@{\quad:\quad}l} 0.1 & 0 \leq x \leq 10\\
+          0& \text{else}\end{array}\right.
+    \end{equation*}
+    is a probability density function for the spinner's values.
+    \item What does your intuition tell you about the value of the mean? Check
+    your guess by evaluating an integral.
+  \end{enumerate}
+\end{problem}
+
+
+
+\begin{problem}[Central Limit Theorem]
+  One hundred $6$-sided dice are rolled, and their numbers are added up. Use
+  the central limit theorem to estimate the probability that the sum of the
+  numbers on the dice is between $330$ and $380$.
+\end{problem}
+
+\begin{problem}
+  % Adapted from Stewart's Calculus.
+  The Hydrogen atom is composed of one proton in the nucleous and one
+  electron, which moves about the nucleus. In the quantum theory of atomic
+  structure, it is assumed that the electron does not move in a well-defined
+  orbit. Instead, it occupies a state known as an \demph{orbital} which may be
+  thought of as a ``cloud'' of negative charge surrounding the nucleous. At the
+  state of lowest energy, called the \demph{ground state}, the shape of this
+  cloud is assumed to be a sphere centered at the nucleus. This sphere is
+  described in terms of the probability density function
+  \begin{equation*}
+    f(r) = \frac{4}{a_{0}^{3}}r^{2}e^{-2r/a_{0}},
+  \end{equation*}
+  where $a_{0}$ is a physical constant known as the \demph{Bohr radius}, and
+  $a_{0} \approx 5.29 \times 10^{-11} \ \mathtt{meters}.$
+  For each $r>0$, let $P(r)$ denote the probability that the electron will be
+  found within the sphere of radius $r$ meters centered at the nucleus. Then 
+  \begin{equation*}
+    P(r) = \int_{0}^{r}f(s) ds.
+  \end{equation*}
+  \begin{enumerate}[(a)]
+    \item Verify that $f$ is a probability density function.
+    \item Find $\lim_{r\to\infty} f(r)$.
+    \item For what value of $r$ does $f(r)$ achieve its maximum value?
+    \item Graph the density function. (I recommend using Desmos.)
+    \item Find the probability that an electron will be within the sphere of
+    radius $4a_{0}$.
+    \item At a moment in time, the distance of the electron from the nucleus
+    is a random variable, which we will call $R$. A good ``best guess'' for
+    this distance is the expected value. Calculate the expected distance of
+    the electron from the nucleus in the ground state of the hydrogen atom.
+    \item The variance $\Var(R)$ measures \demph{uncertainty} about the
+    electron's position. Compute $\Var(R)$.
+    \item The momentum $M$ of the electron is another random variable whose
+    density function is related to that of $R$ (in a manner which is beyond
+    the scope of this class). The \demph{Heisenberg uncertainty principle}
+    says that there is a constant $c>0$ such that
+    \begin{equation*}
+      \Var(R)\Var(M)\geq c
+    \end{equation*}
+    In one or two sentences, interpret this inequality.
+  \end{enumerate}
+\end{problem}
+
+
+% \begin{problem}
+%   The time in hours $T$ between streptococcal infection and display of a sore throat is a
+%   random variable whose probabililty density function is approximately
+%   \begin{equation*}
+%     f(t) 
+%     = \left\{ 
+%       \begin{array}{l@{\quad:\quad}l} \frac{1}{15676} t^{2} e^{-0.05 t},  &0 \leq t \leq 150\\ 0& \text{else} \end{array}\right.
+%   \end{equation*}
+%   \begin{enumerate}[(a)]
+%     \item What is the probability that an infected patient will display
+%     symptoms within the first 48 hours?
+%     \item What is the probability that an infected patient will not display
+%     symptoms until after 36 hours?
+%   \end{enumerate}
+% \end{problem}
+
+
+
+\begin{problem}
+  \label{problem:exercise-10.6}
+  We are interested in testing whether a coin is balanced based on the number
+  of heads $Y$ in 36 flips; that is, $H_{0}:p=.5$ vs $H_{a}:p\neq 5$. Suppose
+  that we decide ahead of time to reject $H_{0}$ if $\left| Y-18 \right| \geq 4$.
+  \begin{enumerate}[(a)]
+    \item What is the value of $\alpha$?
+    \item What is the value of $\beta$ if $p=.7$?
+  \end{enumerate}
+\end{problem}
+
+
+\begin{problem}
+  Please answer ``true'' or ``false'' to the following questions.
+  \begin{enumerate}[(a)]
+    \item The level of the test computed in Problem \ref{problem:exercise-10.6}(a) is
+    the probability that $H_{0}$ is true.
+    \item The value of $\beta$ in Problem \ref{problem:exercise-10.6}(b) is the
+    probability that $H_{a}$ is true.
+    \item In Problem \ref{problem:exercise-10.6}(b), $\beta$ was computed assuming
+    the null hypothesis was false.
+    \item If $\beta$ was computed when $p=.55$, the value would be larger than
+    the value of $\beta$ obtained in Problem \ref{problem:exercise-10.6}(b).
+    \item The probability that the test mistakenly rejects $H_{0}$ is $\beta$. 
+  \end{enumerate}
+\end{problem}
+
+
+
+% \begin{problem}
+%   The joint probability density function of $X$ and $Y$ is given by
+%   \begin{equation*}
+%     f(x,y)
+%     = \left\{ \begin{array}{l@{\quad:\quad}l} \frac{27 y^{2} e^{-3x}}{x^{2}} &0<y<x<\infty \\
+%         0 & \text{otherwise} \end{array}\right.
+%   \end{equation*}
+%   \begin{enumerate}[(a)]
+%     \item Find the marginal density for $X$.
+%     \item Are $X$ and $Y$ indpendent? Why or why not?
+%     \item Find $\P\left[X>2Y \right]$
+%   \end{enumerate}
+% \end{problem}
+
+\begin{problem}%[continuous r.v.]
+  Let $T$ be the waiting time, in hours, between successive purchases at a
+  furniture store. Suppose that $T$ has pdf
+  \begin{equation*}
+    f_{T}(t) = C e^{-\frac{t}{4}}\mathbf{1}_{\left[ t \geq 0\right] } = \left\{ \begin{array}{l@{\quad:\quad}l} Ce^{-\frac{t}{4}} & t \geq 0\\ 0& t<0\end{array}\right.
+  \end{equation*}
+  where $C>0$ is some number that you'll have to determine.
+  \begin{enumerate}[(a)]
+    \item Find a value of $C$ so that $f_{T}(t)$ is a valid pdf.
+    \item What is the probability that the time between purchases is greater
+    than $6$ minutes? [Note: $6\text{ minutes }= 1/10\text{ of an hour}$].
+    \item Compute $\E\left[T \right]$.
+  \end{enumerate}
+\end{problem}
+
+% \section{Transplanted}
+
+% \begin{problem}[Method of Moments]
+%   Let $X$ be the proportion of allotted time that a randomly-selected student
+%   spends working on an exam. Suppose that $X$ is a random variable with pdf
+%   \begin{equation*}
+%     f(x) = \left\{ \begin{array}{l@{\quad:\quad}l} (\theta+1)x^{\theta}
+%         &0 \leq x \leq 1 \\ 0& \text{otherwise} \end{array}\right.
+%   \end{equation*}
+%   where $\theta\in \R$ is an unknown parameter. A random sample of 10 students
+%   yields data
+%   \begin{gather*}
+%     x_{1} = .92,\ x_{2} = .79,\ x_{3} = .90,\ x_{4}=.65,\ x_{5}=.86\ \\
+%     x_{6}=.47,\ x_{7}=.73,\ x_{8}=.97,\ x_{9}=.94,\ x_{10}=.77
+%   \end{gather*}
+%   Use the method of moments to obtain an estimator of $\theta$ and then
+%   compute the estimate for this data.
+% \end{problem}
+
+
+% % \begin{problem}
+% %   Let $S_{200}$ be the number of heads that turn up in 200 tosses of a fair
+% %   coin. Estimate
+% %   \begin{equation*}
+% %     \P\left[S_{200}=100 \right], \P\left[S_{200}=90 \right], \text{ and } \P\left[S_{200}=80 \right].
+% %   \end{equation*}
+% % \end{problem}
+
+
+
+% \begin{problem}
+%   Find the probability that among $10,000$ random digits the digit 3 appears
+%   not more than 931 times.
+
+
+
+% \begin{problem}
+%   A random walker starts at 0 on the x-axis and at each time unit moves 1 step
+%   to the right or 1 step to the left with probability 1/2. Estimate the
+%   probability that, after 100 steps, the walker is more than 10 steps from the
+%   starting position.
+% \end{problem}
+
+
+
+
+% \newpage
+% \section*{Solution to Problem 6}
+
+% Let $J$ be June's score, and let $A$ be April's score. We want to compare
+% \begin{equation*}
+%   \P\left[J \geq 30\right] \quad \text{and} \quad  \P\left[A \geq 30\right]
+% \end{equation*}
+
+% To do this, we will use the Central Limit Theorem.
+
+% \Fl{Calculation for June:} First observe that we can write
+% \begin{equation*}
+%   J = X_{1}+\ldots+X_{48}
+% \end{equation*}
+% where $X_{1},X_{2},\ldots,X_{48}$ are IID random variables with
+% \begin{equation*}
+%   X_{i}= \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{with probability
+%     }3/4\\0 &\text{with probability }1/4 \end{array}\right.
+% \end{equation*}
+% In this case, we have
+% \begin{equation*}
+%   \mu = \E\left[X_{i} \right] = \frac{3}{4}
+% \end{equation*}
+% and
+% \begin{equation*}
+%   \sigma^{2} = \Var(X_{i}) = \frac{3}{4} - \left( \frac{3}{4} \right)^{2} = \frac{3}{4}\frac{1}{4} = \frac{3}{16},
+% \end{equation*}
+% so that
+% \begin{equation*}
+%   \sigma = \frac{\sqrt{3}}{4}
+% \end{equation*}
+% Therefore by the Central Limit Theorem, we have
+% \begin{align*}
+%   \frac{J}{48} 
+%   &\approx \mu + \frac{\sigma}{\sqrt{48}}Z \\
+%   &= \frac{3}{4}+ \frac{\sqrt{3}}{4 \sqrt{48}}Z,
+% \end{align*}
+% where $Z$ is a standard normal random variable. Therefore,
+% \begin{align*}
+%   \P\left[J \geq 30\right] 
+%   &=\P\left[\frac{J}{48}\geq \frac{30}{48}\right]\\
+%   &\approx\P\left[  \frac{3}{4}+ \frac{\sqrt{3}}{4 \sqrt{48}}Z \geq  \frac{30}{48}\right]\\
+%   &= \P\left[ \left( \frac{\sqrt{3}}{4 \sqrt{48}} \right)Z \geq -\frac{1}{8}\right]\\
+%   &= \P\left[Z \geq -2\right]\\
+%   &\approx 0.98
+% \end{align*}
+% Therefore June is about 98\% likely to pass the exam.
+
+% \Fl{Calculation for April} We can write
+% \begin{equation*}
+%   A = Y_{1}+\ldots+Y_{48}
+% \end{equation*}
+% where $Y_{1},\ldots,Y_{48}$ are IID random variables with
+% \begin{equation*}
+%   X_{i}= \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{with probability
+%     }1/2\\0 &\text{with probability }1/2 \end{array}\right.
+% \end{equation*}
+% By similar calculations, we have $\mu = \E\left[Y_{i} \right] = \frac{1}{2}$  and
+% $\sigma^{2} = \Var(Y_{i}) = \frac{1}{4}$, so $\sigma = \frac{1}{2}$.
+% Therefore by the Central Limit Theorem,
+% \begin{align*}
+%   \frac{A}{48} 
+%   &\approx \mu + \frac{\sigma}{\sqrt{48}}Z\\
+%   &= \frac{1}{2} + \frac{1}{2 \sqrt{48}}Z,
+% \end{align*}
+% where $Z$ is a standard normal random variable. Using this approximation, we have:
+% \begin{align*}
+%   \P\left[A \geq 30\right]
+%   &=\P\left[\frac{A}{48}\geq \frac{30}{48}\right]\\
+%   &\approx \P\left[\frac{1}{2}+\frac{1}{2 \sqrt{48}}Z \geq \frac{30}{48}\right]\\
+%   &= \P\left[Z \geq \sqrt{3}\right]\\
+%   &= 0.04
+% \end{align*}
+% \Fl{Conclusion:} The probability that April passes the exam is $0.04$. The
+% probability that June will pass the exam is $0.98$.
+
+
+% \newpage
+% \section*{Solution to Problem 7}
+% Let
+% \begin{equation*}
+%   X_{i} = \left\{ \begin{array}{l@{\quad:\quad}l} 1 & \text{if the i-th
+%       random digit is 3} \\0 & \text{if the i-th digit is not 3} \end{array}\right.
+% \end{equation*}
+% Since there are 10 digits $(0,1,2,\ldots,9)$, we have
+% \begin{equation*}
+%   \P\left[X_{i} =1\right] = \frac{1}{10}.
+% \end{equation*}
+% Then a straightforward computation shows that
+% \begin{align*}
+%   \mu &= \E\left[X_{i} \right] = \frac{1}{10}\\
+%   \sigma^{2}&= \frac{1}{10} \left( 1-\frac{1}{10} \right)= \frac{9}{100}\\
+%   \sigma&= \frac{3}{10}
+% \end{align*}
+% Let $S_{n}=X_{1}+\ldots+X_{n}$ be the number of 3's in the first $n$ random
+% digits. We want to compute $\P\left[S_{10,000}\leq 931\right]$. By the Central Limit Theorem,
+% \begin{align*}
+%   \frac{S_{n}}{n} 
+%   &\approx \mu + \frac{\sigma}{\sqrt{n}}Z.
+% \end{align*}
+% where $Z$ is a standard normal random variable. Here, we have $n=10,000$ so
+% this becomes
+% \begin{equation*}
+%   \frac{S_{10000}}{10000} \approx \frac{1}{10}+ \frac{3}{1000}Z
+% \end{equation*}
+% Thus
+% \begin{align*}
+%   \P\left[S_{10000}\leq 931\right]
+%   &= \P\left[\frac{S_{10000}}{10000} \leq  \frac{931}{10000}\right]\\
+%   &\approx \P\left[  \frac{1}{10}+ \frac{3}{1000}Z \leq \frac{931}{10000}\right]\\
+%   &= \P\left[Z \leq -2.3\right]\\
+%   &\approx 0.01
+% \end{align*}
+% In other words, the probability of having 931 or fewer 3's out of 10,000
+% random digits is about 1\%.
+
+% \section{New problems}
+
+
+
+\begin{problem}%[Extra credit]
+  An urn contains one red ball and one blue ball. A ball is drawn at random.
+  If it is red, the game is over. If it is blue, it is replaced in the urn
+  along with an extra blue ball. This process continues until the red ball is
+  drawn, however long it takes. Let $Y$ be the number of draws required.
+  \begin{enumerate}[(a)]
+    \item Argue that $\P\left[Y=k \right] = \frac{1}{k(k+1)}$.
+    \item Show that this defines a valid pmf. (Hint: first show that
+    $\frac{1}{k(k+1)}= \frac{1}{k}-\frac{1}{k+1}$, and then consider
+    $\sum_{k=1}^{n}\frac{1}{k(k+1)}$).
+    \item Show that $\E\left[Y \right]$ does not exist.
+  \end{enumerate}
+\end{problem}
+
+
+% \begin{problem}[Normal Distribution]
+%   If $Z\sim \mathcal{N}(0,1)$, then
+%   \begin{equation}\label{eq:1}
+%     \P\left[|Z| \leq u \right] = 2 \P\left[Z \leq u\right]-1
+%   \end{equation}
+%   for any $u \geq 0$. Draw a picture to illustrate the geometric meaning of \cref{eq:1}.
+% \end{problem}
+
+
+\end{document}
