@@ -16,6 +16,8 @@ permalink: /exam-information/
 
 [practice-midterms](exams/midterm-2/practice-midterm-exam-2.pdf)
 
+[midterm-2-solutions](exams/midterm-2/midterm-2-solutions.pdf)
+
 ## final exam
     
 - friday, December 18 at 9:45-11:45pm (location: WEB 103)
